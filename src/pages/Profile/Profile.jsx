@@ -3,9 +3,9 @@ import { Outlet } from "react-router-dom";
 
 export const Profile = () => {
   return (
-    <div>
+    <main className="main">
       <h1>Adarsh Balika</h1>
       <Outlet />
-    </div>
+    </main>
   );
 };

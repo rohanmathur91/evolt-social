@@ -10,10 +10,14 @@ import {
   Following,
   Bookmark,
 } from "./pages";
+import { Navbar, Sidebar, Suggestions } from "./components";
 
 const App = () => {
   return (
-    <div className="App">
+    <div className="grid-container text-neutral-900">
+      <Navbar />
+      <Sidebar />
+      <Suggestions />
       <Routes>
         <Route path="/" element={<Explore />} />
         <Route path="/login" element={<Login />} />

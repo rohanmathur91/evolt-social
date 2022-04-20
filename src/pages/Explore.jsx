@@ -2,11 +2,15 @@ import React from "react";
 
 export const Explore = () => {
   return (
-    <div>
-      <h1>Welcome to react</h1>
-      <h2>Welcome to react</h2>
-      <h3>Welcome to react</h3>
-      <h4>Welcome to react</h4>
-    </div>
+    <main className="main">
+      {[...Array(10)].map(() => (
+        <div>
+          <div>{/* profile data */}</div>
+          <img src="" alt="" />
+          <p>{/*post data */}</p>
+          <div>{/* buttons */}</div>
+        </div>
+      ))}
+    </main>
   );
 };

@@ -6,10 +6,6 @@
 
 @layer base {
   /* reset */
-  * {
-    @apply m-0 p-0 box-border;
-  }
-
   body {
     font-family: "Montserrat", sans-serif;
   }
@@ -42,33 +38,6 @@
   }
 }
 
-@layer utilities {
-  .grid-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-areas: "main";
-  }
-
-  @screen lg {
-    .grid-container {
-      grid-template-columns: 15.625rem 1fr 15.625rem;
-      grid-template-areas: "left-aside main right-aside";
-    }
-  }
-
-  .left-aside {
-    grid-area: left-aside;
-  }
-
-  .main {
-    grid-area: main;
-  }
-
-  .aside {
-    grid-area: right-aside;
-  }
-}
-
 @layer components {
   .btn {
     @apply text-sm text-inherit uppercase rounded py-2 px-4 tracking-[1.2px] hover:opacity-70;
@@ -84,5 +53,43 @@
 
   .max-container {
     @apply max-w-screen-2xl mx-auto;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: "main";
+  }
+
+  @screen md {
+    .grid-container {
+      grid-template-columns: 16.87rem 1fr;
+      grid-template-areas: "left-aside main";
+    }
+  }
+
+  @screen lg {
+    .grid-container {
+      grid-template-columns: 16.87rem 1fr 23rem;
+      grid-template-areas: "left-aside main right-aside";
+    }
+  }
+
+  .left-aside {
+    grid-area: left-aside;
+  }
+
+  .main {
+    grid-area: main;
+  }
+
+  .right-aside {
+    grid-area: right-aside;
+  }
+
+  .main,
+  .left-aside,
+  .right-aside {
+    @apply h-[90vh] mt-[10vh];
   }
 }
