@@ -9,16 +9,17 @@ export const Navbar = () => {
           Spaces
         </Link>
         <div className="ml-auto flex flex-row items-center w-100">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="bg-slate-100 w-full md:w-96 rounded focus:outline focus:outline-slate-300"
-          />
-          <Link to="/profile/1" className="ml-6 shrink-0">
+          <button title="Add post">
+            <span className="material-icons-outlined text-3xl w-11 h-11 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100">
+              add_box
+            </span>
+          </button>
+
+          <Link to="/profile/1" className="ml-4 shrink-0">
             <img
               alt="profile"
               src="https://i.pravatar.cc/300"
-              className="w-12 h-12 rounded-full"
+              className="w-11 h-11 rounded-full"
             />
           </Link>
         </div>

@@ -3,26 +3,30 @@ import { Route, Routes } from "react-router-dom";
 import {
   Login,
   Posts,
+  Search,
   Signup,
+  Bookmark,
   Profile,
   Explore,
   Followers,
   Following,
-  Bookmark,
+  Notifications,
 } from "./pages";
-import { Navbar, Sidebar, Suggestions } from "./components";
+import { Navbar, Sidebar, TopContributors } from "./components";
 
 const App = () => {
   return (
     <div className="grid-container text-neutral-900">
       <Navbar />
       <Sidebar />
-      <Suggestions />
+      <TopContributors />
       <Routes>
         <Route path="/" element={<Explore />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/bookmarks" element={<Bookmark />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/notifications" element={<Notifications />} />
         <Route path="/profile/:userId" element={<Profile />}>
           <Route index element={<Posts />} />
           <Route path="followers" element={<Followers />} />
