@@ -27,7 +27,7 @@ const App = () => {
         <Route path="/bookmarks" element={<Bookmark />} />
         <Route path="/search" element={<Search />} />
         <Route path="/notifications" element={<Notifications />} />
-        <Route path="/profile/:userId" element={<Profile />}>
+        <Route path="/profile/:userId/" element={<Profile />}>
           <Route index element={<Posts />} />
           <Route path="followers" element={<Followers />} />
           <Route path="following" element={<Following />} />

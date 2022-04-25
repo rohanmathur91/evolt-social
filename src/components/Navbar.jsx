@@ -31,7 +31,7 @@ export const Navbar = () => {
                 alt="profile"
                 loading="lazy"
                 src="https://i.pravatar.cc/300"
-                className="w-11 h-11 rounded-full bg-gradient-to-b from-slate-200 to-slate-400"
+                className="w-11 h-11 border rounded-full bg-gray-200"
               />
             </Link>
           </div>

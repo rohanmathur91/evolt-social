@@ -13,7 +13,7 @@ export const Explore = () => {
               alt="pravatar"
               loading="lazy"
               src="https://i.pravatar.cc/300"
-              className="w-11 h-11 md:w-12 md:h-12 mr-4 object-cover rounded-full bg-gradient-to-b from-slate-200 to-slate-400"
+              className="w-11 h-11 md:w-12 md:h-12 mr-4 object-cover rounded-full bg-gray-200"
             />
 
             <div className="leading-4">
@@ -30,7 +30,7 @@ export const Explore = () => {
             alt="post"
             loading="lazy"
             src="https://picsum.photos/seed/picsum/900/500"
-            className="w-full h-[50vh] aspect-[2/1] bg-gradient-to-b from-slate-200 to-slate-400"
+            className="w-full h-[50vh] aspect-[2/1] bg-gray-200"
           />
 
           <p className="dark:text-gray-400 p-2 text-sm lg:text-base">
