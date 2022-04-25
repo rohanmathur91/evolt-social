@@ -4,7 +4,10 @@ export const Explore = () => {
   return (
     <main className="main pb-20 p-3 bg-gray-50">
       {[...Array(10)].map((_, index) => (
-        <article key={index} className="border rounded my-4 md:mx-6 bg-white">
+        <article
+          key={index}
+          className="border rounded mb-4 max-w-xl mx-auto bg-white"
+        >
           <section className="p-2 pt-3 my-2 flex items-center">
             <img
               alt="pravatar"
@@ -14,11 +17,11 @@ export const Explore = () => {
             />
 
             <div className="leading-4">
-              <p className="font-semibold">
+              <p className="font-semibold line-clamp-1">
                 Adarsh Balika
                 <span className="ml-1 text-gray-500">@adarsh</span>
               </p>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 line-clamp-1">
                 Lorem ipsum dolor sit amet consectetur
               </p>
             </div>
@@ -41,12 +44,12 @@ export const Explore = () => {
               <span className="material-icons-outlined w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer text-xl hover:text-blue-500 hover:bg-blue-100">
                 thumb_up
               </span>
-              <span class="material-icons-outlined mx-2 w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer text-xl hover:text-blue-500 hover:bg-blue-100">
+              <span className="material-icons-outlined mx-2 w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer text-xl hover:text-blue-500 hover:bg-blue-100">
                 comment
               </span>
             </div>
 
-            <span className="material-icons-outlined w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer text-xl hover:text-pink-500 hover:bg-pink-100">
+            <span className="material-icons-outlined w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer text-xl hover:text-blue-500 hover:bg-blue-100">
               bookmark_border
             </span>
           </section>

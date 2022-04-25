@@ -49,7 +49,7 @@
 
 @layer components {
   .btn {
-    @apply text-sm text-inherit uppercase rounded py-2 px-4 tracking-[1.2px] hover:opacity-70;
+    @apply text-inherit rounded tracking-[1.2px] hover:opacity-70;
   }
 
   .btn-primary {

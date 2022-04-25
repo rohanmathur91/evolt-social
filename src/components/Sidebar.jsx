@@ -18,7 +18,7 @@ export const Sidebar = () => {
             key={icon}
             className={`${
               text === "Profile" ? "hidden md:block" : ""
-            } flex-grow md:flex-grow-0 md:mb-1 md:mx-2 h-15`}
+            } flex-grow md:flex-grow-0 md:mb-1 md:mx-2 h-15 hover:transition-all`}
           >
             <NavLink
               to={path}

@@ -29,7 +29,7 @@ export const Search = () => {
               </p>
             </div>
 
-            <button className="ml-auto self-start text-xs md:text-sm bg-blue-500 text-white py-1 px-3 rounded hover:opacity-75">
+            <button className="ml-auto self-start text-xs md:text-sm bg-blue-500 text-white py-1 px-3 rounded hover:opacity-70">
               Follow
             </button>
           </div>

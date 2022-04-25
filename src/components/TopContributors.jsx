@@ -12,8 +12,11 @@ export const TopContributors = () => {
       } hidden lg:right-aside border-l fixed right-0 w-[20rem] p-3`}
     >
       <h4 className="font-semibold mt-4 mb-2">Top Contributors</h4>
-      {[...Array(3)].map(() => (
-        <div className="p-2 pt-3 my-2 flex items-center border rounded">
+      {[...Array(3)].map((_, index) => (
+        <div
+          key={index}
+          className="p-2 pt-3 my-2 flex items-center border rounded"
+        >
           <img
             alt="pravatar"
             loading="lazy"
