@@ -20,7 +20,11 @@ export const Navbar = () => {
             Spaces
           </Link>
           <div className="ml-auto flex flex-row items-center w-100">
-            <button title="Add post" onClick={() => handleShowModal(true)}>
+            <button
+              className="tooltip"
+              data-tooltip="Add post"
+              onClick={() => handleShowModal(true)}
+            >
               <span className="material-icons-outlined md:text-3xl w-11 h-11 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100/80">
                 add_box
               </span>

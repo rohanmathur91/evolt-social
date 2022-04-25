@@ -22,8 +22,8 @@ export const Profile = () => {
                 Edit Profile
               </button>
               <button
-                title="Logout"
-                className="flex flex-row items-center justify-center"
+                data-tooltip="Logout"
+                className="flex tooltip flex-row items-center justify-center"
               >
                 <span className="material-icons-outlined md:text-3xl">
                   logout

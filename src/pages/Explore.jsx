@@ -41,17 +41,31 @@ export const Explore = () => {
           </p>
           <section className="flex flex-row items-center justify-between p-2">
             <div className="flex text-gray-900">
-              <span className="material-icons-outlined w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer text-xl hover:text-blue-500 hover:bg-blue-100">
-                thumb_up
-              </span>
-              <span className="material-icons-outlined mx-2 w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer text-xl hover:text-blue-500 hover:bg-blue-100">
-                comment
-              </span>
+              <button
+                data-tooltip="Like"
+                className="tooltip w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
+              >
+                <span className="material-icons-outlined text-xl">
+                  thumb_up
+                </span>
+              </button>
+
+              <button
+                data-tooltip="Comment"
+                className="tooltip mx-2 w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
+              >
+                <span className="material-icons-outlined text-xl">comment</span>
+              </button>
             </div>
 
-            <span className="material-icons-outlined w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer text-xl hover:text-blue-500 hover:bg-blue-100">
-              bookmark_border
-            </span>
+            <button
+              data-tooltip="Bookmark"
+              className="tooltip w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
+            >
+              <span className="material-icons-outlined text-xl">
+                bookmark_border
+              </span>
+            </button>
           </section>
         </article>
       ))}
