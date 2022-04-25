@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { emojis } from "../data";
 
-export const AddPost = () => {
+export const AddPost = ({ handleShowModal }) => {
   const [postImage, setPostImage] = useState(null);
   const [postContent, setPostContent] = useState("");
   const [showEmojis, setShowEmojis] = useState(false);
@@ -83,7 +83,10 @@ export const AddPost = () => {
           )}
 
           <div className="ml-auto md:ml-1 mt-1 md:mt-0">
-            <button className="rounded text-sm md:text-base border mr-2 border-blue-500 text-blue-500 py-1 px-3 hover:transition-all hover:text-white hover:bg-blue-500">
+            <button
+              onClick={() => handleShowModal(false)}
+              className="rounded text-sm md:text-base border mr-2 border-blue-500 text-blue-500 py-1 px-3 hover:transition-all hover:text-white hover:bg-blue-500"
+            >
               Cancel
             </button>
 
@@ -117,4 +120,8 @@ export const AddPost = () => {
       </form>
     </>
   );
+};
+
+AddPost.defaultProps = {
+  handleShowModal: () => {},
 };

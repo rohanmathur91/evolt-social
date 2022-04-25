@@ -10,7 +10,7 @@ export const Navbar = () => {
     <>
       {showModal && (
         <Modal handleShowModal={handleShowModal}>
-          <AddPost />
+          <AddPost handleShowModal={handleShowModal} />
         </Modal>
       )}
 
