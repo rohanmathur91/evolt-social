@@ -63,14 +63,14 @@
 
   @screen md {
     .grid-container {
-      grid-template-columns: 16.87rem 1fr;
+      grid-template-columns: 17rem 1fr;
       grid-template-areas: "left-aside main";
     }
   }
 
   @screen lg {
     .grid-container {
-      grid-template-columns: 16.87rem 1fr 23rem;
+      grid-template-columns: 17rem 1fr 20rem;
       grid-template-areas: "left-aside main right-aside";
     }
   }
