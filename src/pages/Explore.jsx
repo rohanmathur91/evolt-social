@@ -2,14 +2,15 @@ import React from "react";
 
 export const Explore = () => {
   return (
-    <main className="main mb-20 p-3">
+    <main className="main pb-20 p-3 bg-gray-50">
       {[...Array(10)].map((_, index) => (
-        <article key={index}>
+        <article key={index} className="border rounded my-4 md:mx-6 bg-white">
           <section className="p-2 pt-3 my-2 flex items-center">
             <img
-              className="w-12 h-12 mr-4 object-cover rounded-full"
-              src="https://i.pravatar.cc/300"
               alt="pravatar"
+              loading="lazy"
+              src="https://i.pravatar.cc/300"
+              className="w-11 h-11 md:w-12 md:h-12 mr-4 object-cover rounded-full bg-gradient-to-b from-slate-200 to-slate-400"
             />
 
             <div className="leading-4">
@@ -23,9 +24,10 @@ export const Explore = () => {
             </div>
           </section>
           <img
-            alt="avatar"
-            className="w-full h-[50vh] aspect-[2/1]"
+            alt="post"
+            loading="lazy"
             src="https://picsum.photos/seed/picsum/900/500"
+            className="w-full h-[50vh] aspect-[2/1] bg-gradient-to-b from-slate-200 to-slate-400"
           />
 
           <p className="dark:text-gray-400 p-2 text-sm lg:text-base">

@@ -15,9 +15,10 @@ export const TopContributors = () => {
       {[...Array(3)].map(() => (
         <div className="p-2 pt-3 my-2 flex items-center border rounded">
           <img
-            className="w-10 h-10 mr-4 object-cover rounded-full"
-            src="https://i.pravatar.cc/300"
             alt="pravatar"
+            loading="lazy"
+            src="https://i.pravatar.cc/300"
+            className="w-10 h-10 mr-4 shrink-0 object-cover rounded-full bg-gradient-to-b from-slate-200 to-slate-400"
           />
 
           <div className="leading-4">
