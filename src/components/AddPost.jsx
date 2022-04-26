@@ -30,8 +30,7 @@ export const AddPost = ({ handleShowModal }) => {
     <>
       <form
         onSubmit={handleFormSubmit}
-        onClick={(e) => e.stopPropagation()}
-        className="m-4 max-w-xl w-full relative bg-white border py-2 px-3 rounded"
+        className="max-w-xl w-full relative bg-white border py-2 px-3 rounded"
       >
         <textarea
           required
@@ -46,15 +45,20 @@ export const AddPost = ({ handleShowModal }) => {
           <div className="flex items-center">
             <button
               type="button"
+              data-tooltip="Add emoji"
               onClick={handleShowEmoji}
-              className="mr-2 w-10 h-10 rounded-full hover:cursor-pointer text-2xl text-blue-500 hover:bg-blue-100"
+              className="tooltip mr-2 w-10 h-10 rounded-full hover:cursor-pointer text-2xl text-blue-500 hover:bg-blue-100"
             >
               <span className="material-icons-outlined flex items-center justify-center">
                 add_reaction
               </span>
             </button>
 
-            <label htmlFor="image-upload" className="flex items-center">
+            <label
+              htmlFor="image-upload"
+              data-tooltip="Add image"
+              className="tooltip flex items-center"
+            >
               <span className="material-icons-outlined w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer text-2xl text-blue-500 hover:bg-blue-100">
                 add_photo_alternate
               </span>
@@ -73,19 +77,20 @@ export const AddPost = ({ handleShowModal }) => {
           </div>
 
           {postContent.length === 120 ? (
-            <span className="text-xs font-semibold text-blue-500 ml-1">
+            <span className="text-xs text-right md:text-center self-center w-[9.8rem] md:text-sm font-semibold text-blue-500 ml-1">
               (Max limit reached)
             </span>
           ) : (
-            <span className="text-xs md:text-sm text-gray-500 font-semibold mx-1">
+            <span className="text-xs text-right md:text-center self-center w-[9.8rem] md:text-sm text-gray-500 font-semibold mx-1">
               Character count: {postContent.length}
             </span>
           )}
 
           <div className="ml-auto md:ml-1 mt-1 md:mt-0">
             <button
+              type="button"
               onClick={() => handleShowModal(false)}
-              className="rounded text-sm md:text-base border mr-2 border-blue-500 text-blue-500 py-1 px-3 hover:transition-all hover:text-white hover:bg-blue-500"
+              className="rounded text-sm md:text-base border mx-2 border-blue-500 text-blue-500 py-1 px-3 hover:transition-all hover:text-white hover:bg-blue-500"
             >
               Cancel
             </button>

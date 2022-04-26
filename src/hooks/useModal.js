@@ -2,7 +2,17 @@ import { useState, useEffect } from "react";
 
 export const useModal = () => {
   const [showModal, setShowModal] = useState(false);
-  const handleShowModal = (show) => setShowModal(show);
+
+  const handleShowModal = (
+    show,
+    mouseUpTarget = null,
+    mouseDownTarget = null
+  ) => {
+    // only update the modal state if clicked target is same
+    if (mouseUpTarget === mouseDownTarget) {
+      setShowModal(show);
+    }
+  };
 
   useEffect(() => {
     if (showModal) {

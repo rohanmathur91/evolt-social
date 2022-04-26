@@ -1,5 +1,5 @@
 import React from "react";
-import notification from "../assets/notification.svg";
+import notification from "../assets/images/notification.svg";
 
 export const Notifications = () => {
   return (

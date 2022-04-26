@@ -32,17 +32,17 @@ export const Profile = () => {
             </div>
           </div>
 
-          <div className="flex flex-row mt-3">
+          <div className="flex flex-row mt-6">
             <Link
               end
               to="/profile/1"
-              className="mr-4 text-sm flex flex-col items-center justify-center"
+              className="mr-4 text-xs sm:text-sm flex flex-col items-center justify-center"
             >
               <span className="font-semibold mr-1">10</span> <span>Posts</span>
             </Link>
             <Link
               to="/profile/1/followers"
-              className="mr-4 text-sm flex flex-col items-center justify-center"
+              className="mr-4 text-xs sm:text-sm flex flex-col items-center justify-center"
             >
               <span className="font-semibold mr-1">20</span>
               <span>Followers</span>
@@ -50,7 +50,7 @@ export const Profile = () => {
             <Link
               end
               to="/profile/1/following"
-              className="mr-4 text-sm flex flex-col items-center justify-center"
+              className="mr-4 text-xs sm:text-sm flex flex-col items-center justify-center"
             >
               <span className="font-semibold mr-1">12</span>
               <span>Following</span>
@@ -66,7 +66,7 @@ export const Profile = () => {
           className={({ isActive }) =>
             `${
               isActive ? "text-blue-500 border-t border-blue-500" : ""
-            } font-semibold text-sm md:text-base  py-2 px-4`
+            } font-semibold text-sm md:text-base py-2 px-4`
           }
         >
           Posts
@@ -77,7 +77,7 @@ export const Profile = () => {
           className={({ isActive }) =>
             `${
               isActive ? "text-blue-500 border-t border-blue-500" : ""
-            } font-semibold text-sm md:text-base  py-2 px-4`
+            } font-semibold text-sm md:text-base py-2 px-4`
           }
         >
           Followers
@@ -88,7 +88,7 @@ export const Profile = () => {
           className={({ isActive }) =>
             `${
               isActive ? "text-blue-500 border-t border-blue-500" : ""
-            } font-semibold text-sm md:text-base  py-2 px-4`
+            } font-semibold text-sm md:text-base py-2 px-4`
           }
         >
           Following
