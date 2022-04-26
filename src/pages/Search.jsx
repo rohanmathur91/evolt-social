@@ -4,11 +4,18 @@ export const Search = () => {
   return (
     <main className="main p-3">
       <h4 className="font-semibold mt-4 mb-2">Search your friends.</h4>
-      <input
-        type="text"
-        placeholder="Search..."
-        className="bg-slate-100 focus:bg-slate-50 w-full rounded focus:outline focus:outline-slate-300"
-      />
+      <label htmlFor="search" className="relative">
+        <span className="material-icons-outlined absolute text-slate-500 left-[10px] bottom-[50%] translate-y-1/2">
+          search
+        </span>
+        <input
+          id="search"
+          type="text"
+          placeholder="Search..."
+          className="bg-slate-100 pl-10 focus:bg-slate-50 w-full rounded focus:outline focus:outline-slate-300"
+        />
+      </label>
+
       <div className="mt-8 grid lg:auto-cols-fr">
         {[...Array(10)].map(() => (
           <div className="p-2 pt-3 my-2 lg:mr-1 flex items-center border rounded">

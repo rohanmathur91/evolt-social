@@ -4,7 +4,7 @@ export const useModal = () => {
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = (
-    show,
+    show = false,
     mouseUpTarget = null,
     mouseDownTarget = null
   ) => {
