@@ -7,7 +7,7 @@ export const Explore = () => {
       <Sidebar />
       <TopContributors />
 
-      <main className="main pb-20 pt-4 px-2 md:px-0">
+      <main className="main pb-20 px-2 md:px-0">
         {[...Array(10)].map((_, index) => (
           <article
             key={index}

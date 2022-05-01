@@ -16,7 +16,7 @@ import { Navbar } from "./components";
 
 const App = () => {
   return (
-    <div className="text-neutral-900 bg-gray-900">
+    <div className="text-neutral-900 bg-gray-100">
       <Navbar />
       <Routes>
         <Route path="/" element={<Explore />} />

@@ -82,14 +82,14 @@
 
   @screen md {
     .grid-container {
-      grid-template-columns: 20rem 1fr;
+      grid-template-columns: 17rem 1fr;
       grid-template-areas: "left-aside main";
     }
   }
 
   @screen lg {
     .grid-container {
-      grid-template-columns: 20rem 1fr 20rem;
+      grid-template-columns: 17rem 1fr 20rem;
       grid-template-areas: "left-aside main right-aside";
     }
   }
@@ -100,7 +100,7 @@
 
   .main {
     grid-area: main;
-    @apply mt-[10vh] min-h-[90vh] h-full;
+    @apply mt-[15vh] min-h-[90vh];
   }
 
   .right-aside {

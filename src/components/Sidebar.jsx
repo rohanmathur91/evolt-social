@@ -11,7 +11,7 @@ export const Sidebar = () => {
   ];
 
   return (
-    <aside className="md:left-aside z-[2] md:z-0 md:ml-auto sticky bottom-3 left-0 right-0 md:mt-[15vh] md:top-[15vh] md:w-[16rem] mx-3 md:mx-0 md:py-2 md:h-[80vh] rounded md:rounded-lg md:border bg-white/60 backdrop-blur-sm">
+    <aside className="md:left-aside z-[2] md:ml-auto sticky bottom-3 left-0 right-0 md:top-[15vh] md:w-[16rem] mx-3 md:mx-0 md:py-2 md:h-[80vh] rounded md:rounded-lg md:border bg-white/60 backdrop-blur-sm">
       <ul className="w-full grid grid-cols-4 md:block gap-1 md:gap-0">
         {sideBarData.map(({ icon, text, path }) => (
           <li
