@@ -12,14 +12,12 @@ import {
   Following,
   Notifications,
 } from "./pages";
-import { Navbar, Sidebar, TopContributors } from "./components";
+import { Navbar } from "./components";
 
 const App = () => {
   return (
-    <div className="grid-container text-neutral-900">
+    <div className="text-neutral-900 bg-gray-900">
       <Navbar />
-      <Sidebar />
-      <TopContributors />
       <Routes>
         <Route path="/" element={<Explore />} />
         <Route path="/login" element={<Login />} />

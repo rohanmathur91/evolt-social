@@ -58,7 +58,7 @@
   }
 
   .btn-secondary {
-    @apply bg-indigo-500 text-white;
+    @apply bg-pink-500 text-white;
   }
 
   .max-container {
@@ -75,47 +75,40 @@
   }
 
   .grid-container {
-    margin: auto;
-    display: grid;
-    max-width: 87.5rem;
+    @apply grid gap-6 mx-auto max-w-6xl;
     grid-template-columns: 1fr;
     grid-template-areas: "main";
   }
 
   @screen md {
     .grid-container {
-      grid-template-columns: 17rem 1fr;
+      grid-template-columns: 20rem 1fr;
       grid-template-areas: "left-aside main";
     }
   }
 
   @screen lg {
     .grid-container {
-      grid-template-columns: 17rem 1fr 20rem;
+      grid-template-columns: 20rem 1fr 20rem;
       grid-template-areas: "left-aside main right-aside";
     }
   }
 
   .left-aside {
-    width: 17rem;
     grid-area: left-aside;
   }
 
   .main {
     grid-area: main;
+    @apply mt-[10vh] min-h-[90vh] h-full;
   }
 
   .right-aside {
-    width: 20rem;
     grid-area: right-aside;
-  }
-
-  .main {
-    @apply mt-[10vh] min-h-[90vh];
   }
 
   .left-aside,
   .right-aside {
-    @apply h-[90vh] mt-[10vh];
+    @apply bg-white;
   }
 }

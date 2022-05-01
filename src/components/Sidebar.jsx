@@ -6,13 +6,13 @@ export const Sidebar = () => {
     { path: "/search", icon: "search", text: "Search" },
     { path: "/notifications", icon: "notifications", text: "Notification" },
     { path: "/", icon: "explore", text: "Explore" },
-    { path: "/bookmark", icon: "bookmark_border", text: "Bookmarks" },
+    { path: "/bookmarks", icon: "bookmark_border", text: "Bookmarks" },
     { path: "/profile/1", icon: "perm_identity", text: "Profile" },
   ];
 
   return (
-    <aside className="fixed bottom-3 mx-3 md:mx-0 rounded md:sticky md:rounded-none left-0 right-0 md:top-[10vh] md:bottom-0 md:right-auto md:left-aside md:border-r bg-white/60 backdrop-blur-sm">
-      <ul className="w-full grid grid-cols-4 md:block md:mt-6 gap-1 md:gap-0">
+    <aside className="md:left-aside z-[2] md:z-0 md:ml-auto sticky bottom-3 left-0 right-0 md:mt-[15vh] md:top-[15vh] md:w-[16rem] mx-3 md:mx-0 md:py-2 md:h-[80vh] rounded md:rounded-lg md:border bg-white/60 backdrop-blur-sm">
+      <ul className="w-full grid grid-cols-4 md:block gap-1 md:gap-0">
         {sideBarData.map(({ icon, text, path }) => (
           <li
             key={icon}
@@ -25,7 +25,7 @@ export const Sidebar = () => {
               title={text}
               className={({ isActive }) =>
                 `${
-                  isActive ? "bg-slate-100 text-blue-500" : ""
+                  isActive ? "bg-slate-100/70 text-blue-500" : ""
                 } p-3 md:p-2 flex flex-col text-xs md:text-base md:flex-row justify-center md:justify-start items-center md:py-2 md:px-4 hover:bg-slate-100 rounded`
               }
             >
