@@ -12,7 +12,7 @@ import {
   Followers,
   Following,
   Notifications,
-} from "./pages";
+} from "./features";
 import { Navbar } from "./components";
 
 const App = () => {

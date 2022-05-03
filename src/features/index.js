@@ -1,7 +1,6 @@
-export * from "./Profile";
+export * from "./auth";
+export * from "./profile";
 export { Home } from "./Home";
-export { Login } from "./Login";
-export { Signup } from "./Signup";
 export { Explore } from "./Explore";
 export { Bookmark } from "./Bookmark";
 export { Search } from "./Search";
