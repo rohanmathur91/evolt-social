@@ -17,7 +17,7 @@ export const Navbar = () => {
       <nav className="fixed top-0 left-0 right-0 w-full border bg-white/80 backdrop-blur-sm z-[1]">
         <div className="max-container h-[10vh] flex flex-row items-center w-100 px-5">
           <Link to="/" className="text-3xl font-bold">
-            Spaces
+            myspace
           </Link>
           <div className="ml-auto flex flex-row items-center w-100">
             <button

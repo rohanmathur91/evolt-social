@@ -17,7 +17,7 @@ export const Search = () => {
             id="search"
             type="text"
             placeholder="Search..."
-            className="bg-slate-100 pl-10 focus:bg-slate-50 w-full rounded focus:outline focus:outline-slate-300"
+            className="bg-slate-100 pl-10 focus:bg-slate-50 w-full rounded border focus:border focus:border-slate-300"
           />
         </label>
 
