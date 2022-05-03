@@ -39,17 +39,17 @@ export const Signup = () => {
   };
 
   return (
-    <main className="mt-[10vh] min-h-[90vh] h-full flex flex-row items-center justify-center">
+    <main className="min-h-[100vh] h-full flex flex-row items-center justify-center">
       <form
         onSubmit={handleFormSubmit}
-        className="border bg-white p-4 rounded-lg max-w-md w-full my-6"
+        className="border bg-white p-6 rounded-lg max-w-lg w-full sm:my-8"
       >
-        <div className="mb-4 text-center">
+        <div className="mb-4 text-center py-4">
           <h3 className="font-semibold text-blue-500">Signup for myspace</h3>
           <p className="text-sm text-gray-500">Connect with the people.</p>
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col sm:flex-row sm:gap-2">
           <Input
             id="firstName"
             type="text"
@@ -120,7 +120,7 @@ export const Signup = () => {
             <button
               type="button"
               onClick={handleShowPassword}
-              className="absolute top-0"
+              className="absolute top-[37px] right-[10px]"
             >
               <span className="material-icons-outlined">
                 {showPassword ? "visibility" : "visibility_off"}

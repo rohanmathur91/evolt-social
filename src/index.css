@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap";
+@import "https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,700;1,400&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap";
 @import "https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round";
 
 @layer base {
@@ -39,6 +39,10 @@
 }
 
 @layer utilities {
+  .brand-name {
+    font-family: "Merriweather", serif;
+  }
+
   .line-clamp-1 {
     overflow: hidden;
     display: -webkit-box;

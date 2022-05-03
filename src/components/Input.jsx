@@ -11,7 +11,7 @@ export const Input = ({
   handleOnFocus,
 }) => {
   return (
-    <div className="flex flex-col mb-4">
+    <div className="flex flex-col mb-5">
       <label htmlFor={id}>{title}</label>
       <input
         required
