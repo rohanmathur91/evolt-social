@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useAuthForm } from "./useAuthForm";
+import { loginUser } from "./authSlice";
 import { Input } from "../../components";
 
 export const Login = () => {
+  const dispatch = useDispatch();
   const [error, setError] = useState("");
   const {
     loading,
@@ -30,6 +33,7 @@ export const Login = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     setError("");
+    dispatch(loginUser(credentials));
   };
 
   return (
