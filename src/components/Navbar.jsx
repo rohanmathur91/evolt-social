@@ -8,6 +8,7 @@ export const Navbar = () => {
   const { showModal, handleShowModal } = useModal();
 
   return (
+    pathname !== "/login" &&
     pathname !== "/signup" && (
       <>
         {showModal && (

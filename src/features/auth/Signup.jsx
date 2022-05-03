@@ -42,7 +42,7 @@ export const Signup = () => {
     <main className="min-h-[100vh] h-full flex flex-row items-center justify-center">
       <form
         onSubmit={handleFormSubmit}
-        className="border bg-white p-6 rounded-lg max-w-lg w-full sm:my-8"
+        className="border bg-white p-6 rounded-lg max-w-lg w-full my-8 mx-4"
       >
         <div className="mb-4 text-center py-4">
           <h3 className="font-semibold text-blue-500">Signup for myspace</h3>
@@ -120,7 +120,7 @@ export const Signup = () => {
             <button
               type="button"
               onClick={handleShowPassword}
-              className="absolute top-[37px] right-[10px]"
+              className="absolute top-[37px] right-[12px]"
             >
               <span className="material-icons-outlined">
                 {showPassword ? "visibility" : "visibility_off"}
@@ -161,9 +161,12 @@ export const Signup = () => {
           </div>
         )}
 
-        <div className="text-sm mb-2 flex flex-row items-center justify-center">
+        <div className="text-sm mt-2 flex flex-row items-center justify-center">
           Already a user?
-          <Link to="/login" className="font-semibold ml-2 flex items-center">
+          <Link
+            to="/login"
+            className="font-semibold ml-2 flex items-center hover:underline"
+          >
             Login
             <span className="material-icons-outlined text-xl">arrow_right</span>
           </Link>

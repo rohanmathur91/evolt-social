@@ -54,7 +54,7 @@
 
 @layer components {
   .btn {
-    @apply text-inherit rounded tracking-[1.2px] hover:opacity-70;
+    @apply text-inherit rounded tracking-[1.2px] hover:opacity-70 transition-all;
   }
 
   .btn-primary {
