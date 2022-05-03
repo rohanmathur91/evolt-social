@@ -71,7 +71,7 @@
 
   .tooltip[data-tooltip]:hover::after {
     content: attr(data-tooltip);
-    @apply absolute bottom-[-30px] left-[50%] translate-x-[-50%] z-[1] w-full min-w-max text-xs transition-all tracking-wide bg-gray-700/90 text-white rounded py-[2px] px-[4px];
+    @apply absolute bottom-[-30px] left-[50%] translate-x-[-50%] z-[1] text-center w-full min-w-max text-xs transition-all tracking-wide bg-gray-700/90 text-white rounded py-[2px] px-[4px];
   }
 
   .grid-container {

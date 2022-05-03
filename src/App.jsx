@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import {
+  Home,
   Login,
   Posts,
   Search,
@@ -19,7 +20,8 @@ const App = () => {
     <div className="text-neutral-900 bg-gray-100">
       <Navbar />
       <Routes>
-        <Route path="/" element={<Explore />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/explore" element={<Explore />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/bookmarks" element={<Bookmark />} />

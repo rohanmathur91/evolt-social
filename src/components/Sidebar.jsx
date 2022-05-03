@@ -3,16 +3,17 @@ import { NavLink } from "react-router-dom";
 
 export const Sidebar = () => {
   const sideBarData = [
+    { path: "/", icon: "home", text: "Feed" },
     { path: "/search", icon: "search", text: "Search" },
+    { path: "/explore", icon: "explore", text: "Explore" },
     { path: "/notifications", icon: "notifications", text: "Notification" },
-    { path: "/", icon: "explore", text: "Explore" },
     { path: "/bookmarks", icon: "bookmark_border", text: "Bookmarks" },
     { path: "/profile/1", icon: "perm_identity", text: "Profile" },
   ];
 
   return (
     <aside className="md:left-aside z-[2] md:ml-auto sticky bottom-3 left-0 right-0 md:top-[15vh] md:w-[16rem] mx-3 md:mx-0 md:py-2 md:h-[80vh] rounded md:rounded-lg md:border bg-white/60 backdrop-blur-sm">
-      <ul className="w-full grid grid-cols-4 md:block gap-1 md:gap-0">
+      <ul className="w-full grid grid-cols-5 md:block gap-1 md:gap-0">
         {sideBarData.map(({ icon, text, path }) => (
           <li
             key={icon}
