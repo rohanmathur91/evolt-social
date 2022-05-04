@@ -13,7 +13,7 @@ import {
   Following,
   Notifications,
 } from "./features";
-import { Navbar } from "./components";
+import { Navbar } from "./common";
 
 const App = () => {
   return (

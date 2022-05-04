@@ -1,5 +1,5 @@
 import React from "react";
-import { Sidebar, TopContributors } from "../components";
+import { Sidebar, TopContributors } from "../../common";
 
 export const Home = () => {
   return (

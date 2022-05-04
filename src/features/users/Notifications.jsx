@@ -1,6 +1,6 @@
 import React from "react";
-import { Sidebar, TopContributors } from "../components";
-import notification from "../assets/images/notification.svg";
+import { Sidebar, TopContributors } from "../../common";
+import notification from "../../assets/images/notification.svg";
 
 export const Notifications = () => {
   return (

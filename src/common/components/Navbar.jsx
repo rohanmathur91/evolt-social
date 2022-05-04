@@ -1,7 +1,8 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import { AddPost } from "../../features";
 import { useModal } from "../hooks";
-import { Modal, AddPost } from "./";
+import { Modal } from "./";
 
 export const Navbar = () => {
   const { pathname } = useLocation();

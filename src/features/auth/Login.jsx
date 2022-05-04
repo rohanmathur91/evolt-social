@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthForm } from "./useAuthForm";
 import { useAuth, loginUser } from "./authSlice";
-import { Input } from "../../components";
+import { Input } from "../../common";
 import { useEffect } from "react";
 
 export const Login = () => {

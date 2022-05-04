@@ -5,7 +5,7 @@ import { useAuthForm } from "./useAuthForm";
 import { validateSignupForm } from "./validateSignupForm ";
 import { signupErrorReducer, signUpErrorInitialState } from "./reducers";
 import { useAuth, signupUser } from "./authSlice";
-import { Input } from "../../components";
+import { Input } from "../../common";
 
 export const Signup = () => {
   const navigate = useNavigate();

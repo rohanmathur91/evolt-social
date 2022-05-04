@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { emojis } from "../data";
+import { emojis } from "./utils";
 
 export const AddPost = ({ handleShowModal }) => {
   const [postImage, setPostImage] = useState(null);
