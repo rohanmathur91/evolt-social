@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { deletePost } from "./postSlice";
 import { getDate } from "./utils";
 
 export const PostCard = ({
+  _id,
   likes,
   imageUrl,
   profileUrl,
@@ -12,9 +15,15 @@ export const PostCard = ({
   updatedAt,
 }) => {
   const [showMore, setShowMore] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const dispatch = useDispatch();
 
   const handleShowMoreClick = () => {
     setShowMore((prevShowMore) => !prevShowMore);
+  };
+
+  const handleDeletePost = () => {
+    dispatch(deletePost({ postId: _id, setIsDeleting }));
   };
 
   return (
@@ -58,11 +67,15 @@ export const PostCard = ({
               <span className="material-icons-outlined text-xl mr-2">edit</span>
               Edit
             </button>
-            <button className="py-2 px-4 text-sm flex items-center hover:text-blue-500 hover:bg-blue-100 rounded">
+            <button
+              disabled={isDeleting}
+              onClick={handleDeletePost}
+              className="py-2 px-4 text-sm flex items-center hover:text-blue-500 hover:bg-blue-100 rounded"
+            >
               <span className="material-icons-outlined text-xl mr-2">
                 delete
               </span>
-              Delete
+              {isDeleting ? "Deleting..." : "Delete"}
             </button>
           </div>
         )}
@@ -73,7 +86,7 @@ export const PostCard = ({
           alt={username}
           loading="lazy"
           src={imageUrl}
-          className="w-full h-[50vh] aspect-[2/1] bg-gray-200"
+          className="w-full h-80 aspect-[2/1] object-cover object-top mt-1 mb-2 bg-gray-200"
         />
       )}
 
@@ -110,6 +123,7 @@ export const PostCard = ({
 };
 
 PostCard.defaultProps = {
+  _id: "",
   likes: null,
   imageUrl: "",
   profileUrl: "",

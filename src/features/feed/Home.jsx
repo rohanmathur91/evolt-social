@@ -7,11 +7,9 @@ export const Home = () => {
   const { posts } = usePosts();
   const dispatch = useDispatch();
 
-  console.log(posts);
-
   useEffect(() => {
     dispatch(getPosts());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="grid-container">
