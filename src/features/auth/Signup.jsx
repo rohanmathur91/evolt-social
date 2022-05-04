@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthForm } from "./useAuthForm";
 import { validateSignupForm } from "./validateSignupForm ";
-import { signupErrorReducer, signUpErrorInitialState } from "./authReducers";
+import { signupErrorReducer, signUpErrorInitialState } from "./reducers";
 import { useAuth, signupUser } from "./authSlice";
 import { Input } from "../../components";
 

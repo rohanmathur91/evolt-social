@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { authFormReducer } from "./authReducers";
+import { authFormReducer } from "./reducers";
 
 export const useAuthForm = (initialForm) => {
   const [authFormState, authFormDispatch] = useReducer(authFormReducer, {
