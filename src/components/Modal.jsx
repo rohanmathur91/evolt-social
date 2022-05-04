@@ -1,0 +1,29 @@
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
+
+export const Modal = ({ children, handleShowModal }) => {
+  const [mouseUpTarget, setMouseUpTarget] = useState(null);
+  const [mouseDownTarget, setMouseDownTarget] = useState(null);
+
+  const handleMouseEvent = (e, type) => {
+    if (type === "mouseup") {
+      setMouseUpTarget(e.target);
+      return;
+    }
+    setMouseDownTarget(e.target);
+  };
+
+  return ReactDOM.createPortal(
+    <div
+      onMouseUp={(e) => handleMouseEvent(e, "mouseup")}
+      onMouseDown={(e) => handleMouseEvent(e, "mousedown")}
+      onClick={(e) => handleShowModal(false, mouseUpTarget, mouseDownTarget)}
+      className="flex flex-row items-center justify-center fixed top-0 bottom-0 right-0 left-0 h-screen w-screen z-10 bg-black/40"
+    >
+      <div className="m-4" onClick={(e) => e.stopPropagation()}>
+        {children}
+      </div>
+    </div>,
+    document.getElementById("modal")
+  );
+};

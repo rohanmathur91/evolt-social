@@ -1,13 +1,114 @@
-body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap";
+@import "https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round";
+
+@layer base {
+  /* reset */
+  body {
+    font-family: "Montserrat", sans-serif;
   }
-  
-  code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
+
+  img,
+  video {
+    block-size: auto;
+    max-inline-size: 100%;
   }
+
+  input {
+    @apply py-2 px-4;
+  }
+
+  /* typography */
+  h1 {
+    @apply text-5xl;
+  }
+
+  h2 {
+    @apply text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl tracking-normal;
+  }
+
+  h4 {
+    @apply text-xl tracking-[0.15px];
+  }
+}
+
+@layer utilities {
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply text-inherit rounded tracking-[1.2px] hover:opacity-70;
+  }
+
+  .btn-primary {
+    @apply bg-blue-500 text-white;
+  }
+
+  .btn-secondary {
+    @apply bg-pink-500 text-white;
+  }
+
+  .max-container {
+    @apply max-w-screen-2xl mx-auto;
+  }
+
+  .tooltip[data-tooltip] {
+    @apply relative;
+  }
+
+  .tooltip[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    @apply absolute bottom-[-30px] left-[50%] translate-x-[-50%] z-[1] w-full min-w-max text-xs transition-all tracking-wide bg-gray-700/90 text-white rounded py-[2px] px-[4px];
+  }
+
+  .grid-container {
+    @apply grid gap-6 mx-auto max-w-6xl;
+    grid-template-columns: 1fr;
+    grid-template-areas: "main";
+  }
+
+  @screen md {
+    .grid-container {
+      grid-template-columns: 17rem 1fr;
+      grid-template-areas: "left-aside main";
+    }
+  }
+
+  @screen lg {
+    .grid-container {
+      grid-template-columns: 17rem 1fr 20rem;
+      grid-template-areas: "left-aside main right-aside";
+    }
+  }
+
+  .left-aside {
+    grid-area: left-aside;
+  }
+
+  .main {
+    grid-area: main;
+    @apply mt-[15vh] min-h-[90vh];
+  }
+
+  .right-aside {
+    grid-area: right-aside;
+  }
+
+  .left-aside,
+  .right-aside {
+    @apply bg-white;
+  }
+}
