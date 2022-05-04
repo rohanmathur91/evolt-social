@@ -7,8 +7,8 @@ export const Input = ({
   error,
   value,
   placeholder,
-  updateValue,
   handleOnFocus,
+  handleInputChange,
 }) => {
   return (
     <div className="flex flex-col mb-5">
@@ -20,7 +20,7 @@ export const Input = ({
         value={value}
         placeholder={placeholder}
         onFocus={handleOnFocus}
-        onChange={(e) => updateValue(e, id)}
+        onChange={(e) => handleInputChange(e, id)}
         className="mt-1 text-base border rounded focus:border focus:border-blue-500"
       />
 
@@ -43,6 +43,6 @@ Input.defaultProps = {
   error: "",
   value: "",
   placeholder: "",
-  updateValue: () => {},
   handleOnFocus: () => {},
+  handleInputChange: () => {},
 };

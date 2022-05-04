@@ -1,31 +1,37 @@
-import React, { useReducer } from "react";
-import { Link } from "react-router-dom";
+import React, { useReducer, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthForm } from "./useAuthForm";
 import { validateSignupForm } from "./validateSignupForm ";
 import { signupErrorReducer, signUpErrorInitialState } from "./authReducers";
+import { useAuth, signupUser } from "./authSlice";
 import { Input } from "../../components";
 
 export const Signup = () => {
-  const {
-    loading,
-    showPassword,
-    credentials,
-    handleShowPassword,
-    handleInputChange,
-    authFormDispatch,
-  } = useAuthForm({
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    username: "",
-    confirmPassword: "",
-  });
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user, error, isLoading } = useAuth();
+
+  useEffect(() => user && navigate("/"), [user, navigate]);
+
+  const { showPassword, credentials, updateValue, handleShowPassword } =
+    useAuthForm({
+      email: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      username: "",
+      confirmPassword: "",
+    });
 
   const [errorState, errorDispatch] = useReducer(
     signupErrorReducer,
     signUpErrorInitialState
   );
+
+  const onFocusClearInput = (actionType) => {
+    errorDispatch({ type: actionType, payload: "" });
+  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -35,7 +41,9 @@ export const Signup = () => {
       errorDispatch,
     });
 
-    console.log(authFormDispatch, isSignupFormValid);
+    if (isSignupFormValid) {
+      dispatch(signupUser(credentials));
+    }
   };
 
   return (
@@ -57,9 +65,9 @@ export const Signup = () => {
             placeholder="Enter your first name"
             value={credentials.firstName}
             error={errorState.firstName}
-            updateValue={handleInputChange}
+            handleInputChange={updateValue}
             handleOnFocus={() =>
-              errorDispatch({ type: "SET_SIGNUP_FIRSTNAME_ERROR", payload: "" })
+              onFocusClearInput("SET_SIGNUP_FIRSTNAME_ERROR")
             }
           />
 
@@ -70,10 +78,8 @@ export const Signup = () => {
             placeholder="Enter your last name"
             value={credentials.lastName}
             error={errorState.lastName}
-            updateValue={handleInputChange}
-            handleOnFocus={() =>
-              errorDispatch({ type: "SET_SIGNUP_LASTNAME_ERROR", payload: "" })
-            }
+            handleInputChange={updateValue}
+            handleOnFocus={() => onFocusClearInput("SET_SIGNUP_LASTNAME_ERROR")}
           />
         </div>
 
@@ -84,10 +90,8 @@ export const Signup = () => {
           placeholder="Enter your username"
           value={credentials.username}
           error={errorState.username}
-          updateValue={handleInputChange}
-          handleOnFocus={() =>
-            errorDispatch({ type: "SET_SIGNUP_USERNAME_ERROR", payload: "" })
-          }
+          handleInputChange={updateValue}
+          handleOnFocus={() => onFocusClearInput("SET_SIGNUP_USERNAME_ERROR")}
         />
 
         <Input
@@ -97,10 +101,8 @@ export const Signup = () => {
           placeholder="Enter your email"
           value={credentials.email}
           error={errorState.email}
-          updateValue={handleInputChange}
-          handleOnFocus={() =>
-            errorDispatch({ type: "SET_SIGNUP_EMAIL_ERROR", payload: "" })
-          }
+          handleInputChange={updateValue}
+          handleOnFocus={() => onFocusClearInput("SET_SIGNUP_EMAIL_ERROR")}
         />
 
         <div className="relative">
@@ -111,10 +113,8 @@ export const Signup = () => {
             value={credentials.password}
             error={errorState.password}
             placeholder="Enter your password"
-            updateValue={handleInputChange}
-            handleOnFocus={() =>
-              errorDispatch({ type: "SET_SIGNUP_PASSWORD_ERROR", payload: "" })
-            }
+            handleInputChange={updateValue}
+            handleOnFocus={() => onFocusClearInput("SET_SIGNUP_PASSWORD_ERROR")}
           />
           {
             <button
@@ -136,28 +136,25 @@ export const Signup = () => {
           value={credentials.confirmPassword}
           error={errorState.confirmPassword}
           placeholder="Re-enter your password"
-          updateValue={handleInputChange}
+          handleInputChange={updateValue}
           handleOnFocus={() =>
-            errorDispatch({
-              type: "SET_SIGNUP_CONFIRM_PASSWORD_ERROR",
-              payload: "",
-            })
+            onFocusClearInput("SET_SIGNUP_CONFIRM_PASSWORD_ERROR")
           }
         />
 
         <button
-          disabled={loading}
+          disabled={isLoading}
           className="btn btn-primary py-2 px-4 w-full font-semibold transition-2 mb-2 rounded"
         >
-          {loading ? "Signup..." : "Signup"}
+          {isLoading ? "Signup..." : "Signup"}
         </button>
 
-        {errorState.formError && (
+        {error && (
           <div className="mb-2 text-red-500 flex flex-row items-center text-center text-sm">
             <span className="material-icons-outlined mr-2 text-xl">
               error_outline
             </span>
-            <p>{errorState.formError}</p>
+            <p>{error}</p>
           </div>
         )}
 

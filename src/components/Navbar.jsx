@@ -21,7 +21,7 @@ export const Navbar = () => {
           <div className="max-container h-[10vh] flex flex-row items-center w-100 px-5">
             <Link
               to="/"
-              className="text-3xl font-bold brand-name italic text-blue-500"
+              className="text-2xl sm:text-3xl font-bold brand-name italic text-blue-500"
             >
               myspace
             </Link>

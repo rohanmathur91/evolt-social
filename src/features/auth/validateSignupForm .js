@@ -35,7 +35,7 @@ export const validateSignupForm = ({
   if (!isUsernameValid) {
     errorDispatch({
       type: "SET_SIGNUP_USERNAME_ERROR",
-      payload: "Please enter valid username",
+      payload: "Username should only consist of letters and numbers",
     });
   }
 

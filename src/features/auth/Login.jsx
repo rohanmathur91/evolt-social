@@ -1,19 +1,23 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthForm } from "./useAuthForm";
-import { loginUser } from "./authSlice";
+import { useAuth, loginUser } from "./authSlice";
 import { Input } from "../../components";
+import { useEffect } from "react";
 
 export const Login = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [error, setError] = useState("");
+  const { user, isLoading, error } = useAuth();
+
+  useEffect(() => user && navigate("/"), [user, navigate]);
+
   const {
-    loading,
     showPassword,
     credentials,
+    updateValue,
     handleShowPassword,
-    handleInputChange,
     authFormDispatch,
   } = useAuthForm({
     username: "",
@@ -32,7 +36,6 @@ export const Login = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    setError("");
     dispatch(loginUser(credentials));
   };
 
@@ -53,7 +56,7 @@ export const Login = () => {
           title="Username"
           placeholder="Enter your username"
           value={credentials.username}
-          updateValue={handleInputChange}
+          handleInputChange={updateValue}
         />
 
         <div className="relative">
@@ -63,7 +66,7 @@ export const Login = () => {
             title="Password"
             value={credentials.password}
             placeholder="Enter your password"
-            updateValue={handleInputChange}
+            handleInputChange={updateValue}
           />
           {
             <button
@@ -79,20 +82,18 @@ export const Login = () => {
         </div>
 
         <button
-          disabled={loading}
+          disabled={isLoading}
           onClick={handleTestCredentials}
           className="btn border border-blue-500 text-blue-500 hover:btn-primary hover:opacity-100 py-2 px-4 w-full font-semibold transition-2 mb-4 rounded"
         >
-          {loading
-            ? "Login with test credentials..."
-            : "Login with test credentials"}
+          Login with test credentials
         </button>
 
         <button
-          disabled={loading}
+          disabled={isLoading}
           className="btn btn-primary py-2 px-4 w-full font-semibold transition-2 mb-2 rounded"
         >
-          {loading ? "Login..." : "Login"}
+          {isLoading ? "Login..." : "Login"}
         </button>
 
         {error && (

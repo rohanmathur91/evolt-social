@@ -8,7 +8,7 @@ export const useAuthForm = (initialForm) => {
     credentials: initialForm,
   });
 
-  const handleInputChange = (e, field) => {
+  const updateValue = (e, field) => {
     authFormDispatch({
       type: "SET_CREDENTIALS",
       payload: { field, value: e.target.value },
@@ -23,8 +23,8 @@ export const useAuthForm = (initialForm) => {
 
   return {
     ...authFormState,
+    updateValue,
     handleShowPassword,
-    handleInputChange,
     authFormDispatch,
   };
 };

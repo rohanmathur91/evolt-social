@@ -5,6 +5,7 @@ export const signUpErrorInitialState = {
   lastName: "",
   username: "",
   confirmPassword: "",
+  formError: "",
 };
 
 export const signupErrorReducer = (errorState, { type, payload }) => {
@@ -26,19 +27,6 @@ export const signupErrorReducer = (errorState, { type, payload }) => {
 
     case "SET_SIGNUP_CONFIRM_PASSWORD_ERROR":
       return { ...errorState, confirmPassword: payload };
-
-    case "SET_SIGNUP_FORM_ERROR":
-      return { ...errorState, formError: payload };
-
-    case "CLEAR_SIGNUP_FORM_ERRORS":
-      return {
-        email: "",
-        password: "",
-        firstName: "",
-        lastName: "",
-        username: "",
-        confirmPassword: "",
-      };
 
     default:
       throw new Error(`${type} action type not found`);
