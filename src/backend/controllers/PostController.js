@@ -11,8 +11,31 @@ import { v4 as uuid } from "uuid";
  * send GET Request at /api/posts
  * */
 
-export const getAllpostsHandler = function () {
-  return new Response(200, {}, { posts: this.db.posts });
+export const getAllpostsHandler = function (schema, request) {
+  const user = requiresAuth.call(this, request);
+  try {
+    if (!user) {
+      return new Response(
+        404,
+        {},
+        {
+          errors: [
+            "The username you entered is not Registered. Not Found error",
+          ],
+        }
+      );
+    }
+
+    return new Response(200, {}, { posts: this.db.posts });
+  } catch (error) {
+    return new Response(
+      500,
+      {},
+      {
+        error,
+      }
+    );
+  }
 };
 
 /**
