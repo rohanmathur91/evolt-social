@@ -1,15 +1,20 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, Outlet, NavLink } from "react-router-dom";
 import { Modal, Sidebar, useModal } from "../../common";
+import { logoutUser } from "../auth";
 
 export const Profile = () => {
   const { showModal, handleShowModal } = useModal();
   const [profileImage, setProfileImage] = useState(null);
+  const dispatch = useDispatch();
 
   const handleProfileImageChange = (e) => {
     console.log(profileImage);
     setProfileImage(e.target.files[0]);
   };
+
+  const handleLogout = () => dispatch(logoutUser());
 
   return (
     <>
@@ -120,6 +125,7 @@ export const Profile = () => {
                     </button>
                     <button
                       data-tooltip="Logout"
+                      onClick={handleLogout}
                       className="flex tooltip flex-row items-center justify-center"
                     >
                       <span className="material-icons-outlined md:text-3xl">
