@@ -19,7 +19,8 @@ export const Home = () => {
       <TopContributors />
 
       <main className="main pb-20 px-2 md:px-0">
-        {posts && posts.map((post) => <PostCard {...post} />)}
+        {posts?.length > 0 &&
+          posts.map((post) => <PostCard key={post._id} {...post} />)}
       </main>
     </div>
   );

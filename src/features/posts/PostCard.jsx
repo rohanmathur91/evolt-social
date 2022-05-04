@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { getDate } from "./utils";
 
 export const PostCard = ({
-  _id,
   likes,
   imageUrl,
   profileUrl,
@@ -12,11 +11,14 @@ export const PostCard = ({
   lastName,
   updatedAt,
 }) => {
+  const [showMore, setShowMore] = useState(false);
+
+  const handleShowMoreClick = () => {
+    setShowMore((prevShowMore) => !prevShowMore);
+  };
+
   return (
-    <article
-      key={_id}
-      className="border rounded-lg mb-4 max-w-xl mx-auto shadow bg-white"
-    >
+    <article className="border rounded-lg mb-4 max-w-xl mx-auto shadow bg-white relative">
       <section className="p-2 pl-4 pt-4 flex items-center">
         {profileUrl ? (
           <img
@@ -44,10 +46,26 @@ export const PostCard = ({
 
         <button
           data-tooltip="More"
+          onClick={handleShowMoreClick}
           className="tooltip mx-2 w-10 h-10 ml-auto flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
         >
           <span className="material-icons-outlined text-2xl">more_horiz</span>
         </button>
+
+        {showMore && (
+          <div className="absolute top-14 right-7 z-[1] w-32 bg-white shadow-md flex flex-col p-2 border rounded-lg">
+            <button className="py-2 px-4 text-sm flex items-center hover:text-blue-500 hover:bg-blue-100 rounded">
+              <span className="material-icons-outlined text-xl mr-2">edit</span>
+              Edit
+            </button>
+            <button className="py-2 px-4 text-sm flex items-center hover:text-blue-500 hover:bg-blue-100 rounded">
+              <span className="material-icons-outlined text-xl mr-2">
+                delete
+              </span>
+              Delete
+            </button>
+          </div>
+        )}
       </section>
 
       {imageUrl && (
@@ -92,7 +110,6 @@ export const PostCard = ({
 };
 
 PostCard.defaultProps = {
-  _id: "",
   likes: null,
   imageUrl: "",
   profileUrl: "",

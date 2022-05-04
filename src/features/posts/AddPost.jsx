@@ -1,14 +1,16 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addPost, usePosts } from "./postSlice";
+import { useAuth } from "../auth";
 import { emojis } from "./data";
 
 export const AddPost = ({ handleShowModal }) => {
-  const [postImage, setPostImage] = useState(null);
+  const [postImage, setPostImage] = useState("");
   const [postContent, setPostContent] = useState("");
   const [showEmojis, setShowEmojis] = useState(false);
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-  };
+  const { user } = useAuth();
+  const { isLoading } = usePosts();
+  const dispatch = useDispatch();
 
   const handleImageFileChange = (e) => {
     setPostImage(e.target.files[0]);
@@ -24,6 +26,19 @@ export const AddPost = ({ handleShowModal }) => {
 
   const handleEmojiClick = (emoji) => {
     setPostContent((prev) => prev + emoji);
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const { firstName, lastName } = user;
+
+    const postData = {
+      lastName,
+      firstName,
+      imageUrl: postImage,
+      content: postContent,
+    };
+    dispatch(addPost({ postData, handleShowModal }));
   };
 
   return (
@@ -94,12 +109,16 @@ export const AddPost = ({ handleShowModal }) => {
             </button>
 
             <button
-              disabled={postContent.length === 0 || postContent.length > 120}
+              disabled={
+                isLoading ||
+                postContent.length === 0 ||
+                postContent.length > 120
+              }
               className={`btn btn-primary text-sm md:text-base py-1 px-3 hover:transition-all ${
                 postContent.length === 0 ? "opacity-70" : ""
               }`}
             >
-              Add post
+              {isLoading ? "Add post..." : "Add post"}
             </button>
           </div>
         </div>
@@ -111,9 +130,10 @@ export const AddPost = ({ handleShowModal }) => {
           >
             {emojis.map((emoji, index) => (
               <button
-                className="m-1 w-7 h-7 flex flex-row items-center justify-center hover:bg-slate-200 rounded p-1"
-                onClick={() => handleEmojiClick(emoji)}
                 key={index}
+                type="button"
+                onClick={() => handleEmojiClick(emoji)}
+                className="m-1 w-7 h-7 flex flex-row items-center justify-center hover:bg-slate-200 rounded p-1"
               >
                 {emoji}
               </button>
