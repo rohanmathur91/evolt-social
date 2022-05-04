@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, Outlet, NavLink } from "react-router-dom";
-import { useModal } from "../../common";
-import { Modal, Sidebar } from "../../common";
+import { Modal, Sidebar, useModal } from "../../common";
 
 export const Profile = () => {
   const { showModal, handleShowModal } = useModal();
