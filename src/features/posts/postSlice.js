@@ -54,7 +54,7 @@ const postSlice = createSlice({
     },
     [getPosts.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      state.posts = payload.posts;
+      state.posts = payload.posts.reverse();
     },
     [getPosts.rejected]: (state) => {
       state.isLoading = false;
@@ -65,7 +65,7 @@ const postSlice = createSlice({
     },
     [addPost.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      state.posts = payload.posts;
+      state.posts = payload.posts.reverse();
     },
     [addPost.rejected]: (state) => {
       state.isLoading = false;
