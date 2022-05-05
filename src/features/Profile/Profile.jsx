@@ -74,7 +74,7 @@ export const Profile = () => {
               <input
                 type="text"
                 placeholder="Link..."
-                className="border border-slate-300 rounded w-full hover:outline-blue-500 focus:outline-blue-500"
+                className="border border-slate-300 rounded w-full focus:border focus:border-blue-500"
               />
             </label>
 
@@ -84,7 +84,7 @@ export const Profile = () => {
                 type="text"
                 maxLength="80"
                 placeholder="Bio..."
-                className="border border-slate-300 rounded w-full py-2 px-4 hover:outline-blue-500 focus:outline-blue-500"
+                className="border border-slate-300 rounded w-full py-2 px-4 outline-none focus:border focus:border-blue-500"
               />
             </label>
 

@@ -76,15 +76,13 @@ export const AddPost = ({ handleShowModal }) => {
             </label>
           </div>
 
-          {postContent.length === 120 ? (
-            <span className="text-xs text-right md:text-center self-center w-[9.8rem] md:text-sm font-semibold text-blue-500 ml-1">
-              (Max limit reached)
-            </span>
-          ) : (
-            <span className="text-xs text-right md:text-center self-center w-[9.8rem] md:text-sm text-gray-500 font-semibold mx-1">
-              Character count: {postContent.length}
-            </span>
-          )}
+          <span
+            className={`${
+              postContent.length === 120 ? "text-blue-500" : "text-gray-500"
+            } text-xs text-center self-center w-[5rem] md:text-sm font-semibold mx-1`}
+          >
+            {postContent.length} / 120
+          </span>
 
           <div className="ml-auto md:ml-1 mt-1 md:mt-0">
             <button
