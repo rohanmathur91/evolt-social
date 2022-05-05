@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../auth";
 import { deletePost } from "./postSlice";
 import { getDate } from "./utils";
 
@@ -16,6 +18,8 @@ export const PostCard = ({
 }) => {
   const [showMore, setShowMore] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleShowMoreClick = () => {
@@ -53,13 +57,15 @@ export const PostCard = ({
           </p>
         </div>
 
-        <button
-          data-tooltip="More"
-          onClick={handleShowMoreClick}
-          className="tooltip mx-2 w-10 h-10 ml-auto flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
-        >
-          <span className="material-icons-outlined text-2xl">more_horiz</span>
-        </button>
+        {username === user?.username && (
+          <button
+            data-tooltip="More"
+            onClick={handleShowMoreClick}
+            className="tooltip mx-2 w-10 h-10 ml-auto flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
+          >
+            <span className="material-icons-outlined text-2xl">more_horiz</span>
+          </button>
+        )}
 
         {showMore && (
           <div className="absolute top-14 right-7 z-[1] w-32 bg-white shadow-md flex flex-col p-2 border rounded-lg">
@@ -105,6 +111,7 @@ export const PostCard = ({
 
           <button
             data-tooltip="Comment"
+            onClick={() => navigate(`/post/${_id}`)}
             className="tooltip mx-2 w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
           >
             <span className="material-icons-outlined text-xl">comment</span>
