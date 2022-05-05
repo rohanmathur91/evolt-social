@@ -27,7 +27,7 @@ export const PostCard = ({
   };
 
   return (
-    <article className="border rounded-lg mb-4 max-w-xl mx-auto shadow bg-white relative">
+    <article className="border rounded-lg mb-4 max-w-xl mx-auto shadow-md bg-white relative">
       <section className="p-2 pl-4 pt-4 flex items-center">
         {profileUrl ? (
           <img
@@ -93,13 +93,15 @@ export const PostCard = ({
       <p className="py-2 px-5 text-sm lg:text-base">{content}</p>
       <section className="flex flex-row items-center justify-between mt-2 mb-3 mx-5">
         <div className="flex text-gray-900">
-          <button
-            data-tooltip="Like"
-            className="tooltip w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
-          >
-            <span className="material-icons-outlined text-xl">thumb_up</span>
-            <span>{likes.likeCount}</span>
-          </button>
+          <div className="flex items-center w-16">
+            <button
+              data-tooltip="Like"
+              className="tooltip w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
+            >
+              <span className="material-icons-outlined text-xl">thumb_up</span>
+            </button>
+            <span className="text-sm ml-1">{likes.likeCount}</span>
+          </div>
 
           <button
             data-tooltip="Comment"
