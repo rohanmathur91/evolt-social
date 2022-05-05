@@ -11,6 +11,7 @@ import {
   Explore,
   Followers,
   Following,
+  SinglePost,
   Notifications,
 } from "./features";
 import { Navbar } from "./common";
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/" element={<PrivateRoute />}>
           <Route path="/" element={<Home />} />
           <Route path="/explore" element={<Explore />} />
+          <Route path="/post/:postId" element={<SinglePost />} />
           <Route path="/bookmarks" element={<Bookmark />} />
           <Route path="/search" element={<Search />} />
           <Route path="/notifications" element={<Notifications />} />

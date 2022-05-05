@@ -52,7 +52,7 @@ export const PostCard = ({
           </span>
           <p className="text-gray-500 text-sm font-normal flex items-center line-clamp-1">
             @{username}
-            <span className="mx-1 font-semibold">.</span>
+            <span className="mx-1 font-semibold">•</span>
             {getDate(updatedAt)}
           </p>
         </div>
@@ -106,7 +106,7 @@ export const PostCard = ({
             >
               <span className="material-icons-outlined text-xl">thumb_up</span>
             </button>
-            <span className="text-sm ml-1">{likes.likeCount}</span>
+            <span className="text-sm ml-1">{likes?.likeCount}</span>
           </div>
 
           <button

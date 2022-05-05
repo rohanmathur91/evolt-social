@@ -72,7 +72,7 @@ const postSlice = createSlice({
       state.errorMessage = "Could not add the posts!";
     },
     [deletePost.fulfilled]: (state, { payload }) => {
-      state.posts = payload.posts;
+      state.posts = payload.posts.reverse();
     },
     [deletePost.rejected]: (state) => {
       state.deleteError = "Could not delete the post!";
