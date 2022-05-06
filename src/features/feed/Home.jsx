@@ -18,7 +18,7 @@ export const Home = () => {
 
       <main className="main pb-20 px-2 md:px-0">
         {posts?.length > 0 &&
-          posts.map((post) => <PostCard key={post._id} {...post} />)}
+          posts.map((post) => <PostCard key={post._id} post={post} />)}
       </main>
     </div>
   );

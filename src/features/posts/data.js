@@ -1,3 +1,5 @@
+export const postLimit = 150;
+
 export const emojis = [
   "🎉",
   "😂",

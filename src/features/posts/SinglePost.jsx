@@ -50,7 +50,7 @@ export const SinglePost = () => {
           <p className="text-center font-semibold mt-8">Loading...</p>
         ) : (
           <>
-            <PostCard {...post} />
+            <PostCard post={post} />
 
             <form
               onSubmit={handleCommentSubmit}

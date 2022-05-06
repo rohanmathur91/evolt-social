@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { usePosts, modalHandler } from "../../features";
+import { usePosts, setModalDisplay, setCurrentEditPost } from "../../features";
 
 export const useModal = () => {
   const dispatch = useDispatch();
@@ -13,7 +13,12 @@ export const useModal = () => {
   ) => {
     // only update the modal state if clicked target is same
     if (mouseUpTarget === mouseDownTarget) {
-      dispatch(modalHandler(show));
+      dispatch(setModalDisplay(show));
+
+      // clear the current edited post when modal closed
+      if (!show) {
+        dispatch(setCurrentEditPost(null));
+      }
     }
   };
 

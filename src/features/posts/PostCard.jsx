@@ -1,31 +1,45 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import {
+  likePost,
+  disLikePost,
+  deletePost,
+  setCurrentEditPost,
+} from "./postSlice";
 import { useAuth } from "../auth";
-import { likePost, disLikePost, deletePost } from "./postSlice";
+import { useModal } from "../../common";
 import { getDate, getPostLikedStatus } from "./utils";
 
-export const PostCard = ({
-  _id,
-  likes,
-  imageUrl,
-  profileUrl,
-  content,
-  username,
-  firstName,
-  lastName,
-  updatedAt,
-}) => {
+export const PostCard = ({ post }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { handleShowModal } = useModal();
   const [showMore, setShowMore] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isLikeLoading, setIsLikeLoading] = useState(false);
+  const {
+    _id,
+    likes,
+    imageUrl,
+    profileUrl,
+    content,
+    username,
+    firstName,
+    lastName,
+    updatedAt,
+  } = post;
   const isPostLiked = getPostLikedStatus(user, likes);
 
   const handleShowMoreClick = () => {
     setShowMore((prevShowMore) => !prevShowMore);
+  };
+
+  const handleEditPost = () => {
+    setShowMore(false);
+    handleShowModal(true);
+    dispatch(setCurrentEditPost(post));
   };
 
   const handleDeletePost = () => {
@@ -79,7 +93,10 @@ export const PostCard = ({
 
         {showMore && (
           <div className="absolute top-14 right-7 z-[1] w-32 bg-white shadow-md flex flex-col p-2 border rounded-lg">
-            <button className="py-2 px-4 text-sm flex items-center hover:text-blue-500 hover:bg-blue-100 rounded">
+            <button
+              onClick={handleEditPost}
+              className="py-2 px-4 text-sm flex items-center hover:text-blue-500 hover:bg-blue-100 rounded"
+            >
               <span className="material-icons-outlined text-xl mr-2">edit</span>
               Edit
             </button>
@@ -152,13 +169,15 @@ export const PostCard = ({
 };
 
 PostCard.defaultProps = {
-  _id: "",
-  likes: null,
-  imageUrl: "",
-  profileUrl: "",
-  content: "",
-  username: "",
-  firstName: "",
-  lastName: "",
-  updatedAt: "",
+  post: {
+    _id: "",
+    likes: null,
+    imageUrl: "",
+    profileUrl: "",
+    content: "",
+    username: "",
+    firstName: "",
+    lastName: "",
+    updatedAt: "",
+  },
 };

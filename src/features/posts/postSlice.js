@@ -2,19 +2,17 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const addPost = createAsyncThunk(
-  "posts/addPost",
-  async ({ postData, handleShowModal }) => {
-    try {
-      const { data: posts } = await axios.post("/api/posts", { postData });
-      handleShowModal(false);
-      return posts;
-    } catch (error) {
-      console.log(error.response);
-    }
+// add a new post
+export const addPost = createAsyncThunk("posts/addPost", async (postData) => {
+  try {
+    const { data: posts } = await axios.post("/api/posts", { postData });
+    return posts;
+  } catch (error) {
+    console.log(error.response);
   }
-);
+});
 
+// delete a post
 export const deletePost = createAsyncThunk(
   "posts/deletePost",
   async ({ postId, navigate, setIsDeleting }) => {
@@ -22,6 +20,7 @@ export const deletePost = createAsyncThunk(
       setIsDeleting(true);
       const { data: posts } = await axios.delete(`/api/posts/${postId}`);
       navigate("/");
+
       return posts;
     } catch (error) {
       console.log(error);
@@ -31,15 +30,18 @@ export const deletePost = createAsyncThunk(
   }
 );
 
+// get all the posts
 export const getPosts = createAsyncThunk("posts/getPosts", async () => {
   try {
     const { data: posts } = await axios.get("/api/posts");
+
     return posts;
   } catch (error) {
     console.log(error);
   }
 });
 
+// like a post
 export const likePost = createAsyncThunk(
   "posts/likePost",
   async ({ postId, setIsLikeLoading }, { rejectWithValue }) => {
@@ -62,6 +64,7 @@ export const likePost = createAsyncThunk(
   }
 );
 
+// dislike/unlike a liked post
 export const disLikePost = createAsyncThunk(
   "posts/disLikePost",
   async ({ postId, setIsLikeLoading }, { rejectWithValue }) => {
@@ -84,16 +87,42 @@ export const disLikePost = createAsyncThunk(
   }
 );
 
+export const editPost = createAsyncThunk("posts/editPost", async (postData) => {
+  try {
+    const {
+      data: { posts },
+    } = await axios.post(`/api/posts/edit/${postData._id}`, {
+      postData,
+    });
+
+    return posts;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 const postSlice = createSlice({
   name: "posts",
   initialState: {
     posts: [],
+    showModal: false,
     isLoading: false,
     likeError: "",
     deleteError: "",
     errorMessage: "",
+    isEditMode: false,
+    currentEditPost: null,
   },
-  reducer: {},
+  reducers: {
+    setModalDisplay: (state, { payload }) => {
+      state.showModal = payload;
+    },
+
+    setCurrentEditPost: (state, { payload }) => {
+      state.currentEditPost = payload;
+      state.isEditMode = !payload ? false : true;
+    },
+  },
   extraReducers: {
     [getPosts.pending]: (state) => {
       state.isLoading = true;
@@ -111,6 +140,7 @@ const postSlice = createSlice({
     },
     [addPost.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
+      state.showModal = false;
       state.posts = payload.posts.reverse();
     },
     [addPost.rejected]: (state) => {
@@ -135,8 +165,22 @@ const postSlice = createSlice({
     [disLikePost.rejected]: (state, { payload }) => {
       state.likeError = payload;
     },
+    [editPost.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [editPost.fulfilled]: (state, { payload }) => {
+      state.showModal = false;
+      state.isLoading = false;
+      state.isEditMode = false;
+      state.currentEditPost = null;
+      state.posts = payload.reverse();
+    },
+    [editPost.rejected]: (state) => {
+      state.isLoading = false;
+    },
   },
 });
 
 export const postReducer = postSlice.reducer;
+export const { setModalDisplay, setCurrentEditPost } = postSlice.actions;
 export const usePosts = () => useSelector((state) => state.posts);
