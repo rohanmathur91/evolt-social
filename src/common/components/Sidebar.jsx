@@ -27,7 +27,7 @@ export const Sidebar = () => {
               className={({ isActive }) =>
                 `${
                   isActive ? "bg-blue-100/70 text-blue-500" : ""
-                } p-3 md:p-2 flex flex-col text-xs md:text-base md:flex-row justify-center md:justify-start items-center md:py-2 md:px-4 hover:bg-blue-100 rounded`
+                } p-3 md:p-2 flex flex-col text-xs md:text-base md:flex-row justify-center md:justify-start items-center md:py-2 md:px-4 hover:text-blue-500 hover:bg-blue-100 rounded`
               }
             >
               <span className="material-icons-outlined text-2xl md:mr-3 md:text-3xl">
