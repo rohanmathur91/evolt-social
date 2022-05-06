@@ -7,3 +7,7 @@ export const getDate = (updatedDate) => {
 export const getPostLikedStatus = (user, likes) => {
   return likes?.likedBy.some(({ username }) => username === user?.username);
 };
+
+export const getSinglePost = (posts, postId) => {
+  return posts.find(({ _id }) => _id === postId);
+};

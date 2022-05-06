@@ -1,31 +1,21 @@
-import axios from "axios";
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { usePosts } from "./postSlice";
 import { Sidebar, TopContributors } from "../../common";
 import { PostCard } from "./PostCard";
+import { getSinglePost } from "./utils";
 
 export const SinglePost = () => {
   const { postId } = useParams();
   const navigate = useNavigate();
+  const { posts } = usePosts();
   const [post, setPost] = useState(null);
   const [comment, setComment] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const { username, profileUrl, firstName, lastName } = post ?? {};
 
   useEffect(() => {
-    (async () => {
-      try {
-        setIsLoading(true);
-        const {
-          data: { post },
-        } = await axios.get(`/api/posts/${postId}`);
-        setPost(post);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, [postId]);
+    setPost(getSinglePost(posts, postId));
+  }, [posts, postId]);
 
   const handleCommentChange = (e) => {
     setComment(e.target.value);
@@ -56,7 +46,7 @@ export const SinglePost = () => {
           </span>
           Go back
         </button>
-        {!post || isLoading ? (
+        {!post ? (
           <p className="text-center font-semibold mt-8">Loading...</p>
         ) : (
           <>
