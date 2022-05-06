@@ -12,19 +12,19 @@ export const getDate = (updatedDate) => {
 };
 
 /**
- * @description This function gives the status of post liked by user or not.
+ * @description Function gives the status of post liked by user or not.
  *
  * @param  {object} user
  * @param  {object} likes
  * @returns {boolean} status
  */
 
-export const getPostLikedStatus = (user, likes) => {
-  return likes?.likedBy.some(({ username }) => username === user?.username);
+export const getPostLikedStatus = (userId, likes) => {
+  return likes?.likedBy.some((_id) => _id === userId);
 };
 
 /**
- * @description This function returns the single post depending on postId.
+ * @description Function returns the single post depending on postId.
  *
  * @param  {array} posts
  * @param  {string} postId
@@ -34,6 +34,14 @@ export const getPostLikedStatus = (user, likes) => {
 export const getSinglePost = (posts, postId) => {
   return posts.find(({ _id }) => _id === postId);
 };
+
+/**
+ * @description Function returns a boolean depending upon if post is in bookmark or not.
+ *
+ * @param  {string} postId
+ * @param  {array} bookmarks
+ * @returns {boolean} post in bookmark
+ */
 
 export const getPostBookmarkStatus = (postId, bookmarks) => {
   return bookmarks.some(({ _id }) => _id === postId);

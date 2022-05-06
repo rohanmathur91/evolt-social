@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
+import { logoutUser } from "../auth";
 
 export const addPost = createAsyncThunk("posts/addPost", async (postData) => {
   try {
@@ -96,6 +97,21 @@ export const editPost = createAsyncThunk("posts/editPost", async (postData) => {
   }
 });
 
+export const getBookmarkPosts = createAsyncThunk(
+  "posts/getBookmarkPosts",
+  async () => {
+    try {
+      const {
+        data: { bookmarks },
+      } = await axios.get("/api/users/bookmark");
+
+      return bookmarks;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const addPostInBookmarks = createAsyncThunk(
   "posts/addPostInBookmarks",
   async (postId) => {
@@ -103,6 +119,21 @@ export const addPostInBookmarks = createAsyncThunk(
       const {
         data: { bookmarks },
       } = await axios.post(`/api/users/bookmark/${postId}`);
+
+      return bookmarks;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const removePostFromBookmarks = createAsyncThunk(
+  "posts/removePostFromBookmarks",
+  async (postId) => {
+    try {
+      const {
+        data: { bookmarks },
+      } = await axios.post(`/api/users/remove-bookmark/${postId}`);
 
       return bookmarks;
     } catch (error) {
@@ -135,6 +166,10 @@ const postSlice = createSlice({
     },
   },
   extraReducers: {
+    [logoutUser]: (state) => {
+      state.posts = [];
+      state.bookmarks = [];
+    },
     [getPosts.pending]: (state) => {
       state.isLoading = true;
     },
@@ -188,8 +223,25 @@ const postSlice = createSlice({
     },
     [editPost.rejected]: (state) => {
       state.isLoading = false;
+      state.isEditMode = false;
+      state.showModal = false;
+    },
+    [getBookmarkPosts.pending]: (state) => {
+      state.isLoading = true;
+      state.errorMessage = "";
+    },
+    [getBookmarkPosts.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.bookmarks = payload.reverse();
+    },
+    [getBookmarkPosts.rejected]: (state) => {
+      state.isLoading = false;
+      state.errorMessage = "Could not fetch the bookmarks!";
     },
     [addPostInBookmarks.fulfilled]: (state, { payload }) => {
+      state.bookmarks = payload.reverse();
+    },
+    [removePostFromBookmarks.fulfilled]: (state, { payload }) => {
       state.bookmarks = payload.reverse();
     },
   },

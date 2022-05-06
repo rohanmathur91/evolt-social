@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -8,6 +9,7 @@ import {
   deletePost,
   setCurrentEditPost,
   addPostInBookmarks,
+  removePostFromBookmarks,
 } from "./postSlice";
 import { useAuth } from "../auth";
 import { useModal } from "../../common";
@@ -33,10 +35,8 @@ export const PostCard = ({ post }) => {
     lastName,
     updatedAt,
   } = post;
-  const isPostLiked = getPostLikedStatus(user, likes);
+  const isPostLiked = getPostLikedStatus(user._id, likes);
   const isBookmarked = getPostBookmarkStatus(_id, bookmarks);
-
-  console.log(user);
 
   const handleShowMoreClick = () => {
     setShowMore((prevShowMore) => !prevShowMore);
@@ -63,35 +63,43 @@ export const PostCard = ({ post }) => {
   const handleBookmarkPost = () => {
     if (!isBookmarked) {
       dispatch(addPostInBookmarks(_id));
+    } else {
+      dispatch(removePostFromBookmarks(_id));
     }
   };
 
   return (
     <article className="border rounded-lg mb-4 max-w-xl mx-auto shadow-md bg-white relative">
       <section className="p-2 pl-4 pt-4 flex items-center">
-        {profileUrl ? (
-          <img
-            alt={username}
-            loading="lazy"
-            src={profileUrl}
-            className="w-11 h-11 md:w-12 md:h-12 mr-4 object-cover rounded-full bg-gray-200"
-          />
-        ) : (
-          <div className="h-11 min-w-[2.75rem] md:w-12 md:h-12 mr-4 flex items-center justify-center font-semibold object-cover rounded-full bg-blue-500 text-white">
-            {firstName[0] + lastName[0]}
-          </div>
-        )}
+        <Link
+          title={username}
+          to={`/profile/${username}`}
+          className="flex items-center"
+        >
+          {profileUrl ? (
+            <img
+              alt={username}
+              loading="lazy"
+              src={profileUrl}
+              className="w-11 h-11 md:w-12 md:h-12 mr-4 object-cover rounded-full bg-gray-200"
+            />
+          ) : (
+            <div className="h-11 min-w-[2.75rem] md:w-12 md:h-12 mr-4 flex items-center justify-center font-semibold object-cover rounded-full bg-blue-500 text-white">
+              {firstName[0] + lastName[0]}
+            </div>
+          )}
 
-        <div>
-          <span className="font-semibold line-clamp-1">
-            {firstName} {lastName}
-          </span>
-          <p className="text-gray-500 text-sm font-normal flex items-center line-clamp-1">
-            @{username}
-            <span className="mx-1 font-semibold">•</span>
-            {getDate(updatedAt)}
-          </p>
-        </div>
+          <div>
+            <span className="font-semibold line-clamp-1">
+              {firstName} {lastName}
+            </span>
+            <p className="text-gray-500 text-sm font-normal flex items-center line-clamp-1">
+              @{username}
+              <span className="mx-1 font-semibold">•</span>
+              {getDate(updatedAt)}
+            </p>
+          </div>
+        </Link>
 
         {username === user?.username && (
           <button
@@ -173,7 +181,9 @@ export const PostCard = ({ post }) => {
           className="tooltip w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
         >
           {isBookmarked ? (
-            <span class="material-icons text-xl text-blue-500">bookmark</span>
+            <span className="material-icons text-xl text-blue-500">
+              bookmark
+            </span>
           ) : (
             <span className="material-icons-outlined text-xl">
               bookmark_border
