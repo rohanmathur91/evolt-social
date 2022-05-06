@@ -17,10 +17,11 @@ export const addPost = createAsyncThunk(
 
 export const deletePost = createAsyncThunk(
   "posts/deletePost",
-  async ({ postId, setIsDeleting }) => {
+  async ({ postId, navigate, setIsDeleting }) => {
     try {
       setIsDeleting(true);
       const { data: posts } = await axios.delete(`/api/posts/${postId}`);
+      navigate("/");
       return posts;
     } catch (error) {
       console.log(error);
@@ -81,4 +82,4 @@ const postSlice = createSlice({
 });
 
 export const postReducer = postSlice.reducer;
-export const usePosts = () => useSelector((state) => state.post);
+export const usePosts = () => useSelector((state) => state.posts);

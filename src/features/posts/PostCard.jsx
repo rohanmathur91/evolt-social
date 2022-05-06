@@ -16,18 +16,18 @@ export const PostCard = ({
   lastName,
   updatedAt,
 }) => {
-  const [showMore, setShowMore] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
   const { user } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showMore, setShowMore] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleShowMoreClick = () => {
     setShowMore((prevShowMore) => !prevShowMore);
   };
 
   const handleDeletePost = () => {
-    dispatch(deletePost({ postId: _id, setIsDeleting }));
+    dispatch(deletePost({ postId: _id, navigate, setIsDeleting }));
   };
 
   return (
