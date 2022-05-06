@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 
 export const loginUser = createAsyncThunk(
@@ -41,6 +41,8 @@ export const signupUser = createAsyncThunk(
   }
 );
 
+export const logoutUser = createAction("auth/logoutUser");
+
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -48,14 +50,13 @@ export const authSlice = createSlice({
     error: "",
     isLoading: false,
   },
-  reducers: {
-    logoutUser: (state) => {
+  reducers: {},
+  extraReducers: {
+    [logoutUser]: (state) => {
       state.user = null;
       localStorage.removeItem("evolt-social-token");
     },
-  },
 
-  extraReducers: {
     [loginUser.pending]: (state) => {
       state.error = "";
       state.isLoading = true;
@@ -86,5 +87,4 @@ export const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
-export const { logoutUser } = authSlice.actions;
 export const useAuth = () => useSelector(({ auth }) => auth);
