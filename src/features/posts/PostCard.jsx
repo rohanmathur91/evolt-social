@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -19,6 +19,7 @@ export const PostCard = ({ post }) => {
   const { user } = useAuth();
   const { bookmarks } = usePosts();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const { handleShowModal } = useModal();
   const [showMore, setShowMore] = useState(false);
@@ -42,17 +43,17 @@ export const PostCard = ({ post }) => {
     setShowMore((prevShowMore) => !prevShowMore);
   };
 
-  const handleEditPost = () => {
+  const handleEditPostClick = () => {
     setShowMore(false);
     handleShowModal(true);
     dispatch(setCurrentEditPost(post));
   };
 
-  const handleDeletePost = () => {
+  const handleDeletePostClick = () => {
     dispatch(deletePost({ postId: _id, navigate, setIsDeleting }));
   };
 
-  const handleLikePost = () => {
+  const handleLikePostClick = () => {
     if (!isPostLiked) {
       dispatch(likePost({ postId: _id, setIsLikeLoading }));
     } else {
@@ -60,12 +61,16 @@ export const PostCard = ({ post }) => {
     }
   };
 
-  const handleBookmarkPost = () => {
+  const handleBookmarkPostClick = () => {
     if (!isBookmarked) {
       dispatch(addPostInBookmarks(_id));
     } else {
       dispatch(removePostFromBookmarks(_id));
     }
+  };
+
+  const handleSinglePostClick = () => {
+    if (!pathname.includes("post")) navigate(`/post/${_id}`);
   };
 
   return (
@@ -114,7 +119,7 @@ export const PostCard = ({ post }) => {
         {showMore && (
           <div className="absolute top-14 right-7 z-[1] w-32 bg-white shadow-md flex flex-col p-2 border rounded-lg">
             <button
-              onClick={handleEditPost}
+              onClick={handleEditPostClick}
               className="py-2 px-4 text-sm flex items-center hover:text-blue-500 hover:bg-blue-100 rounded"
             >
               <span className="material-icons-outlined text-xl mr-2">edit</span>
@@ -122,7 +127,7 @@ export const PostCard = ({ post }) => {
             </button>
             <button
               disabled={isDeleting}
-              onClick={handleDeletePost}
+              onClick={handleDeletePostClick}
               className="py-2 px-4 text-sm flex items-center hover:text-blue-500 hover:bg-blue-100 rounded"
             >
               <span className="material-icons-outlined text-xl mr-2">
@@ -139,18 +144,24 @@ export const PostCard = ({ post }) => {
           alt={username}
           loading="lazy"
           src={imageUrl}
-          className="w-full h-80 aspect-[2/1] object-cover object-top mt-1 mb-2 bg-gray-200"
+          onClick={handleSinglePostClick}
+          className="w-full h-80 cursor-pointer aspect-[2/1] object-cover object-top mt-1 mb-2 bg-gray-200"
         />
       )}
 
-      <p className="py-2 px-5 text-sm lg:text-base">{content}</p>
+      <p
+        onClick={handleSinglePostClick}
+        className="py-2 px-5 text-sm lg:text-base cursor-pointer"
+      >
+        {content}
+      </p>
       <section className="flex flex-row items-center justify-between mt-2 mb-3 mx-5">
         <div className="flex text-gray-900">
           <div className="flex items-center w-16">
             <button
               data-tooltip="Like"
               disabled={isLikeLoading}
-              onClick={handleLikePost}
+              onClick={handleLikePostClick}
               className="tooltip w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
             >
               {isPostLiked ? (
@@ -168,7 +179,7 @@ export const PostCard = ({ post }) => {
 
           <button
             data-tooltip="Comment"
-            onClick={() => navigate(`/post/${_id}`)}
+            onClick={handleSinglePostClick}
             className="tooltip mx-2 w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
           >
             <span className="material-icons-outlined text-xl">comment</span>
@@ -177,7 +188,7 @@ export const PostCard = ({ post }) => {
 
         <button
           data-tooltip="Bookmark"
-          onClick={handleBookmarkPost}
+          onClick={handleBookmarkPostClick}
           className="tooltip w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
         >
           {isBookmarked ? (
