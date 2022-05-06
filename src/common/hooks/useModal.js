@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { usePosts, modalHandler } from "../../features";
 
 export const useModal = () => {
-  const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch();
+  const { showModal } = usePosts();
 
   const handleShowModal = (
     show = false,
@@ -10,7 +13,7 @@ export const useModal = () => {
   ) => {
     // only update the modal state if clicked target is same
     if (mouseUpTarget === mouseDownTarget) {
-      setShowModal(show);
+      dispatch(modalHandler(show));
     }
   };
 
