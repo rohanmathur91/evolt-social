@@ -34,3 +34,7 @@ export const getPostLikedStatus = (user, likes) => {
 export const getSinglePost = (posts, postId) => {
   return posts.find(({ _id }) => _id === postId);
 };
+
+export const getPostBookmarkStatus = (postId, bookmarks) => {
+  return bookmarks.some(({ _id }) => _id === postId);
+};

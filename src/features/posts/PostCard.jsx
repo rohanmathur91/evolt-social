@@ -2,17 +2,20 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
+  usePosts,
   likePost,
   disLikePost,
   deletePost,
   setCurrentEditPost,
+  addPostInBookmarks,
 } from "./postSlice";
 import { useAuth } from "../auth";
 import { useModal } from "../../common";
-import { getDate, getPostLikedStatus } from "./utils";
+import { getDate, getPostLikedStatus, getPostBookmarkStatus } from "./utils";
 
 export const PostCard = ({ post }) => {
   const { user } = useAuth();
+  const { bookmarks } = usePosts();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { handleShowModal } = useModal();
@@ -31,6 +34,9 @@ export const PostCard = ({ post }) => {
     updatedAt,
   } = post;
   const isPostLiked = getPostLikedStatus(user, likes);
+  const isBookmarked = getPostBookmarkStatus(_id, bookmarks);
+
+  console.log(user);
 
   const handleShowMoreClick = () => {
     setShowMore((prevShowMore) => !prevShowMore);
@@ -51,6 +57,12 @@ export const PostCard = ({ post }) => {
       dispatch(likePost({ postId: _id, setIsLikeLoading }));
     } else {
       dispatch(disLikePost({ postId: _id, setIsLikeLoading }));
+    }
+  };
+
+  const handleBookmarkPost = () => {
+    if (!isBookmarked) {
+      dispatch(addPostInBookmarks(_id));
     }
   };
 
@@ -157,11 +169,16 @@ export const PostCard = ({ post }) => {
 
         <button
           data-tooltip="Bookmark"
+          onClick={handleBookmarkPost}
           className="tooltip w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
         >
-          <span className="material-icons-outlined text-xl">
-            bookmark_border
-          </span>
+          {isBookmarked ? (
+            <span class="material-icons text-xl text-blue-500">bookmark</span>
+          ) : (
+            <span className="material-icons-outlined text-xl">
+              bookmark_border
+            </span>
+          )}
         </button>
       </section>
     </article>

@@ -2,7 +2,6 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-// add a new post
 export const addPost = createAsyncThunk("posts/addPost", async (postData) => {
   try {
     const { data: posts } = await axios.post("/api/posts", { postData });
@@ -12,7 +11,6 @@ export const addPost = createAsyncThunk("posts/addPost", async (postData) => {
   }
 });
 
-// delete a post
 export const deletePost = createAsyncThunk(
   "posts/deletePost",
   async ({ postId, navigate, setIsDeleting }) => {
@@ -30,7 +28,6 @@ export const deletePost = createAsyncThunk(
   }
 );
 
-// get all the posts
 export const getPosts = createAsyncThunk("posts/getPosts", async () => {
   try {
     const { data: posts } = await axios.get("/api/posts");
@@ -41,7 +38,6 @@ export const getPosts = createAsyncThunk("posts/getPosts", async () => {
   }
 });
 
-// like a post
 export const likePost = createAsyncThunk(
   "posts/likePost",
   async ({ postId, setIsLikeLoading }, { rejectWithValue }) => {
@@ -64,7 +60,6 @@ export const likePost = createAsyncThunk(
   }
 );
 
-// dislike/unlike a liked post
 export const disLikePost = createAsyncThunk(
   "posts/disLikePost",
   async ({ postId, setIsLikeLoading }, { rejectWithValue }) => {
@@ -101,10 +96,26 @@ export const editPost = createAsyncThunk("posts/editPost", async (postData) => {
   }
 });
 
+export const addPostInBookmarks = createAsyncThunk(
+  "posts/addPostInBookmarks",
+  async (postId) => {
+    try {
+      const {
+        data: { bookmarks },
+      } = await axios.post(`/api/users/bookmark/${postId}`);
+
+      return bookmarks;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 const postSlice = createSlice({
   name: "posts",
   initialState: {
     posts: [],
+    bookmarks: [],
     showModal: false,
     isLoading: false,
     likeError: "",
@@ -177,6 +188,9 @@ const postSlice = createSlice({
     },
     [editPost.rejected]: (state) => {
       state.isLoading = false;
+    },
+    [addPostInBookmarks.fulfilled]: (state, { payload }) => {
+      state.bookmarks = payload.reverse();
     },
   },
 });

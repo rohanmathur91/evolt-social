@@ -36,7 +36,7 @@ export const SinglePost = () => {
       <Sidebar />
       <TopContributors />
 
-      <main className="main px-2 md:px-0 max-w-xl mx-auto">
+      <main className="main w-full px-2 md:px-0 max-w-xl mx-auto">
         <button
           onClick={() => navigate(-1)}
           className="mb-4 py-2 px-4 flex items-center justify-center rounded hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
