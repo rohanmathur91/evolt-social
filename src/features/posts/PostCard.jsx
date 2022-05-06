@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth";
-import { deletePost } from "./postSlice";
-import { getDate } from "./utils";
+import { likePost, disLikePost, deletePost } from "./postSlice";
+import { getDate, getPostLikedStatus } from "./utils";
 
 export const PostCard = ({
   _id,
@@ -21,6 +21,8 @@ export const PostCard = ({
   const dispatch = useDispatch();
   const [showMore, setShowMore] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isLikeLoading, setIsLikeLoading] = useState(false);
+  const isPostLiked = getPostLikedStatus(user, likes);
 
   const handleShowMoreClick = () => {
     setShowMore((prevShowMore) => !prevShowMore);
@@ -28,6 +30,14 @@ export const PostCard = ({
 
   const handleDeletePost = () => {
     dispatch(deletePost({ postId: _id, navigate, setIsDeleting }));
+  };
+
+  const handleLikePost = () => {
+    if (!isPostLiked) {
+      dispatch(likePost({ postId: _id, setIsLikeLoading }));
+    } else {
+      dispatch(disLikePost({ postId: _id, setIsLikeLoading }));
+    }
   };
 
   return (
@@ -102,9 +112,19 @@ export const PostCard = ({
           <div className="flex items-center w-16">
             <button
               data-tooltip="Like"
+              disabled={isLikeLoading}
+              onClick={handleLikePost}
               className="tooltip w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
             >
-              <span className="material-icons-outlined text-xl">thumb_up</span>
+              {isPostLiked ? (
+                <span className="material-icons text-xl text-blue-500">
+                  thumb_up
+                </span>
+              ) : (
+                <span className="material-icons-outlined text-xl">
+                  thumb_up
+                </span>
+              )}
             </button>
             <span className="text-sm ml-1">{likes?.likeCount}</span>
           </div>

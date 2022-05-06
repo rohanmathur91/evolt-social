@@ -40,11 +40,56 @@ export const getPosts = createAsyncThunk("posts/getPosts", async () => {
   }
 });
 
+export const likePost = createAsyncThunk(
+  "posts/likePost",
+  async ({ postId, setIsLikeLoading }, { rejectWithValue }) => {
+    try {
+      setIsLikeLoading(true);
+      const {
+        data: { posts },
+      } = await axios.post(`/api/posts/like/${postId}`);
+
+      return posts;
+    } catch (error) {
+      if (error.response.status === 400)
+        return rejectWithValue("Post already liked!");
+      else {
+        return rejectWithValue("Something went wrong!");
+      }
+    } finally {
+      setIsLikeLoading(false);
+    }
+  }
+);
+
+export const disLikePost = createAsyncThunk(
+  "posts/disLikePost",
+  async ({ postId, setIsLikeLoading }, { rejectWithValue }) => {
+    try {
+      setIsLikeLoading(true);
+      const {
+        data: { posts },
+      } = await axios.post(`/api/posts/dislike/${postId}`);
+
+      return posts;
+    } catch (error) {
+      if (error.response.status === 400)
+        return rejectWithValue("Cannot dislike a post.");
+      else {
+        return rejectWithValue("Something went wrong!");
+      }
+    } finally {
+      setIsLikeLoading(false);
+    }
+  }
+);
+
 const postSlice = createSlice({
   name: "posts",
   initialState: {
     posts: [],
     isLoading: false,
+    likeError: "",
     deleteError: "",
     errorMessage: "",
   },
@@ -77,6 +122,18 @@ const postSlice = createSlice({
     },
     [deletePost.rejected]: (state) => {
       state.deleteError = "Could not delete the post!";
+    },
+    [likePost.fulfilled]: (state, { payload }) => {
+      state.posts = payload.reverse();
+    },
+    [likePost.rejected]: (state, { payload }) => {
+      state.likeError = payload;
+    },
+    [disLikePost.fulfilled]: (state, { payload }) => {
+      state.posts = payload.reverse();
+    },
+    [disLikePost.rejected]: (state, { payload }) => {
+      state.likeError = payload;
     },
   },
 });

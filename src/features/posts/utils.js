@@ -3,3 +3,7 @@ export const getDate = (updatedDate) => {
   date = String(date).split(" ");
   return `${date[1]} ${date[2]}`;
 };
+
+export const getPostLikedStatus = (user, likes) => {
+  return likes?.likedBy.some(({ username }) => username === user?.username);
+};
