@@ -1,8 +1,8 @@
 import React, { useEffect, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addPost, editPost, usePosts } from "./postSlice";
-import { useAuth } from "../auth";
-import { emojis, postLimit } from "./data";
+import { addPost, editPost, usePosts } from "../postSlice";
+import { useAuth } from "../../auth";
+import { emojis, postLimit } from "../data";
 
 export const AddPost = ({ handleShowModal }) => {
   const { user } = useAuth();
@@ -12,8 +12,6 @@ export const AddPost = ({ handleShowModal }) => {
   const [postImage, setPostImage] = useState("");
   const [postContent, setPostContent] = useState("");
   const [showEmojis, setShowEmojis] = useState(false);
-
-  console.log(isEditMode);
 
   useEffect(() => {
     if (currentEditPost) {

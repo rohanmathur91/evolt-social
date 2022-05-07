@@ -1,5 +1,4 @@
 export * from "./postSlice";
-export { AddPost } from "./AddPost";
+export * from "./components";
 export { Bookmark } from "./Bookmark";
-export { PostCard } from "./PostCard";
 export { SinglePost } from "./SinglePost";

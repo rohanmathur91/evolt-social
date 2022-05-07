@@ -10,10 +10,10 @@ import {
   setCurrentEditPost,
   addPostInBookmarks,
   removePostFromBookmarks,
-} from "./postSlice";
-import { useAuth } from "../auth";
-import { useModal } from "../../common";
-import { getDate, getPostLikedStatus, getPostBookmarkStatus } from "./utils";
+} from "../postSlice";
+import { useAuth } from "../../auth";
+import { useModal } from "../../../common";
+import { getDate, getPostLikedStatus, getPostBookmarkStatus } from "../utils";
 
 export const PostCard = ({ post }) => {
   const { user } = useAuth();
@@ -35,9 +35,12 @@ export const PostCard = ({ post }) => {
     firstName,
     lastName,
     updatedAt,
+    comments,
   } = post;
   const isPostLiked = getPostLikedStatus(user._id, likes);
   const isBookmarked = getPostBookmarkStatus(_id, bookmarks);
+
+  console.log(comments);
 
   const handleShowMoreClick = () => {
     setShowMore((prevShowMore) => !prevShowMore);
@@ -98,11 +101,10 @@ export const PostCard = ({ post }) => {
             <span className="font-semibold line-clamp-1">
               {firstName} {lastName}
             </span>
-            <p className="text-gray-500 text-sm font-normal flex items-center line-clamp-1">
-              @{username}
-              <span className="mx-1 font-semibold">•</span>
+            <span className="text-gray-500 text-sm font-normal flex items-center line-clamp-1">
+              @{username} <span className="mx-1 font-semibold">•</span>{" "}
               {getDate(updatedAt)}
-            </p>
+            </span>
           </div>
         </Link>
 
@@ -177,13 +179,16 @@ export const PostCard = ({ post }) => {
             <span className="text-sm ml-1">{likes?.likeCount}</span>
           </div>
 
-          <button
-            data-tooltip="Comment"
-            onClick={handleSinglePostClick}
-            className="tooltip mx-2 w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
-          >
-            <span className="material-icons-outlined text-xl">comment</span>
-          </button>
+          <div className="flex items-center">
+            <button
+              data-tooltip="Comment"
+              onClick={handleSinglePostClick}
+              className="tooltip w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
+            >
+              <span className="material-icons-outlined text-xl">comment</span>
+            </button>
+            <span className="text-sm ml-1">{comments.length}</span>
+          </div>
         </div>
 
         <button

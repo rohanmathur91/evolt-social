@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { usePosts, getBookmarkPosts } from "./postSlice";
-import { PostCard } from "./PostCard";
-import { Sidebar, TopContributors } from "../../common";
 import { useDispatch } from "react-redux";
+import { usePosts, getBookmarkPosts } from "./postSlice";
+import { Sidebar, TopContributors } from "../../common";
+import { PostCard } from "./components";
 
 export const Bookmark = () => {
   const dispatch = useDispatch();
