@@ -6,6 +6,7 @@ import { logoutUser } from "../auth";
 export const addPost = createAsyncThunk("posts/addPost", async (postData) => {
   try {
     const { data: posts } = await axios.post("/api/posts", { postData });
+
     return posts;
   } catch (error) {
     console.log(error.response);

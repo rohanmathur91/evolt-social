@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import {
   Home,
@@ -13,11 +13,22 @@ import {
   Following,
   SinglePost,
   Notifications,
+  PrivateRoute,
+  persistUser,
 } from "./features";
 import { Navbar } from "./common";
-import { PrivateRoute } from "./features";
+import { useDispatch } from "react-redux";
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem("myspace-token");
+    if (token) {
+      dispatch(persistUser());
+    }
+  }, [dispatch]);
+
   return (
     <div className="text-neutral-900 bg-gray-100">
       <Navbar />

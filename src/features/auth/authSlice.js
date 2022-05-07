@@ -9,11 +9,9 @@ export const loginUser = createAsyncThunk(
       const {
         data: { foundUser, encodedToken },
       } = await axios.post("/api/auth/login", credentials);
-
       axios.defaults.headers.common["authorization"] = encodedToken;
-      localStorage.setItem("evolt-social-token", encodedToken);
 
-      return foundUser;
+      return { foundUser, encodedToken };
     } catch (error) {
       return rejectWithValue("Email or password is incorrect");
     }
@@ -27,11 +25,9 @@ export const signupUser = createAsyncThunk(
       const {
         data: { createdUser, encodedToken },
       } = await axios.post("/api/auth/signup", credentials);
-
       axios.defaults.headers.common["authorization"] = encodedToken;
-      localStorage.setItem("evolt-social-token", encodedToken);
 
-      return createdUser;
+      return { createdUser, encodedToken };
     } catch (error) {
       if (error.response.status === 422) {
         return rejectWithValue("Username already exists!");
@@ -42,6 +38,7 @@ export const signupUser = createAsyncThunk(
 );
 
 export const logoutUser = createAction("auth/logoutUser");
+export const persistUser = createAction("auth/persistUser");
 
 export const authSlice = createSlice({
   name: "auth",
@@ -52,11 +49,17 @@ export const authSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
+    [persistUser]: (state) => {
+      state.user = JSON.parse(localStorage.getItem("myspace-user"));
+      axios.defaults.headers.common["authorization"] =
+        localStorage.getItem("myspace-token");
+    },
     [logoutUser]: (state) => {
       state.user = null;
-      localStorage.removeItem("evolt-social-token");
+      localStorage.removeItem("myspace-user");
+      localStorage.removeItem("myspace-token");
+      delete axios.defaults.headers.common["authorization"];
     },
-
     [loginUser.pending]: (state) => {
       state.error = "";
       state.isLoading = true;
@@ -64,7 +67,9 @@ export const authSlice = createSlice({
     [loginUser.fulfilled]: (state, { payload }) => {
       state.error = "";
       state.isLoading = false;
-      state.user = payload;
+      state.user = payload.foundUser;
+      localStorage.setItem("myspace-token", payload.encodedToken);
+      localStorage.setItem("myspace-user", JSON.stringify(payload.foundUser));
     },
     [loginUser.rejected]: (state, { payload }) => {
       state.error = payload;
@@ -77,7 +82,9 @@ export const authSlice = createSlice({
     [signupUser.fulfilled]: (state, { payload }) => {
       state.error = "";
       state.isLoading = false;
-      state.user = payload;
+      state.user = payload.createdUser;
+      localStorage.setItem("myspace-token", payload.encodedToken);
+      localStorage.setItem("myspace-user", JSON.stringify(payload.createdUser));
     },
     [signupUser.rejected]: (state, { payload }) => {
       state.error = payload;
