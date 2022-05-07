@@ -142,6 +142,21 @@ export const removePostFromBookmarks = createAsyncThunk(
   }
 );
 
+export const commentOnPost = createAsyncThunk(
+  "posts/commentOnPost",
+  async ({ postId, comment }, { rejectWithValue }) => {
+    try {
+      const { data: posts } = await axios.post(`/api/posts/comment/${postId}`, {
+        comment,
+      });
+
+      return posts;
+    } catch (error) {
+      return rejectWithValue("Something went wrong!");
+    }
+  }
+);
+
 const postSlice = createSlice({
   name: "posts",
   initialState: {
@@ -243,6 +258,9 @@ const postSlice = createSlice({
     },
     [removePostFromBookmarks.fulfilled]: (state, { payload }) => {
       state.bookmarks = payload.reverse();
+    },
+    [commentOnPost.fulfilled]: (state, { payload }) => {
+      state.posts = payload.posts.reverse();
     },
   },
 });
