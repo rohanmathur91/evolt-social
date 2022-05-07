@@ -1,14 +1,16 @@
-import React, { useState } from "react";
-import { emojis } from "../data";
+import React, { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
+import { addPost, usePosts } from "./postSlice";
+import { useAuth } from "../auth";
+import { emojis } from "./data";
 
 export const AddPost = ({ handleShowModal }) => {
-  const [postImage, setPostImage] = useState(null);
+  const [postImage, setPostImage] = useState("");
   const [postContent, setPostContent] = useState("");
   const [showEmojis, setShowEmojis] = useState(false);
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-  };
+  const { user } = useAuth();
+  const { isLoading } = usePosts();
+  const dispatch = useDispatch();
 
   const handleImageFileChange = (e) => {
     setPostImage(e.target.files[0]);
@@ -26,16 +28,36 @@ export const AddPost = ({ handleShowModal }) => {
     setPostContent((prev) => prev + emoji);
   };
 
+  const handleTextAreaFocus = useCallback((node) => {
+    if (node) {
+      node.focus();
+    }
+  }, []);
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const { firstName, lastName } = user;
+
+    const postData = {
+      lastName,
+      firstName,
+      imageUrl: postImage,
+      content: postContent,
+    };
+    dispatch(addPost({ postData, handleShowModal }));
+  };
+
   return (
     <>
       <form
         onSubmit={handleFormSubmit}
-        className="max-w-xl w-full relative bg-white border py-2 px-3 rounded"
+        className="max-w-xl w-full relative bg-white border p-3 rounded-lg"
       >
         <textarea
           required
           maxLength="120"
           value={postContent}
+          ref={handleTextAreaFocus}
           onChange={handleContentChange}
           placeholder="What's on your mind?"
           className="w-full h-36 p-3 resize-none rounded border focus:outline-2 focus:outline-blue-500"
@@ -94,12 +116,16 @@ export const AddPost = ({ handleShowModal }) => {
             </button>
 
             <button
-              disabled={postContent.length === 0 || postContent.length > 120}
+              disabled={
+                isLoading ||
+                postContent.length === 0 ||
+                postContent.length > 120
+              }
               className={`btn btn-primary text-sm md:text-base py-1 px-3 hover:transition-all ${
                 postContent.length === 0 ? "opacity-70" : ""
               }`}
             >
-              Add post
+              {isLoading ? "Add post..." : "Add post"}
             </button>
           </div>
         </div>
@@ -111,9 +137,10 @@ export const AddPost = ({ handleShowModal }) => {
           >
             {emojis.map((emoji, index) => (
               <button
-                className="m-1 w-7 h-7 flex flex-row items-center justify-center hover:bg-slate-200 rounded p-1"
-                onClick={() => handleEmojiClick(emoji)}
                 key={index}
+                type="button"
+                onClick={() => handleEmojiClick(emoji)}
+                className="m-1 w-7 h-7 flex flex-row items-center justify-center hover:bg-slate-200 rounded p-1"
               >
                 {emoji}
               </button>

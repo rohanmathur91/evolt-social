@@ -1,7 +1,8 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import { AddPost } from "../../features";
 import { useModal } from "../hooks";
-import { Modal, AddPost } from "./";
+import { Modal } from "./";
 
 export const Navbar = () => {
   const { pathname } = useLocation();
@@ -17,7 +18,7 @@ export const Navbar = () => {
           </Modal>
         )}
 
-        <nav className="fixed top-0 left-0 right-0 w-full border bg-white/80 backdrop-blur-sm z-[1]">
+        <nav className="fixed top-0 left-0 right-0 w-full border bg-white/80 backdrop-blur-sm z-[3]">
           <div className="max-container h-[10vh] flex flex-row items-center w-100 px-5">
             <Link
               to="/"

@@ -1,17 +1,22 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuthForm } from "./useAuthForm";
 import { useAuth, loginUser } from "./authSlice";
-import { Input } from "../../components";
+import { Input } from "../../common";
 import { useEffect } from "react";
 
 export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const { user, isLoading, error } = useAuth();
 
-  useEffect(() => user && navigate("/"), [user, navigate]);
+  useEffect(() => {
+    if (user) {
+      navigate(location.state?.from?.pathname ?? "/", { replace: true });
+    }
+  }, [user, location, navigate]);
 
   const {
     showPassword,

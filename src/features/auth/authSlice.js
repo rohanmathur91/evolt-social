@@ -10,7 +10,7 @@ export const loginUser = createAsyncThunk(
         data: { foundUser, encodedToken },
       } = await axios.post("/api/auth/login", credentials);
 
-      axios.defaults.headers.common["Authorization"] = encodedToken;
+      axios.defaults.headers.common["authorization"] = encodedToken;
       localStorage.setItem("evolt-social-token", encodedToken);
 
       return foundUser;
@@ -28,7 +28,7 @@ export const signupUser = createAsyncThunk(
         data: { createdUser, encodedToken },
       } = await axios.post("/api/auth/signup", credentials);
 
-      axios.defaults.headers.common["Authorization"] = encodedToken;
+      axios.defaults.headers.common["authorization"] = encodedToken;
       localStorage.setItem("evolt-social-token", encodedToken);
 
       return createdUser;
@@ -51,6 +51,7 @@ export const authSlice = createSlice({
   reducers: {
     logoutUser: (state) => {
       state.user = null;
+      localStorage.removeItem("evolt-social-token");
     },
   },
 
