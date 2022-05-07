@@ -34,6 +34,7 @@ export const signupHandler = function (schema, request) {
       _id,
       createdAt: formatDate(),
       updatedAt: formatDate(),
+      profileUrl: "",
       username,
       password,
       ...rest,

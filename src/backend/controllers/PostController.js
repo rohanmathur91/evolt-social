@@ -109,7 +109,12 @@ export const createPostHandler = function (schema, request) {
         likedBy: [],
         dislikedBy: [],
       },
+      comments: [],
+      imageUrl: "",
       username: user.username,
+      profileUrl: user.profileUrl,
+      firstName: user.firstName,
+      lastName: user.lastName,
       createdAt: formatDate(),
       updatedAt: formatDate(),
     };
@@ -301,6 +306,54 @@ export const deletePostHandler = function (schema, request) {
       );
     }
     this.db.posts.remove({ _id: postId });
+    return new Response(201, {}, { posts: this.db.posts });
+  } catch (error) {
+    return new Response(
+      500,
+      {},
+      {
+        error,
+      }
+    );
+  }
+};
+
+/**
+ * This handler handles comment on a post in the db.
+ * send POST Request at /api/post/comment/:postId
+ * */
+
+export const commentPostHandler = function (schema, request) {
+  const user = requiresAuth.call(this, request);
+  try {
+    if (!user) {
+      return new Response(
+        404,
+        {},
+        {
+          errors: [
+            "The username you entered is not Registered. Not Found error",
+          ],
+        }
+      );
+    }
+    const postId = request.params.postId;
+    const { comment } = JSON.parse(request.requestBody);
+    const post = schema.posts.findBy({ _id: postId }).attrs;
+    const { firstName, lastName, username, profileUrl } = user;
+
+    post.comments.push({
+      ...comment,
+      _id: uuid(),
+      firstName,
+      lastName,
+      username,
+      profileUrl,
+      createdAt: formatDate(),
+    });
+
+    post.comments.reverse();
+    this.db.posts.update({ _id: postId }, { ...post, updatedAt: formatDate() });
     return new Response(201, {}, { posts: this.db.posts });
   } catch (error) {
     return new Response(
