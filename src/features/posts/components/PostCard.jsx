@@ -37,7 +37,7 @@ export const PostCard = ({ post }) => {
     updatedAt,
     comments,
   } = post;
-  const isPostLiked = getPostLikedStatus(user._id, likes);
+  const isPostLiked = getPostLikedStatus(user, likes);
   const isBookmarked = getPostBookmarkStatus(_id, bookmarks);
 
   const handleShowMoreClick = () => {

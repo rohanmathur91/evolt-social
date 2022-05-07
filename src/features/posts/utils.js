@@ -19,8 +19,8 @@ export const getDate = (updatedDate) => {
  * @returns {boolean} status
  */
 
-export const getPostLikedStatus = (userId, likes) => {
-  return likes?.likedBy.some((_id) => _id === userId);
+export const getPostLikedStatus = (user, likes) => {
+  return likes?.likedBy.some(({ username }) => username === user.username);
 };
 
 /**
