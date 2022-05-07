@@ -31,6 +31,7 @@ export const SinglePost = () => {
   const handleCommentSubmit = (e) => {
     e.preventDefault();
     dispatch(commentOnPost({ postId, comment }));
+    setComment((prevComment) => ({ ...prevComment, comment: "" }));
   };
 
   const handleInputFocus = useCallback((node) => {
