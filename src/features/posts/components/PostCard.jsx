@@ -75,7 +75,7 @@ export const PostCard = ({ post }) => {
   };
 
   return (
-    <article className="border rounded-lg mb-4 max-w-xl mx-auto shadow-md bg-white relative">
+    <article className="border rounded-lg my-4 md:mt-0 max-w-xl mx-auto shadow-md bg-white relative">
       <section className="p-2 pl-4 pt-4 flex items-center">
         <Link
           title={username}
