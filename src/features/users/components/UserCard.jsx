@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { followUser, unfollowUser, useProfile } from "../../profile";
 import { useAuth } from "../../auth";
 import { getFollowingStatus } from "../utils";
+import { CircularLoader } from "../../../common";
 
 export const UserCard = ({
   _id,
@@ -57,9 +58,17 @@ export const UserCard = ({
         <button
           disabled={isFollowLoader}
           onClick={() => handleFollowClick(_id)}
-          className="ml-auto self-start text-xs md:text-sm bg-blue-500 text-white py-1 px-3 rounded hover:opacity-70"
+          className="ml-auto relative self-start text-xs md:text-sm bg-blue-500 text-white py-1 px-3 rounded hover:opacity-70"
         >
-          {isFollowLoader ? "Loading..." : isFollowing ? "Following" : "Follow"}
+          {isFollowLoader && (
+            <CircularLoader
+              size="14px"
+              style="absolute top-0 bottom-0 left-0 right-0"
+            />
+          )}
+          <span className={`${isFollowLoader ? "invisible" : ""}`}>
+            {isFollowing ? "Following" : "Follow"}
+          </span>
         </button>
       )}
     </article>

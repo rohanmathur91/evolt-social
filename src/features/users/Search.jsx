@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { Sidebar, TopContributors } from "../../common";
 import { useUsers, getSearchedUsers } from "./userSlice";
+import { Sidebar, TopContributors, CircularLoader } from "../../common";
 import { UserCard } from "./components";
 
 export const Search = () => {
@@ -55,7 +55,14 @@ export const Search = () => {
         <div className="mt-8">
           {isLoading ? (
             <p className="text-center font-semibold mt-8">
-              {searchQuery ? `Searching for "${searchQuery}"` : "Loading..."}
+              {searchQuery ? (
+                <div className="flex items-center justify-center">
+                  <CircularLoader size="1rem" />
+                  <span className="ml-4">Searching for "{searchQuery}"</span>
+                </div>
+              ) : (
+                <CircularLoader size="2rem" />
+              )}
             </p>
           ) : userlist.length > 0 ? (
             userlist.map((user) => <UserCard key={user._id} {...user} />)
