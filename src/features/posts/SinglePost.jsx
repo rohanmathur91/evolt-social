@@ -97,7 +97,8 @@ export const SinglePost = () => {
                   {isCommentPosting && (
                     <CircularLoader
                       size="16px"
-                      style="absolute top-0 bottom-0 left-0 right-0 text-red-500 text-white"
+                      position="center"
+                      style="text-red-500 text-white"
                     />
                   )}
                   <span className={isCommentPosting ? "invisible" : ""}>

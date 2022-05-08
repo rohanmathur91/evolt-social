@@ -60,12 +60,7 @@ export const UserCard = ({
           onClick={() => handleFollowClick(_id)}
           className="ml-auto relative self-start text-xs md:text-sm bg-blue-500 text-white py-1 px-3 rounded hover:opacity-70"
         >
-          {isFollowLoader && (
-            <CircularLoader
-              size="1rem"
-              style="absolute top-0 bottom-0 left-0 right-0"
-            />
-          )}
+          {isFollowLoader && <CircularLoader size="1rem" position="center" />}
           <span className={isFollowLoader ? "invisible" : ""}>
             {isFollowing ? "Following" : "Follow"}
           </span>

@@ -135,7 +135,8 @@ export const PostCard = ({ post }) => {
               {isDeleting && (
                 <CircularLoader
                   size="1rem"
-                  style="absolute top-0 bottom-0 left-0 right-0 text-red-500"
+                  position="center"
+                  style="text-red-500"
                 />
               )}
               <span

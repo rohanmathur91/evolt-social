@@ -137,16 +137,11 @@ export const AddPost = ({ handleShowModal }) => {
                 postContent.length === 0 ||
                 postContent.length > postLimit
               }
-              className={`btn btn-primary text-sm md:text-base py-1 px-3 border border-blue-500 hover:transition-all ${
+              className={`btn btn-primary text-sm md:text-base py-1 px-3 border border-blue-500 ${
                 isLoading ? "relative" : ""
               }`}
             >
-              {isLoading && (
-                <CircularLoader
-                  size="1rem"
-                  style="absolute top-0 bottom-0 left-0 right-0"
-                />
-              )}
+              {isLoading && <CircularLoader size="1rem" position="center" />}
 
               <span className={isLoading ? "invisible" : ""}>
                 {isEditMode ? "Edit post" : "Add post"}
