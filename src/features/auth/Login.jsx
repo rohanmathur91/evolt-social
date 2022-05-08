@@ -48,7 +48,7 @@ export const Login = () => {
     <main className="min-h-[100vh] h-full flex flex-row items-center justify-center">
       <form
         onSubmit={handleFormSubmit}
-        className="border bg-white p-6 rounded-lg max-w-md w-full mx-4"
+        className="border bg-white shadow-lg p-6 rounded-lg max-w-md w-full mx-4"
       >
         <div className="mb-4 text-center py-4">
           <h3 className="font-semibold text-blue-500">Login to myspace</h3>

@@ -109,7 +109,12 @@ export const createPostHandler = function (schema, request) {
         likedBy: [],
         dislikedBy: [],
       },
+      comments: [],
+      imageUrl: "",
       username: user.username,
+      profileUrl: user.profileUrl,
+      firstName: user.firstName,
+      lastName: user.lastName,
       createdAt: formatDate(),
       updatedAt: formatDate(),
     };
@@ -192,18 +197,26 @@ export const likePostHandler = function (schema, request) {
     }
     const postId = request.params.postId;
     const post = schema.posts.findBy({ _id: postId }).attrs;
-    if (post.likes.likedBy.some((currUser) => currUser._id === user._id)) {
+    if (post.likes.likedBy.some(({ _id }) => _id === user._id)) {
       return new Response(
         400,
         {},
-        { errors: ["Cannot like a post that is already liked. "] }
+        { errors: ["Cannot like a post that is already liked."] }
       );
     }
     post.likes.dislikedBy = post.likes.dislikedBy.filter(
-      (currUser) => currUser._id !== user._id
+      ({ _id }) => _id !== user._id
     );
     post.likes.likeCount += 1;
-    post.likes.likedBy.push(user);
+
+    const { _id, username, firstName, lastName } = user;
+    post.likes.likedBy.push({
+      _id,
+      username,
+      firstName,
+      lastName,
+      likedDate: formatDate(),
+    });
     this.db.posts.update({ _id: postId }, { ...post, updatedAt: formatDate() });
     return new Response(201, {}, { posts: this.db.posts });
   } catch (error) {
@@ -245,7 +258,7 @@ export const dislikePostHandler = function (schema, request) {
         { errors: ["Cannot decrement like less than 0."] }
       );
     }
-    if (post.likes.dislikedBy.some((currUser) => currUser._id === user._id)) {
+    if (post.likes.dislikedBy.some(({ _id }) => _id === user._id)) {
       return new Response(
         400,
         {},
@@ -254,9 +267,17 @@ export const dislikePostHandler = function (schema, request) {
     }
     post.likes.likeCount -= 1;
     const updatedLikedBy = post.likes.likedBy.filter(
-      (currUser) => currUser._id !== user._id
+      ({ _id }) => _id !== user._id
     );
-    post.likes.dislikedBy.push(user);
+
+    const { _id, username, firstName, lastName } = user;
+    post.likes.dislikedBy.push({
+      _id,
+      username,
+      firstName,
+      lastName,
+      likedDate: formatDate(),
+    });
     post = { ...post, likes: { ...post.likes, likedBy: updatedLikedBy } };
     this.db.posts.update({ _id: postId }, { ...post, updatedAt: formatDate() });
     return new Response(201, {}, { posts: this.db.posts });
@@ -303,6 +324,54 @@ export const deletePostHandler = function (schema, request) {
       );
     }
     this.db.posts.remove({ _id: postId });
+    return new Response(201, {}, { posts: this.db.posts });
+  } catch (error) {
+    return new Response(
+      500,
+      {},
+      {
+        error,
+      }
+    );
+  }
+};
+
+/**
+ * This handler handles comment on a post in the db.
+ * send POST Request at /api/post/comment/:postId
+ * */
+
+export const commentPostHandler = function (schema, request) {
+  const user = requiresAuth.call(this, request);
+  try {
+    if (!user) {
+      return new Response(
+        404,
+        {},
+        {
+          errors: [
+            "The username you entered is not Registered. Not Found error",
+          ],
+        }
+      );
+    }
+    const postId = request.params.postId;
+    const { comment } = JSON.parse(request.requestBody);
+    const post = schema.posts.findBy({ _id: postId }).attrs;
+    const { firstName, lastName, username, profileUrl } = user;
+
+    post.comments.push({
+      ...comment,
+      _id: uuid(),
+      firstName,
+      lastName,
+      username,
+      profileUrl,
+      createdAt: formatDate(),
+    });
+
+    post.comments.reverse();
+    this.db.posts.update({ _id: postId }, { ...post, updatedAt: formatDate() });
     return new Response(201, {}, { posts: this.db.posts });
   } catch (error) {
     return new Response(

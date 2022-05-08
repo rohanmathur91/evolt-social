@@ -1,16 +1,24 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addPost, usePosts } from "./postSlice";
-import { useAuth } from "../auth";
-import { emojis } from "./data";
+import { addPost, editPost, usePosts } from "../postSlice";
+import { useAuth } from "../../auth";
+import { emojis, postLimit } from "../data";
 
 export const AddPost = ({ handleShowModal }) => {
+  const { user } = useAuth();
+  const dispatch = useDispatch();
+  const { isLoading } = usePosts();
+  const { isEditMode, currentEditPost } = usePosts();
   const [postImage, setPostImage] = useState("");
   const [postContent, setPostContent] = useState("");
   const [showEmojis, setShowEmojis] = useState(false);
-  const { user } = useAuth();
-  const { isLoading } = usePosts();
-  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (currentEditPost) {
+      setPostImage(currentEditPost.imageUrl);
+      setPostContent(currentEditPost.content);
+    }
+  }, [currentEditPost]);
 
   const handleImageFileChange = (e) => {
     setPostImage(e.target.files[0]);
@@ -25,7 +33,7 @@ export const AddPost = ({ handleShowModal }) => {
   };
 
   const handleEmojiClick = (emoji) => {
-    setPostContent((prev) => prev + emoji);
+    setPostContent((prev) => (prev.length < postLimit ? prev + emoji : prev));
   };
 
   const handleTextAreaFocus = useCallback((node) => {
@@ -44,7 +52,12 @@ export const AddPost = ({ handleShowModal }) => {
       imageUrl: postImage,
       content: postContent,
     };
-    dispatch(addPost({ postData, handleShowModal }));
+
+    if (!isEditMode) {
+      dispatch(addPost(postData));
+    } else {
+      dispatch(editPost({ ...currentEditPost, ...postData }));
+    }
   };
 
   return (
@@ -55,7 +68,7 @@ export const AddPost = ({ handleShowModal }) => {
       >
         <textarea
           required
-          maxLength="120"
+          maxLength={postLimit}
           value={postContent}
           ref={handleTextAreaFocus}
           onChange={handleContentChange}
@@ -100,10 +113,12 @@ export const AddPost = ({ handleShowModal }) => {
 
           <span
             className={`${
-              postContent.length === 120 ? "text-blue-500" : "text-gray-500"
+              postContent.length === postLimit
+                ? "text-blue-500"
+                : "text-gray-500"
             } text-xs text-center self-center w-[5rem] md:text-sm font-semibold mx-1`}
           >
-            {postContent.length} / 120
+            {postContent.length} / {postLimit}
           </span>
 
           <div className="ml-auto md:ml-1 mt-1 md:mt-0">
@@ -119,13 +134,19 @@ export const AddPost = ({ handleShowModal }) => {
               disabled={
                 isLoading ||
                 postContent.length === 0 ||
-                postContent.length > 120
+                postContent.length > postLimit
               }
-              className={`btn btn-primary text-sm md:text-base py-1 px-3 hover:transition-all ${
+              className={`btn btn-primary text-sm md:text-base py-1 px-3 border border-blue-500 hover:transition-all ${
                 postContent.length === 0 ? "opacity-70" : ""
               }`}
             >
-              {isLoading ? "Add post..." : "Add post"}
+              {isEditMode
+                ? isLoading
+                  ? "Edit post..."
+                  : "Edit post"
+                : isLoading
+                ? "Add post..."
+                : "Add post"}
             </button>
           </div>
         </div>
@@ -140,7 +161,7 @@ export const AddPost = ({ handleShowModal }) => {
                 key={index}
                 type="button"
                 onClick={() => handleEmojiClick(emoji)}
-                className="m-1 w-7 h-7 flex flex-row items-center justify-center hover:bg-slate-200 rounded p-1"
+                className="m-1 w-7 h-7 flex flex-row items-center justify-center hover:bg-slate-200 hover:scale-110 transition-all rounded p-1"
               >
                 {emoji}
               </button>
