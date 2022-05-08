@@ -35,7 +35,7 @@ export const posts = [
       dislikedBy: [],
     },
     comments: [],
-    profileUrl: "https://picsum.photos/200/200",
+    profileUrl: "https://i.pravatar.cc/300",
     imageUrl: "",
     firstName: "Adarsh",
     lastName: "Balika",

@@ -13,7 +13,7 @@ export const users = [
     username: "adarshbalika",
     password: "adarshBalika123",
     bio: "You only live once, but if you do it right, once is enough.",
-    profileUrl: "https://picsum.photos/200/200",
+    profileUrl: "https://i.pravatar.cc/300",
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },

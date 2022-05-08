@@ -7,12 +7,15 @@ export const followUser = createAsyncThunk(
   async ({ followUserId, setIsFollowLoader }) => {
     try {
       setIsFollowLoader(true);
-      const { data } = await axios.post(`/api/users/follow/${followUserId}`);
+      const {
+        data: {
+          user: { following },
+        },
+      } = await axios.post(`/api/users/follow/${followUserId}`);
 
-      console.log(data);
-      return [];
+      return following;
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
     } finally {
       setIsFollowLoader(false);
     }
@@ -21,15 +24,20 @@ export const followUser = createAsyncThunk(
 
 export const unfollowUser = createAsyncThunk(
   "profile/unfollowUser",
-  async (followUserId) => {
+  async ({ followUserId, setIsFollowLoader }) => {
     try {
+      setIsFollowLoader(true);
       const {
-        data: { user },
+        data: {
+          user: { following },
+        },
       } = await axios.post(`/api/users/unfollow/${followUserId}`);
 
-      console.log(user);
+      return following;
     } catch (error) {
       console.log(error.response);
+    } finally {
+      setIsFollowLoader(false);
     }
   }
 );
@@ -44,7 +52,9 @@ const profileSlice = createSlice({
   extraReducers: {
     [followUser.fulfilled]: (state, { payload }) => {
       state.following = payload;
-      state.isFollowLoader = false;
+    },
+    [unfollowUser.fulfilled]: (state, { payload }) => {
+      state.following = payload;
     },
   },
 });

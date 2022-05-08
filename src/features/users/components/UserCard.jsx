@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { followUser, useProfile } from "../../profile";
+import { followUser, unfollowUser, useProfile } from "../../profile";
 import { useAuth } from "../../auth";
+import { getFollowingStatus } from "../utils";
 
 export const UserCard = ({
   _id,
@@ -16,19 +17,16 @@ export const UserCard = ({
   const dispatch = useDispatch();
   const { following } = useProfile();
   const [isFollowLoader, setIsFollowLoader] = useState(false);
-
-  console.log(following);
-
-  const getFollowingStatus = (following, followUserId) => {
-    return following?.some(({ _id }) => _id === followUserId);
-  };
-
   const isFollowing = getFollowingStatus(following, _id);
-  const handleFollowClick = (followUserId) => {
-    console.log(followUserId);
 
-    dispatch(followUser({ followUserId, setIsFollowLoader }));
+  const handleFollowClick = (followUserId) => {
+    if (!isFollowing) {
+      dispatch(followUser({ followUserId, setIsFollowLoader }));
+    } else {
+      dispatch(unfollowUser({ followUserId, setIsFollowLoader }));
+    }
   };
+
   return (
     <article className="p-2 pt-3 my-2 lg:mr-1 rounded-lg flex items-center border">
       <Link to={`/profile/${_id}`} className="flex items-center">
@@ -66,4 +64,13 @@ export const UserCard = ({
       )}
     </article>
   );
+};
+
+UserCard.defaultProps = {
+  _id: "",
+  bio: "",
+  firstName: "",
+  lastName: "",
+  username: "",
+  profileUrl: "",
 };
