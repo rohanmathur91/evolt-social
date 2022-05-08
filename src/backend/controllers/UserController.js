@@ -10,7 +10,24 @@ import { formatDate, requiresAuth } from "../utils/authUtils";
  * send GET Request at /api/users
  * */
 
-export const getAllUsersHandler = function () {
+export const getAllUsersHandler = function (schema, request) {
+  const searchQuery = request.queryParams?.search.trim();
+
+  if (searchQuery) {
+    const searchedUsers = this.db.users.filter(
+      ({ username, firstName, lastName }) => {
+        const fullName = firstName + " " + lastName;
+        return (
+          username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          fullName.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+      }
+    );
+
+    return new Response(200, {}, { users: searchedUsers });
+  }
   return new Response(200, {}, { users: this.db.users });
 };
 
