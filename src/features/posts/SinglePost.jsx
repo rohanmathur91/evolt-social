@@ -73,8 +73,8 @@ export const SinglePost = () => {
                   className="w-10 h-10 flex-shrink-0 mr-2 object-cover rounded-full bg-gray-200"
                 />
               ) : (
-                <div className="w-10 h-10 flex-shrink-0 text-sm flex items-center justify-center font-semibold object-cover rounded-full bg-blue-500 text-white">
-                  {firstName[0] + lastName[0]}
+                <div className="w-10 h-10 text-lg flex-shrink-0 flex items-center justify-center font-semibold object-cover rounded-full bg-blue-500 text-white">
+                  {firstName[0].toUpperCase()}
                 </div>
               )}
 
