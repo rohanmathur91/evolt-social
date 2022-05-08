@@ -12,7 +12,7 @@ import {
   removePostFromBookmarks,
 } from "../postSlice";
 import { useAuth } from "../../auth";
-import { useModal } from "../../../common";
+import { useModal, CircularLoader } from "../../../common";
 import { getDate, getPostLikedStatus, getPostBookmarkStatus } from "../utils";
 
 export const PostCard = ({ post }) => {
@@ -128,12 +128,24 @@ export const PostCard = ({ post }) => {
             <button
               disabled={isDeleting}
               onClick={handleDeletePostClick}
-              className="py-2 px-4 text-sm flex items-center hover:text-red-500 hover:bg-red-100 rounded"
+              className={`${
+                isDeleting ? "relative" : ""
+              } py-2 px-4 text-sm flex items-center hover:text-red-500 hover:bg-red-100 rounded`}
             >
-              <span className="material-icons-outlined text-xl mr-2">
+              {isDeleting && (
+                <CircularLoader
+                  size="14px"
+                  style="absolute top-0 bottom-0 left-0 right-0 text-red-500"
+                />
+              )}
+              <span
+                className={`${
+                  isDeleting ? "invisible" : ""
+                } material-icons-outlined text-xl mr-2`}
+              >
                 delete
               </span>
-              {isDeleting ? "Deleting..." : "Delete"}
+              <span className={`${isDeleting ? "invisible" : ""}`}>Delete</span>
             </button>
           </div>
         )}
