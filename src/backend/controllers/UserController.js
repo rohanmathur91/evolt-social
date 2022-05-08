@@ -19,8 +19,6 @@ export const getAllUsersHandler = function (schema, request) {
         const fullName = firstName + " " + lastName;
         return (
           username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
           fullName.toLowerCase().includes(searchQuery.toLowerCase())
         );
       }
