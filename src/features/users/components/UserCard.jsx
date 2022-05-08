@@ -62,11 +62,11 @@ export const UserCard = ({
         >
           {isFollowLoader && (
             <CircularLoader
-              size="14px"
+              size="1rem"
               style="absolute top-0 bottom-0 left-0 right-0"
             />
           )}
-          <span className={`${isFollowLoader ? "invisible" : ""}`}>
+          <span className={isFollowLoader ? "invisible" : ""}>
             {isFollowing ? "Following" : "Follow"}
           </span>
         </button>

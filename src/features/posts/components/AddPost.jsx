@@ -2,6 +2,7 @@ import React, { useEffect, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addPost, editPost, usePosts } from "../postSlice";
 import { useAuth } from "../../auth";
+import { CircularLoader } from "../../../common";
 import { emojis, postLimit } from "../data";
 
 export const AddPost = ({ handleShowModal }) => {
@@ -137,16 +138,19 @@ export const AddPost = ({ handleShowModal }) => {
                 postContent.length > postLimit
               }
               className={`btn btn-primary text-sm md:text-base py-1 px-3 border border-blue-500 hover:transition-all ${
-                postContent.length === 0 ? "opacity-70" : ""
+                isLoading ? "relative" : ""
               }`}
             >
-              {isEditMode
-                ? isLoading
-                  ? "Edit post..."
-                  : "Edit post"
-                : isLoading
-                ? "Add post..."
-                : "Add post"}
+              {isLoading && (
+                <CircularLoader
+                  size="1rem"
+                  style="absolute top-0 bottom-0 left-0 right-0"
+                />
+              )}
+
+              <span className={isLoading ? "invisible" : ""}>
+                {isEditMode ? "Edit post" : "Add post"}
+              </span>
             </button>
           </div>
         </div>

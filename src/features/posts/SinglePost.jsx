@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../auth";
 import { usePosts, commentOnPost } from "./postSlice";
-import { Sidebar, TopContributors } from "../../common";
+import { Sidebar, TopContributors, CircularLoader } from "../../common";
 import { PostCard, CommentCard } from "./components";
 import { getSinglePost } from "./utils";
 
@@ -14,6 +14,7 @@ export const SinglePost = () => {
   const dispatch = useDispatch();
   const { posts } = usePosts();
   const [post, setPost] = useState(null);
+  const [isCommentPosting, setIsCommentPosting] = useState(false);
   const [comment, setComment] = useState({
     comment: "",
     replies: [],
@@ -30,7 +31,7 @@ export const SinglePost = () => {
 
   const handleCommentSubmit = (e) => {
     e.preventDefault();
-    dispatch(commentOnPost({ postId, comment }));
+    dispatch(commentOnPost({ postId, comment, setIsCommentPosting }));
     setComment((prevComment) => ({ ...prevComment, comment: "" }));
   };
 
@@ -48,7 +49,7 @@ export const SinglePost = () => {
       <main className="main w-full pb-10 px-2 md:px-0 max-w-xl mx-auto">
         <button
           onClick={() => navigate(-1)}
-          className="mb-4 py-2 px-4 flex items-center justify-center rounded hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
+          className="mb-4 py-2 px-4 flex items-center justify-center rounded text-blue-500 hover:bg-blue-100"
         >
           <span className="material-icons-outlined text-xl mr-1">
             arrow_back
@@ -56,7 +57,7 @@ export const SinglePost = () => {
           Go back
         </button>
         {!post ? (
-          <p className="text-center font-semibold mt-8">Loading...</p>
+          <CircularLoader size="2rem" style="text-blue-500" />
         ) : (
           <>
             <PostCard post={post} />
@@ -89,11 +90,19 @@ export const SinglePost = () => {
                 />
                 <button
                   disabled={!comment.comment}
-                  className={`${
-                    !comment.comment ? "opacity-70" : ""
-                  } btn btn-primary text-sm md:text-base py-1 px-3 hover:transition-all`}
+                  className={`btn btn-primary text-sm md:text-base py-1 px-3 ${
+                    isCommentPosting ? "relative" : ""
+                  }`}
                 >
-                  Post
+                  {isCommentPosting && (
+                    <CircularLoader
+                      size="16px"
+                      style="absolute top-0 bottom-0 left-0 right-0 text-red-500 text-white"
+                    />
+                  )}
+                  <span className={isCommentPosting ? "invisible" : ""}>
+                    Post
+                  </span>
                 </button>
               </div>
             </form>

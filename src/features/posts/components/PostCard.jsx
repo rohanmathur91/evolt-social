@@ -134,7 +134,7 @@ export const PostCard = ({ post }) => {
             >
               {isDeleting && (
                 <CircularLoader
-                  size="14px"
+                  size="1rem"
                   style="absolute top-0 bottom-0 left-0 right-0 text-red-500"
                 />
               )}
@@ -145,7 +145,7 @@ export const PostCard = ({ post }) => {
               >
                 delete
               </span>
-              <span className={`${isDeleting ? "invisible" : ""}`}>Delete</span>
+              <span className={isDeleting ? "invisible" : ""}>Delete</span>
             </button>
           </div>
         )}
