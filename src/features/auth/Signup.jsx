@@ -146,7 +146,7 @@ export const Signup = () => {
           disabled={isLoading}
           className="btn btn-primary py-2 px-4 w-full font-semibold transition-2 mb-2 rounded"
         >
-          {isLoading ? "Signup..." : "Signup"}
+          Signup
         </button>
 
         {error && (
