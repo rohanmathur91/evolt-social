@@ -43,4 +43,22 @@ export const posts = [
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },
+  {
+    _id: uuid(),
+    content:
+      "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores lor repellendus.",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    comments: [],
+    profileUrl: "",
+    imageUrl: "",
+    firstName: "John",
+    lastName: "Doe",
+    username: "johndoe",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+  },
 ];

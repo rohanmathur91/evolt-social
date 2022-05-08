@@ -18,7 +18,7 @@ export const SinglePost = () => {
     comment: "",
     replies: [],
   });
-  const { username, profileUrl, firstName, lastName } = user ?? {};
+  const { username, profileUrl, firstName } = user ?? {};
 
   useEffect(() => {
     setPost(getSinglePost(posts, postId));
