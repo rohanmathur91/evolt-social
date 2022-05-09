@@ -10,7 +10,7 @@ import { EditProfileForm } from "./components";
 export const Profile = () => {
   const { user } = useAuth();
   const { bookmarks } = usePosts();
-  const { isLoading } = useProfile();
+  const { isLoading, followers, following } = useProfile();
   const { modalType, handleModalType } = useModal();
   const dispatch = useDispatch();
   const { _id, bio, firstName, lastName, username, profileUrl } = user;
@@ -32,88 +32,74 @@ export const Profile = () => {
 
       <div className="grid-container">
         <Sidebar />
-        <main className="main bg-white rounded-lg md:col-start-2 md:col-end-[-1]">
-          <div className="flex flex-col pt-6 mb-10">
-            <div className="flex flex-row items-center justify-center p-2 mb-2">
+        <main className="main bg-white pb-20 rounded-lg md:col-start-2 md:col-end-[-1]">
+          <div className="flex flex-col mb-10">
+            <div className="bg-gray-200 h-60 md:rounded-lg"></div>
+            <div className="flex items-center px-4 md:px-10">
               <img
                 alt="profile"
                 loading="lazy"
                 src="https://i.pravatar.cc/300"
-                className="w-28 h-28 md:w-36 md:h-36 bg-gray-200 rounded-full border"
+                className="-mt-16 md:mt-[-74px] border-4 border-white w-28 h-28 md:w-36 md:h-36 bg-gray-200 rounded-full"
               />
-              <div className="ml-4">
-                <div className="flex flex-row items-center flex-wrap">
-                  <span className="text-xl md:text-2xl font-semibold mr-4">
-                    adarshBalika
-                  </span>
 
-                  <div className="mt-2 md:mt-0 flex flex-row items-center">
-                    <button
-                      onClick={() => handleModalType(PROFILEMODAL)}
-                      className="mr-4 rounded text-sm border border-blue-500 text-blue-500 py-1 px-3 hover:transition-all hover:text-white hover:bg-blue-500"
-                    >
-                      Edit Profile
-                    </button>
-                    <button
-                      data-tooltip="Logout"
-                      onClick={handleLogout}
-                      className="flex tooltip flex-row items-center justify-center"
-                    >
-                      <span className="material-icons-outlined md:text-3xl">
-                        logout
-                      </span>
-                    </button>
-                  </div>
-                </div>
-
-                <div className="flex flex-row my-4">
-                  <Link
-                    to="/profile/1"
-                    className="mr-4 text-xs sm:text-sm flex flex-col items-center justify-center"
-                  >
-                    <span className="font-semibold mr-1">10</span>{" "}
-                    <span>Posts</span>
-                  </Link>
-                  <Link
-                    to="/profile/1/followers"
-                    className="mr-4 text-xs sm:text-sm flex flex-col items-center justify-center"
-                  >
-                    <span className="font-semibold mr-1">20</span>
-                    <span>Followers</span>
-                  </Link>
-                  <Link
-                    to="/profile/1/following"
-                    className="mr-4 text-xs sm:text-sm flex flex-col items-center justify-center"
-                  >
-                    <span className="font-semibold mr-1">12</span>
-                    <span>Following</span>
-                  </Link>
-                </div>
-
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  href={`https://google.com`}
-                  className="text-sm sm:text-sm text-blue-500 font-semibold hover:underline line-clamp-1 pr-4"
+              <div className="ml-auto mt-2 flex flex-col">
+                <button
+                  onClick={() => handleModalType(PROFILEMODAL)}
+                  className="rounded md:h-9 text-sm md:text-base border border-blue-500 text-blue-500 py-1 px-3 hover:text-white hover:bg-blue-500"
                 >
-                  https://google.com
-                </a>
+                  Edit Profile
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="flex mt-2 md:h-9 items-center py-1 px-3 justify-center hover:bg-red-100 hover:text-red-500 rounded bg-red-500 text-white text-sm md:text-base"
+                >
+                  Logout
+                  <span className="material-icons-outlined text-base ml-2">
+                    logout
+                  </span>
+                </button>
               </div>
             </div>
-            <p className="mx-4 font-semibold text-sm text-center sm:text-sm line-clamp-1">
-              Utilities for controlling the color of an element's borders.
-            </p>
+
+            <div className="px-4 md:px-10 font-semibold">
+              <h3 className="text-lg md:text-2xl">
+                {firstName} {lastName}
+              </h3>
+              <span className="text-sm md:text-base text-gray-500">
+                @{username}
+              </span>
+            </div>
+            <div className="mt-2 mx-4 md:mx-10">
+              <p className="text-sm md:text-base">{bio}</p>
+              <div className="mt-4">
+                <Link to={`/profile/${username}/followers`}>
+                  <span className="font-semibold">{followers.length}</span>
+                  <span className="ml-2 text-sm hover:underline">
+                    Followers
+                  </span>
+                </Link>
+                <Link to={`/profile/${username}/following`} className="ml-4">
+                  <span className="font-semibold">{following.length}</span>
+                  <span className="ml-2 text-sm hover:underline">
+                    Following
+                  </span>
+                </Link>
+              </div>
+            </div>
           </div>
 
-          <div className="max-w-2xl mx-auto">
-            <div className="border-t flex items-center justify-between">
+          <div className="max-w-3xl mx-auto">
+            <div className="border-b flex items-center justify-between">
               <NavLink
                 end
-                to="/profile/1"
+                to={`/profile/${username}`}
                 className={({ isActive }) =>
                   `${
-                    isActive ? "text-blue-500 border-t border-blue-500" : ""
-                  } font-semibold text-sm md:text-base py-2 px-4`
+                    isActive
+                      ? "text-blue-500 border-b-2 mb-[-0.8px] border-blue-500"
+                      : ""
+                  } font-semibold text-sm md:text-base py-2 px-4 hover:text-blue-500`
                 }
               >
                 Posts
@@ -123,8 +109,10 @@ export const Profile = () => {
                 to="/profile/1/followers"
                 className={({ isActive }) =>
                   `${
-                    isActive ? "text-blue-500 border-t border-blue-500" : ""
-                  } font-semibold text-sm md:text-base py-2 px-4`
+                    isActive
+                      ? "text-blue-500 border-b-2 mb-[-0.8px] border-blue-500"
+                      : ""
+                  } font-semibold text-sm md:text-base py-2 px-4 hover:text-blue-500`
                 }
               >
                 Followers
@@ -134,8 +122,10 @@ export const Profile = () => {
                 to="/profile/1/following"
                 className={({ isActive }) =>
                   `${
-                    isActive ? "text-blue-500 border-t border-blue-500" : ""
-                  } font-semibold text-sm md:text-base py-2 px-4`
+                    isActive
+                      ? "text-blue-500 border-b-2 mb-[-0.8px] border-blue-500"
+                      : ""
+                  } font-semibold text-sm md:text-base py-2 px-4 hover:text-blue-500`
                 }
               >
                 Following

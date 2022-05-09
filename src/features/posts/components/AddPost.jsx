@@ -126,7 +126,7 @@ export const AddPost = ({ handleModalType }) => {
             <button
               type="button"
               onClick={() => handleModalType("")}
-              className="rounded text-sm md:text-base border mx-2 border-blue-500 text-blue-500 py-1 px-3 hover:transition-all hover:text-white hover:bg-blue-500"
+              className="rounded text-sm md:text-base border mx-2 border-blue-500 text-blue-500 py-1 px-3 hover:text-white hover:bg-blue-500"
             >
               Cancel
             </button>
