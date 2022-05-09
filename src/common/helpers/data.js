@@ -4,5 +4,5 @@ export const sideBarData = [
   { path: "/explore", icon: "explore", text: "Explore" },
   { path: "/notifications", icon: "notifications", text: "Notification" },
   { path: "/bookmarks", icon: "bookmark_border", text: "Bookmarks" },
-  { path: "/profile/1", icon: "perm_identity", text: "Profile" },
+  { path: "/profile/:userId", icon: "perm_identity", text: "Profile" },
 ];

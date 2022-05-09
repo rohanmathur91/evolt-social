@@ -1,8 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../features";
 import { sideBarData } from "../helpers";
 
 export const Sidebar = () => {
+  const { user } = useAuth();
+
   return (
     <aside className="md:left-aside z-[2] md:ml-auto sticky bottom-3 left-0 right-0 md:top-[15vh] md:w-[16rem] mx-3 md:mx-0 md:py-2 md:h-[80vh] rounded md:rounded-lg md:border bg-white/60 backdrop-blur-sm">
       <ul className="w-full grid grid-cols-5 md:block gap-1 md:gap-0">
@@ -14,8 +17,8 @@ export const Sidebar = () => {
             } flex-grow md:flex-grow-0 md:mb-1 md:mx-2 h-15 hover:transition-all`}
           >
             <NavLink
-              to={path}
               title={text}
+              to={text === "Profile" ? `/profile/${user?._id}` : path}
               className={({ isActive }) =>
                 `${
                   isActive ? "bg-blue-100/70 text-blue-500" : ""
