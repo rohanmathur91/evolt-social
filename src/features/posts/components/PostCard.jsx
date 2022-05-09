@@ -136,7 +136,7 @@ export const PostCard = ({ post }) => {
                 <CircularLoader
                   size="1rem"
                   position="center"
-                  style="text-red-500"
+                  customStyle="text-red-500"
                 />
               )}
               <span

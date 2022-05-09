@@ -57,7 +57,7 @@ export const SinglePost = () => {
           Go back
         </button>
         {!post ? (
-          <CircularLoader size="2rem" style="text-blue-500" />
+          <CircularLoader size="2rem" customStyle="text-blue-500" />
         ) : (
           <>
             <PostCard post={post} />
@@ -98,7 +98,7 @@ export const SinglePost = () => {
                     <CircularLoader
                       size="16px"
                       position="center"
-                      style="text-red-500 text-white"
+                      customStyle="text-red-500 text-white"
                     />
                   )}
                   <span className={isCommentPosting ? "invisible" : ""}>

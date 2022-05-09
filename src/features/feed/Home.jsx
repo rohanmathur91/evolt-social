@@ -18,7 +18,7 @@ export const Home = () => {
 
       <main className="main pb-20 px-2 md:px-0">
         {isLoading ? (
-          <CircularLoader size="2rem" style="mt-8 text-blue-500" />
+          <CircularLoader size="2rem" customStyle="mt-8 text-blue-500" />
         ) : posts.length > 0 ? (
           posts.map((post) => <PostCard key={post._id} post={post} />)
         ) : (

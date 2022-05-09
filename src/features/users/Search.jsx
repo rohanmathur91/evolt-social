@@ -57,11 +57,11 @@ export const Search = () => {
             <p className="text-center font-semibold mt-8">
               {searchQuery ? (
                 <span className="flex items-center justify-center">
-                  <CircularLoader size="1rem" style="text-blue-500" />
+                  <CircularLoader size="1rem" customStyle="text-blue-500" />
                   <span className="ml-4">Searching for "{searchQuery}"</span>
                 </span>
               ) : (
-                <CircularLoader size="2rem" style="text-blue-500" />
+                <CircularLoader size="2rem" customStyle="text-blue-500" />
               )}
             </p>
           ) : userlist.length > 0 ? (
