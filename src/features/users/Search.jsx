@@ -23,6 +23,10 @@ export const Search = () => {
     setSearchQuery(e.target.value);
   };
 
+  const handleClearSearchQuery = () => {
+    setSearchQuery("");
+  };
+
   const handleInputFocus = useCallback((node) => {
     if (node) {
       node.focus();
@@ -37,7 +41,7 @@ export const Search = () => {
       <main className="main py-3 px-4 bg-white rounded-lg">
         <h4 className="font-semibold mt-4 mb-2">Search your friends.</h4>
         <label htmlFor="search" className="relative">
-          <span className="material-icons-outlined absolute text-slate-500 left-[10px] bottom-[9px] translate-y-1/2">
+          <span className="material-icons-outlined absolute text-slate-500 left-[10px] top-[-2px]">
             search
           </span>
           <input
@@ -48,8 +52,17 @@ export const Search = () => {
             placeholder="Search..."
             ref={handleInputFocus}
             onChange={handleSearchQuery}
-            className="bg-slate-100 shadow-sm pl-10 rounded-lg focus:bg-slate-50 w-full border focus:border focus:border-slate-300"
+            className="bg-slate-100 shadow-sm px-10 rounded-lg focus:bg-slate-50 w-full border focus:border focus:border-slate-300"
           />
+          {searchQuery && (
+            <button
+              title="Clear"
+              onClick={handleClearSearchQuery}
+              className="flex items-center hover:bg-slate-200 rounded text-slate-500 text-xl absolute right-[10px] top-[-2px]"
+            >
+              <span className="material-icons-outlined">close</span>
+            </button>
+          )}
         </label>
 
         <div className="mt-8">
