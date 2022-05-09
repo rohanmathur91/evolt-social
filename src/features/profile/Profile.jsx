@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, Outlet, NavLink } from "react-router-dom";
-import { Modal, Sidebar, useModal } from "../../common";
+import { Modal, Sidebar, useModal, PROFILEMODAL } from "../../common";
 import { logoutUser } from "../auth";
 
 export const Profile = () => {
-  const { showModal, handleShowModal } = useModal();
+  const { modalType, handleModalType } = useModal();
   const [profileImage, setProfileImage] = useState(null);
   const dispatch = useDispatch();
 
@@ -18,14 +18,14 @@ export const Profile = () => {
 
   return (
     <>
-      {showModal && (
-        <Modal handleShowModal={handleShowModal}>
+      {modalType === PROFILEMODAL && (
+        <Modal handleModalType={handleModalType}>
           <form className="bg-white flex flex-col p-4 rounded relative">
             <div className="absolute right-0 top-0">
               <button
                 type="button"
                 data-tooltip="Close"
-                onClick={() => handleShowModal(false)}
+                onClick={() => handleModalType("")}
                 className="tooltip p-2 m-2 flex rounded items-center justify-center hover:bg-blue-100 hover:text-blue-500"
               >
                 <span className="material-icons-outlined">close</span>
@@ -118,7 +118,7 @@ export const Profile = () => {
 
                   <div className="mt-2 md:mt-0 flex flex-row items-center">
                     <button
-                      onClick={() => handleShowModal(true)}
+                      onClick={() => handleModalType(PROFILEMODAL)}
                       className="mr-4 rounded text-sm border border-blue-500 text-blue-500 py-1 px-3 hover:transition-all hover:text-white hover:bg-blue-500"
                     >
                       Edit Profile

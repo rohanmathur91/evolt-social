@@ -166,7 +166,7 @@ const postSlice = createSlice({
   initialState: {
     posts: [],
     bookmarks: [],
-    showModal: false,
+    modalType: "",
     isLoading: false,
     likeError: "",
     deleteError: "",
@@ -175,8 +175,8 @@ const postSlice = createSlice({
     currentEditPost: null,
   },
   reducers: {
-    setModalDisplay: (state, { payload }) => {
-      state.showModal = payload;
+    setModalType: (state, { payload }) => {
+      state.modalType = payload;
     },
 
     setCurrentEditPost: (state, { payload }) => {
@@ -204,11 +204,12 @@ const postSlice = createSlice({
       state.isLoading = true;
     },
     [addPost.fulfilled]: (state, { payload }) => {
+      state.modalType = "";
       state.isLoading = false;
-      state.showModal = false;
       state.posts = payload.posts.reverse();
     },
     [addPost.rejected]: (state) => {
+      state.modalType = "";
       state.isLoading = false;
       state.errorMessage = "Could not add the posts!";
     },
@@ -234,16 +235,16 @@ const postSlice = createSlice({
       state.isLoading = true;
     },
     [editPost.fulfilled]: (state, { payload }) => {
-      state.showModal = false;
+      state.modalType = "";
       state.isLoading = false;
       state.isEditMode = false;
       state.currentEditPost = null;
       state.posts = payload.reverse();
     },
     [editPost.rejected]: (state) => {
+      state.modalType = "";
       state.isLoading = false;
       state.isEditMode = false;
-      state.showModal = false;
     },
     [getBookmarkPosts.pending]: (state) => {
       state.isLoading = true;
@@ -270,5 +271,5 @@ const postSlice = createSlice({
 });
 
 export const postReducer = postSlice.reducer;
-export const { setModalDisplay, setCurrentEditPost } = postSlice.actions;
+export const { setModalType, setCurrentEditPost } = postSlice.actions;
 export const usePosts = () => useSelector((state) => state.posts);

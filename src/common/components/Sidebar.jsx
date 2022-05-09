@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { sideBarData } from "../data";
+import { sideBarData } from "../helpers";
 
 export const Sidebar = () => {
   return (

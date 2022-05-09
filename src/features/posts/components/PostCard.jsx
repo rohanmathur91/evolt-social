@@ -12,7 +12,7 @@ import {
   removePostFromBookmarks,
 } from "../postSlice";
 import { useAuth } from "../../auth";
-import { useModal, CircularLoader } from "../../../common";
+import { useModal, CircularLoader, POSTMODAL } from "../../../common";
 import { getDate, getPostLikedStatus, getPostBookmarkStatus } from "../utils";
 
 export const PostCard = ({ post }) => {
@@ -21,7 +21,7 @@ export const PostCard = ({ post }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const dispatch = useDispatch();
-  const { handleShowModal } = useModal();
+  const { handleModalType } = useModal();
   const [showMore, setShowMore] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isLikeLoading, setIsLikeLoading] = useState(false);
@@ -46,7 +46,7 @@ export const PostCard = ({ post }) => {
 
   const handleEditPostClick = () => {
     setShowMore(false);
-    handleShowModal(true);
+    handleModalType(POSTMODAL);
     dispatch(setCurrentEditPost(post));
   };
 

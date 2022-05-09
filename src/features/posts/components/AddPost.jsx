@@ -5,7 +5,7 @@ import { useAuth } from "../../auth";
 import { CircularLoader } from "../../../common";
 import { emojis, postLimit } from "../data";
 
-export const AddPost = ({ handleShowModal }) => {
+export const AddPost = ({ handleModalType }) => {
   const { user } = useAuth();
   const dispatch = useDispatch();
   const { isLoading } = usePosts();
@@ -125,7 +125,7 @@ export const AddPost = ({ handleShowModal }) => {
           <div className="ml-auto md:ml-1 mt-1 md:mt-0">
             <button
               type="button"
-              onClick={() => handleShowModal(false)}
+              onClick={() => handleModalType("")}
               className="rounded text-sm md:text-base border mx-2 border-blue-500 text-blue-500 py-1 px-3 hover:transition-all hover:text-white hover:bg-blue-500"
             >
               Cancel
@@ -173,5 +173,5 @@ export const AddPost = ({ handleShowModal }) => {
 };
 
 AddPost.defaultProps = {
-  handleShowModal: () => {},
+  handleModalType: () => {},
 };

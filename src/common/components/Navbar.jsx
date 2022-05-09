@@ -3,18 +3,19 @@ import { Link, useLocation } from "react-router-dom";
 import { AddPost } from "../../features";
 import { useModal } from "../hooks";
 import { Modal } from "./";
+import { POSTMODAL } from "../helpers";
 
 export const Navbar = () => {
   const { pathname } = useLocation();
-  const { showModal, handleShowModal } = useModal();
+  const { modalType, handleModalType } = useModal();
 
   return (
     pathname !== "/login" &&
     pathname !== "/signup" && (
       <>
-        {showModal && (
-          <Modal handleShowModal={handleShowModal}>
-            <AddPost handleShowModal={handleShowModal} />
+        {modalType === POSTMODAL && (
+          <Modal handleModalType={handleModalType}>
+            <AddPost handleModalType={handleModalType} />
           </Modal>
         )}
 
@@ -29,7 +30,7 @@ export const Navbar = () => {
             <div className="ml-auto flex flex-row items-center w-100">
               <button
                 data-tooltip="Add post"
-                onClick={() => handleShowModal(true)}
+                onClick={() => handleModalType(POSTMODAL)}
                 className="tooltip w-11 h-11 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100/80"
               >
                 <span className="material-icons-outlined md:text-3xl">
