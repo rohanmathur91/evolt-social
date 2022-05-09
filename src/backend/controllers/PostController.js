@@ -111,6 +111,7 @@ export const createPostHandler = function (schema, request) {
       },
       comments: [],
       imageUrl: "",
+      userId: user._id,
       username: user.username,
       profileUrl: user.profileUrl,
       firstName: user.firstName,
