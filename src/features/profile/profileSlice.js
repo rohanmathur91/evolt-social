@@ -42,19 +42,49 @@ export const unfollowUser = createAsyncThunk(
   }
 );
 
+export const getCurrentUserPosts = createAsyncThunk(
+  "profile/getCurrentUserPosts",
+  async (username) => {
+    try {
+      const { data: posts } = await axios.get(`/api/posts/user/${username}`);
+
+      return posts;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 const profileSlice = createSlice({
   name: "profile",
   initialState: {
+    isLoading: false,
     followers: [],
     following: [],
+    currentUserPosts: [],
   },
   reducers: {},
   extraReducers: {
+    [followUser.pending]: (state) => {
+      state.isLoading = true;
+    },
     [followUser.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
       state.following = payload;
     },
+    [unfollowUser.pending]: (state) => {
+      state.isLoading = true;
+    },
     [unfollowUser.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
       state.following = payload;
+    },
+    [getCurrentUserPosts.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getCurrentUserPosts.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.currentUserPosts = payload;
     },
   },
 });
