@@ -31,6 +31,7 @@ export const PostCard = ({ post }) => {
     imageUrl,
     profileUrl,
     content,
+    userId,
     username,
     firstName,
     lastName,
@@ -79,7 +80,7 @@ export const PostCard = ({ post }) => {
       <section className="p-2 pl-4 pt-4 flex items-center">
         <Link
           title={username}
-          to={`/profile/${username}`}
+          to={`/profile/${userId}`}
           className="flex items-center"
         >
           {profileUrl ? (
