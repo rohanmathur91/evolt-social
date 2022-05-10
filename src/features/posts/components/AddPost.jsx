@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addPost, editPost, usePosts } from "../postSlice";
 import { useAuth } from "../../auth";
@@ -37,12 +37,6 @@ export const AddPost = ({ handleModalType }) => {
     setPostContent((prev) => (prev.length < postLimit ? prev + emoji : prev));
   };
 
-  const handleTextAreaFocus = useCallback((node) => {
-    if (node) {
-      node.focus();
-    }
-  }, []);
-
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const { firstName, lastName } = user;
@@ -69,9 +63,9 @@ export const AddPost = ({ handleModalType }) => {
       >
         <textarea
           required
+          autoFocus
           maxLength={postLimit}
           value={postContent}
-          ref={handleTextAreaFocus}
           onChange={handleContentChange}
           placeholder="What's on your mind?"
           className="w-full h-36 p-3 resize-none rounded border focus:outline-2 focus:outline-blue-500"
