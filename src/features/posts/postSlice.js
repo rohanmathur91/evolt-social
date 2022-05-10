@@ -15,11 +15,10 @@ export const addPost = createAsyncThunk("posts/addPost", async (postData) => {
 
 export const deletePost = createAsyncThunk(
   "posts/deletePost",
-  async ({ postId, navigate, setIsDeleting }) => {
+  async ({ postId, setIsDeleting }) => {
     try {
       setIsDeleting(true);
       const { data: posts } = await axios.delete(`/api/posts/${postId}`);
-      navigate("/");
 
       return posts;
     } catch (error) {

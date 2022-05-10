@@ -57,7 +57,7 @@ export const AddPost = ({ handleModalType }) => {
       dispatch(editPost({ ...currentEditPost, ...postData }));
     }
 
-    if (pathname !== "/") {
+    if (pathname !== "/" && !pathname.includes("profile")) {
       navigate("/");
     }
   };

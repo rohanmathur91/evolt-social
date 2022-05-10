@@ -52,7 +52,10 @@ export const PostCard = ({ post }) => {
   };
 
   const handleDeletePostClick = () => {
-    dispatch(deletePost({ postId: _id, navigate, setIsDeleting }));
+    dispatch(deletePost({ postId: _id, setIsDeleting }));
+    if (pathname.includes("post")) {
+      navigate("/");
+    }
   };
 
   const handleLikePostClick = () => {

@@ -24,14 +24,14 @@ export const followUser = createAsyncThunk(
 
 export const unfollowUser = createAsyncThunk(
   "profile/unfollowUser",
-  async ({ followUserId, setIsFollowLoader }) => {
+  async ({ followingUserId, setIsFollowLoader }) => {
     try {
       setIsFollowLoader(true);
       const {
         data: {
           user: { following },
         },
-      } = await axios.post(`/api/users/unfollow/${followUserId}`);
+      } = await axios.post(`/api/users/unfollow/${followingUserId}`);
 
       return following;
     } catch (error) {
@@ -42,29 +42,35 @@ export const unfollowUser = createAsyncThunk(
   }
 );
 
-export const getCurrentUserPosts = createAsyncThunk(
-  "profile/getCurrentUserPosts",
-  async (username) => {
-    try {
-      const { data: posts } = await axios.get(`/api/posts/user/${username}`);
+export const getUser = createAsyncThunk("profile/getUser", async (userId) => {
+  try {
+    const {
+      data: { user },
+    } = await axios.get(`/api/users/${userId}`);
 
-      return posts;
-    } catch (error) {
-      console.log(error);
-    }
+    return user;
+  } catch (error) {
+    console.log(error.response);
   }
-);
+});
 
 const profileSlice = createSlice({
   name: "profile",
   initialState: {
-    isLoading: false,
     followers: [],
     following: [],
-    currentUserPosts: [],
+    currentUser: null,
+    isUserLoading: false,
   },
   reducers: {},
   extraReducers: {
+    [getUser.pending]: (state) => {
+      state.isUserLoading = true;
+    },
+    [getUser.fulfilled]: (state, { payload }) => {
+      state.isUserLoading = false;
+      state.currentUser = payload;
+    },
     [followUser.pending]: (state) => {
       state.isLoading = true;
     },
@@ -78,13 +84,6 @@ const profileSlice = createSlice({
     [unfollowUser.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
       state.following = payload;
-    },
-    [getCurrentUserPosts.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [getCurrentUserPosts.fulfilled]: (state, { payload }) => {
-      state.isLoading = false;
-      state.currentUserPosts = payload;
     },
   },
 });

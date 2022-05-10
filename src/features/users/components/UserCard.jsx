@@ -20,11 +20,11 @@ export const UserCard = ({
   const [isFollowLoader, setIsFollowLoader] = useState(false);
   const isFollowing = getFollowingStatus(following, _id);
 
-  const handleFollowClick = (followUserId) => {
+  const handleFollowClick = (userId) => {
     if (!isFollowing) {
-      dispatch(followUser({ followUserId, setIsFollowLoader }));
+      dispatch(followUser({ followUserId: userId, setIsFollowLoader }));
     } else {
-      dispatch(unfollowUser({ followUserId, setIsFollowLoader }));
+      dispatch(unfollowUser({ followingUserId: userId, setIsFollowLoader }));
     }
   };
 
@@ -58,7 +58,7 @@ export const UserCard = ({
         <button
           disabled={isFollowLoader}
           onClick={() => handleFollowClick(_id)}
-          className="ml-auto relative self-start text-xs md:text-sm bg-blue-500 text-white py-1 px-3 rounded hover:opacity-70"
+          className="btn btn-primary ml-auto relative self-start text-xs md:text-sm py-1 px-3"
         >
           {isFollowLoader && <CircularLoader size="1rem" position="center" />}
           <span className={isFollowLoader ? "invisible" : ""}>
