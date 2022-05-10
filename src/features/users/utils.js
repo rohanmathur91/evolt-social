@@ -3,9 +3,9 @@
  *
  * @param  {array} following
  * @param  {string} followUserId
- * @returns {boolean} user in following
+ * @returns {boolean} is user in following
  */
 
 export const getFollowingStatus = (following, followUserId) => {
-  return following.some(({ _id }) => _id === followUserId);
+  return following?.some(({ _id }) => _id === followUserId);
 };

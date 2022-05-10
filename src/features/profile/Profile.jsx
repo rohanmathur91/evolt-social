@@ -17,12 +17,11 @@ import { getUser } from ".";
 export const Profile = () => {
   const { userId } = useParams();
   const { user: loggedinUser } = useAuth();
-  const { currentUser, isUserLoading } = useProfile();
+  const { currentUser, following, isUserLoading } = useProfile();
   const [isFollowLoader, setIsFollowLoader] = useState(false);
-  const { followers, following } = useProfile();
   const { modalType, handleModalType } = useModal();
-  const isFollowing = getFollowingStatus(following, userId);
   const dispatch = useDispatch();
+  const isFollowing = getFollowingStatus(following, userId);
   const {
     _id,
     bio,
@@ -148,16 +147,20 @@ export const Profile = () => {
                   </span>
 
                   <div className="mt-3 mb-4">
-                    <Link to={`/profile/${_id}/followers`}>
-                      <span className="font-semibold">{followers.length}</span>
-                      <span className="ml-2 text-sm hover:underline">
-                        Followers
+                    <Link to={`/profile/${_id}/following`}>
+                      <span className="font-semibold">
+                        {currentUser?.following.length || 0}
                       </span>
-                    </Link>
-                    <Link to={`/profile/${_id}/following`} className="ml-4">
-                      <span className="font-semibold">{following.length}</span>
                       <span className="ml-2 text-sm hover:underline">
                         Following
+                      </span>
+                    </Link>
+                    <Link to={`/profile/${_id}/followers`} className="ml-4">
+                      <span className="font-semibold">
+                        {currentUser?.followers.length || 0}
+                      </span>
+                      <span className="ml-2 text-sm hover:underline">
+                        Followers
                       </span>
                     </Link>
                   </div>

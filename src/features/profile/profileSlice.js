@@ -9,11 +9,12 @@ export const followUser = createAsyncThunk(
       setIsFollowLoader(true);
       const {
         data: {
-          user: { following },
+          followUser,
+          user: { followers, following },
         },
       } = await axios.post(`/api/users/follow/${followUserId}`);
 
-      return following;
+      return { followUser, followers, following };
     } catch (error) {
       console.log(error);
     } finally {
@@ -29,11 +30,12 @@ export const unfollowUser = createAsyncThunk(
       setIsFollowLoader(true);
       const {
         data: {
-          user: { following },
+          followUser,
+          user: { followers, following },
         },
       } = await axios.post(`/api/users/unfollow/${followingUserId}`);
 
-      return following;
+      return { followUser, followers, following };
     } catch (error) {
       console.log(error.response);
     } finally {
@@ -76,14 +78,18 @@ const profileSlice = createSlice({
     },
     [followUser.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      state.following = payload;
+      state.following = payload.following;
+      state.followers = payload.followers;
+      state.currentUser = payload.followUser;
     },
     [unfollowUser.pending]: (state) => {
       state.isLoading = true;
     },
     [unfollowUser.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      state.following = payload;
+      state.following = payload.following;
+      state.followers = payload.followers;
+      state.currentUser = payload.followUser;
     },
   },
 });
