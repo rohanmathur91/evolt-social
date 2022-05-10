@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addPost, editPost, usePosts } from "../postSlice";
 import { useAuth } from "../../auth";
@@ -7,7 +8,9 @@ import { emojis, postLimit } from "../data";
 
 export const AddPost = ({ handleModalType }) => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const { isLoading } = usePosts();
   const { isEditMode, currentEditPost } = usePosts();
   const [postImage, setPostImage] = useState("");
@@ -52,6 +55,10 @@ export const AddPost = ({ handleModalType }) => {
       dispatch(addPost(postData));
     } else {
       dispatch(editPost({ ...currentEditPost, ...postData }));
+    }
+
+    if (pathname !== "/") {
+      navigate("/");
     }
   };
 
