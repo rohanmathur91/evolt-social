@@ -2,6 +2,7 @@ import React, { useEffect, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addPost, editPost, usePosts } from "../postSlice";
 import { useAuth } from "../../auth";
+import { CircularLoader } from "../../../common";
 import { emojis, postLimit } from "../data";
 
 export const AddPost = ({ handleShowModal }) => {
@@ -136,17 +137,15 @@ export const AddPost = ({ handleShowModal }) => {
                 postContent.length === 0 ||
                 postContent.length > postLimit
               }
-              className={`btn btn-primary text-sm md:text-base py-1 px-3 border border-blue-500 hover:transition-all ${
-                postContent.length === 0 ? "opacity-70" : ""
+              className={`btn btn-primary text-sm md:text-base py-1 px-3 border border-blue-500 ${
+                isLoading ? "relative" : ""
               }`}
             >
-              {isEditMode
-                ? isLoading
-                  ? "Edit post..."
-                  : "Edit post"
-                : isLoading
-                ? "Add post..."
-                : "Add post"}
+              {isLoading && <CircularLoader size="1rem" position="center" />}
+
+              <span className={isLoading ? "invisible" : ""}>
+                {isEditMode ? "Edit post" : "Add post"}
+              </span>
             </button>
           </div>
         </div>
@@ -161,7 +160,7 @@ export const AddPost = ({ handleShowModal }) => {
                 key={index}
                 type="button"
                 onClick={() => handleEmojiClick(emoji)}
-                className="m-1 w-7 h-7 flex flex-row items-center justify-center hover:bg-slate-200 hover:scale-110 transition-all rounded p-1"
+                className="m-1 w-7 h-7 flex flex-row items-center justify-center hover:bg-slate-200 hover:scale-110 rounded p-1"
               >
                 {emoji}
               </button>

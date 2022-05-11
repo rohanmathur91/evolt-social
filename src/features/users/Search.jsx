@@ -1,51 +1,89 @@
-import React from "react";
-import { Sidebar, TopContributors } from "../../common";
+import React, { useState, useEffect, useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { useUsers, getSearchedUsers } from "./userSlice";
+import { Sidebar, TopContributors, CircularLoader } from "../../common";
+import { UserCard } from "./components";
 
 export const Search = () => {
+  const dispatch = useDispatch();
+  const { userlist, isLoading } = useUsers();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    dispatch(getSearchedUsers.pending());
+
+    let timerId = setTimeout(() => {
+      dispatch(getSearchedUsers(searchQuery));
+    }, 600);
+
+    return () => timerId && clearTimeout(timerId);
+  }, [dispatch, searchQuery]);
+
+  const handleSearchQuery = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleClearSearchQuery = () => {
+    setSearchQuery("");
+  };
+
+  const handleInputFocus = useCallback((node) => {
+    if (node) {
+      node.focus();
+    }
+  }, []);
+
   return (
     <div className="grid-container">
       <Sidebar />
       <TopContributors />
 
-      <main className="main p-3 bg-white">
+      <main className="main py-3 px-4 bg-white rounded-lg">
         <h4 className="font-semibold mt-4 mb-2">Search your friends.</h4>
         <label htmlFor="search" className="relative">
-          <span className="material-icons-outlined absolute text-slate-500 left-[10px] bottom-[50%] translate-y-1/2">
+          <span className="material-icons-outlined absolute text-slate-500 left-[10px] top-[-2px]">
             search
           </span>
           <input
             id="search"
             type="text"
+            value={searchQuery}
+            autoComplete="off"
             placeholder="Search..."
-            className="bg-slate-100 pl-10 focus:bg-slate-50 w-full rounded border focus:border focus:border-slate-300"
+            ref={handleInputFocus}
+            onChange={handleSearchQuery}
+            className="bg-slate-100 shadow-sm px-10 rounded-lg focus:bg-slate-50 w-full border focus:border focus:border-slate-300"
           />
+          {searchQuery && (
+            <button
+              title="Clear"
+              onClick={handleClearSearchQuery}
+              className="flex items-center hover:bg-slate-200 rounded text-slate-500 text-xl absolute right-[10px] top-[-2px]"
+            >
+              <span className="material-icons-outlined">close</span>
+            </button>
+          )}
         </label>
 
-        <div className="mt-8 grid lg:auto-cols-fr">
-          {[...Array(10)].map(() => (
-            <div className="p-2 pt-3 my-2 lg:mr-1 flex items-center border rounded">
-              <img
-                alt="pravatar"
-                loading="lazy"
-                src="https://i.pravatar.cc/300"
-                className="w-10 h-10 mr-4 object-cover rounded-full bg-gray-200"
-              />
-
-              <div className="leading-4">
-                <p className="font-semibold line-clamp-1">
-                  Adarsh Balika
-                  <span className="text-gray-500 ml-1">@adarsh</span>
-                </p>
-                <p className="text-sm text-gray-500 line-clamp-1">
-                  Lorem ipsum dolor sit amet consectetur
-                </p>
-              </div>
-
-              <button className="ml-auto self-start text-xs md:text-sm bg-blue-500 text-white py-1 px-3 rounded hover:opacity-70">
-                Follow
-              </button>
-            </div>
-          ))}
+        <div className="mt-8">
+          {isLoading ? (
+            <p className="text-center font-semibold mt-8">
+              {searchQuery ? (
+                <span className="flex items-center justify-center">
+                  <CircularLoader size="1rem" customStyle="text-blue-500" />
+                  <span className="ml-4">Searching for "{searchQuery}"</span>
+                </span>
+              ) : (
+                <CircularLoader size="2rem" customStyle="text-blue-500" />
+              )}
+            </p>
+          ) : userlist.length > 0 ? (
+            userlist.map((user) => <UserCard key={user._id} {...user} />)
+          ) : (
+            <p className="text-center font-semibold mt-8">
+              No results matched with "{searchQuery}"
+            </p>
+          )}
         </div>
       </main>
     </div>

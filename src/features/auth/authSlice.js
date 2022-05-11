@@ -94,4 +94,4 @@ export const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
-export const useAuth = () => useSelector(({ auth }) => auth);
+export const useAuth = () => useSelector((state) => state.auth);

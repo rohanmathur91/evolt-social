@@ -1,4 +1,3 @@
-export { Posts } from "./Posts";
+export * from "./components";
+export * from "./profileSlice";
 export { Profile } from "./Profile";
-export { Followers } from "./Followers";
-export { Following } from "./Following";

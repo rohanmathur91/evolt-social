@@ -12,7 +12,7 @@ import {
   removePostFromBookmarks,
 } from "../postSlice";
 import { useAuth } from "../../auth";
-import { useModal } from "../../../common";
+import { useModal, CircularLoader } from "../../../common";
 import { getDate, getPostLikedStatus, getPostBookmarkStatus } from "../utils";
 
 export const PostCard = ({ post }) => {
@@ -75,7 +75,7 @@ export const PostCard = ({ post }) => {
   };
 
   return (
-    <article className="border rounded-lg mb-4 max-w-xl mx-auto shadow-md bg-white relative">
+    <article className="border rounded-lg my-4 md:mt-0 max-w-xl mx-auto shadow-md bg-white relative">
       <section className="p-2 pl-4 pt-4 flex items-center">
         <Link
           title={username}
@@ -90,8 +90,8 @@ export const PostCard = ({ post }) => {
               className="w-11 h-11 md:w-12 md:h-12 mr-4 object-cover rounded-full bg-gray-200"
             />
           ) : (
-            <div className="h-11 min-w-[2.75rem] md:w-12 md:h-12 mr-4 flex items-center justify-center font-semibold object-cover rounded-full bg-blue-500 text-white">
-              {firstName[0] + lastName[0]}
+            <div className="h-11 min-w-[2.75rem] text-xl md:w-12 md:h-12 mr-4 flex items-center justify-center font-semibold object-cover rounded-full bg-blue-500 text-white">
+              {firstName[0].toUpperCase()}
             </div>
           )}
 
@@ -100,7 +100,7 @@ export const PostCard = ({ post }) => {
               {firstName} {lastName}
             </span>
             <span className="text-gray-500 text-sm font-normal flex items-center line-clamp-1">
-              @{username} <span className="mx-1 font-semibold">•</span>{" "}
+              @{username} <span className="mx-1 font-semibold">•</span>
               {getDate(updatedAt)}
             </span>
           </div>
@@ -128,12 +128,25 @@ export const PostCard = ({ post }) => {
             <button
               disabled={isDeleting}
               onClick={handleDeletePostClick}
-              className="py-2 px-4 text-sm flex items-center hover:text-blue-500 hover:bg-blue-100 rounded"
+              className={`${
+                isDeleting ? "relative" : ""
+              } py-2 px-4 text-sm flex items-center hover:text-red-500 hover:bg-red-100 rounded`}
             >
-              <span className="material-icons-outlined text-xl mr-2">
+              {isDeleting && (
+                <CircularLoader
+                  size="1rem"
+                  position="center"
+                  customStyle="text-red-500"
+                />
+              )}
+              <span
+                className={`${
+                  isDeleting ? "invisible" : ""
+                } material-icons-outlined text-xl mr-2`}
+              >
                 delete
               </span>
-              {isDeleting ? "Deleting..." : "Delete"}
+              <span className={isDeleting ? "invisible" : ""}>Delete</span>
             </button>
           </div>
         )}
@@ -151,25 +164,25 @@ export const PostCard = ({ post }) => {
 
       <p
         onClick={handleSinglePostClick}
-        className="py-2 px-5 text-sm lg:text-base cursor-pointer"
+        className="py-2 px-5 text-sm lg:text-base cursor-pointer mb-2"
       >
         {content}
       </p>
-      <section className="flex flex-row items-center justify-between mt-2 mb-3 mx-5">
+      <section className="flex flex-row items-center justify-between py-2 mx-5 border-t">
         <div className="flex text-gray-900">
           <div className="flex items-center w-16">
             <button
               data-tooltip="Like"
               disabled={isLikeLoading}
               onClick={handleLikePostClick}
-              className="tooltip w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
+              className="tooltip w-10 h-10 flex items-center justify-center rounded-full hover:text-blue-500 hover:bg-blue-100"
             >
               {isPostLiked ? (
-                <span className="material-icons text-xl text-blue-500">
+                <span className="material-icons text-xl sm:text-[22px] text-blue-500">
                   thumb_up
                 </span>
               ) : (
-                <span className="material-icons-outlined text-xl">
+                <span className="material-icons-outlined text-xl sm:text-[22px]">
                   thumb_up
                 </span>
               )}
@@ -181,9 +194,11 @@ export const PostCard = ({ post }) => {
             <button
               data-tooltip="Comment"
               onClick={handleSinglePostClick}
-              className="tooltip w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
+              className="tooltip w-10 h-10 flex items-center justify-center rounded-full hover:text-blue-500 hover:bg-blue-100"
             >
-              <span className="material-icons-outlined text-xl">comment</span>
+              <span className="material-icons-outlined text-xl sm:text-[22px]">
+                comment
+              </span>
             </button>
             <span className="text-sm ml-1">{comments.length}</span>
           </div>
@@ -192,14 +207,14 @@ export const PostCard = ({ post }) => {
         <button
           data-tooltip="Bookmark"
           onClick={handleBookmarkPostClick}
-          className="tooltip w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
+          className="tooltip w-10 h-10 flex items-center justify-center rounded-full hover:text-blue-500 hover:bg-blue-100"
         >
           {isBookmarked ? (
-            <span className="material-icons text-xl text-blue-500">
+            <span className="material-icons text-xl text-blue-500 sm:text-[22px]">
               bookmark
             </span>
           ) : (
-            <span className="material-icons-outlined text-xl">
+            <span className="material-icons-outlined text-xl sm:text-[22px]">
               bookmark_border
             </span>
           )}

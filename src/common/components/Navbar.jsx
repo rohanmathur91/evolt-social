@@ -28,11 +28,11 @@ export const Navbar = () => {
             </Link>
             <div className="ml-auto flex flex-row items-center w-100">
               <button
-                className="tooltip"
                 data-tooltip="Add post"
                 onClick={() => handleShowModal(true)}
+                className="tooltip w-11 h-11 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100/80"
               >
-                <span className="material-icons-outlined md:text-3xl w-11 h-11 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100/80">
+                <span className="material-icons-outlined md:text-3xl">
                   add_box
                 </span>
               </button>

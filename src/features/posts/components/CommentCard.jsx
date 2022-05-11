@@ -16,11 +16,11 @@ export const CommentCard = ({
           alt={username}
           loading="lazy"
           src={profileUrl}
-          className="w-10 h-10 mr-4 object-cover rounded-full bg-gray-200"
+          className="w-10 h-10 mr-4 object-cover flex-shrink-0 rounded-full bg-gray-200"
         />
       ) : (
-        <div className="w-10 h-10 mr-4 flex items-center justify-center font-semibold object-cover rounded-full bg-blue-500 text-white">
-          {firstName[0] + lastName[0]}
+        <div className="w-10 h-10 mr-4 text-lg flex flex-shrink-0 items-center justify-center font-semibold object-cover rounded-full bg-blue-500 text-white">
+          {firstName[0].toUpperCase()}
         </div>
       )}
 

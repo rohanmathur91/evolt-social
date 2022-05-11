@@ -145,8 +145,9 @@ export const removePostFromBookmarks = createAsyncThunk(
 
 export const commentOnPost = createAsyncThunk(
   "posts/commentOnPost",
-  async ({ postId, comment }, { rejectWithValue }) => {
+  async ({ postId, comment, setIsCommentPosting }, { rejectWithValue }) => {
     try {
+      setIsCommentPosting(true);
       const { data: posts } = await axios.post(`/api/posts/comment/${postId}`, {
         comment,
       });
@@ -154,6 +155,8 @@ export const commentOnPost = createAsyncThunk(
       return posts;
     } catch (error) {
       return rejectWithValue("Something went wrong!");
+    } finally {
+      setIsCommentPosting(false);
     }
   }
 );
