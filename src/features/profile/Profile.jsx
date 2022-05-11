@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, Outlet, NavLink, useParams } from "react-router-dom";
-import { useProfile, followUser, unfollowUser } from "./profileSlice";
+import { getUser, useProfile, followUser, unfollowUser } from "./profileSlice";
 import { logoutUser, useAuth } from "../auth";
 import {
   Modal,
@@ -10,18 +10,21 @@ import {
   PROFILEMODAL,
   CircularLoader,
 } from "../../common";
+import { usePosts } from "../posts";
 import { getFollowingStatus } from "../users";
 import { EditProfileForm } from "./components";
-import { getUser } from ".";
+import { getCurrentUserPosts } from "./utils";
 
 export const Profile = () => {
+  const { posts } = usePosts();
   const { userId } = useParams();
-  const { user: loggedinUser } = useAuth();
-  const { currentUser, following, isUserLoading } = useProfile();
-  const [isFollowLoader, setIsFollowLoader] = useState(false);
-  const { modalType, handleModalType } = useModal();
   const dispatch = useDispatch();
-  const isFollowing = getFollowingStatus(following, userId);
+  const { user: loggedInUser } = useAuth();
+  const { modalType, handleModalType } = useModal();
+  const { currentUser, loggedInUserfollowing, isUserLoading } = useProfile();
+  const [isFollowLoader, setIsFollowLoader] = useState(false);
+  const isFollowing = getFollowingStatus(loggedInUserfollowing, userId);
+  const currentUserPosts = getCurrentUserPosts(userId, posts);
   const {
     _id,
     bio,
@@ -39,9 +42,19 @@ export const Profile = () => {
 
   const handleFollowClick = () => {
     if (!isFollowing) {
-      dispatch(followUser({ followUserId: userId, setIsFollowLoader }));
+      dispatch(
+        followUser({
+          followUserId: userId,
+          setIsFollowLoader,
+        })
+      );
     } else {
-      dispatch(unfollowUser({ followingUserId: userId, setIsFollowLoader }));
+      dispatch(
+        unfollowUser({
+          followingUserId: userId,
+          setIsFollowLoader,
+        })
+      );
     }
   };
 
@@ -57,7 +70,7 @@ export const Profile = () => {
 
       <div className="grid-container">
         <Sidebar />
-        <main className="main bg-white pb-20 rounded-lg md:col-start-2 md:col-end-[-1]">
+        <main className="main bg-white rounded-lg md:col-start-2 md:col-end-[-1]">
           {!currentUser || isUserLoading ? (
             <CircularLoader size="2rem" customStyle="mt-8 text-blue-500" />
           ) : (
@@ -88,7 +101,7 @@ export const Profile = () => {
                   )}
 
                   <div className="ml-auto mt-2 flex flex-col">
-                    {userId === loggedinUser._id ? (
+                    {userId === loggedInUser._id ? (
                       <button
                         onClick={() => handleModalType(PROFILEMODAL)}
                         className="btn btn-primary py-1 px-3 md:h-9 text-sm md:text-base"
@@ -147,26 +160,34 @@ export const Profile = () => {
                   </span>
 
                   <div className="mt-3 mb-4">
-                    <Link to={`/profile/${_id}/following`}>
+                    <Link to={`/profile/${_id}`}>
                       <span className="font-semibold">
-                        {currentUser?.following.length || 0}
+                        {currentUserPosts.length || 0}
                       </span>
                       <span className="ml-2 text-sm hover:underline">
-                        Following
+                        Posts
                       </span>
                     </Link>
                     <Link to={`/profile/${_id}/followers`} className="ml-4">
                       <span className="font-semibold">
-                        {currentUser?.followers.length || 0}
+                        {currentUser.followers.length || 0}
                       </span>
                       <span className="ml-2 text-sm hover:underline">
                         Followers
                       </span>
                     </Link>
+                    <Link to={`/profile/${_id}/following`} className="ml-4">
+                      <span className="font-semibold">
+                        {currentUser.following.length || 0}
+                      </span>
+                      <span className="ml-2 text-sm hover:underline">
+                        Following
+                      </span>
+                    </Link>
                   </div>
                 </div>
               </div>
-              <div className="max-w-xl mx-auto mt-4">
+              <div className="max-w-xl mx-auto mt-4 pb-32">
                 <div className="border-b flex items-center justify-between">
                   <NavLink
                     end

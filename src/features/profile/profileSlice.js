@@ -1,12 +1,15 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
+import { loginUser, logoutUser } from "../auth";
 
 export const followUser = createAsyncThunk(
   "profile/followUser",
-  async ({ followUserId, setIsFollowLoader }) => {
+  async ({ followUserId, setIsFollowLoader }, { getState }) => {
     try {
       setIsFollowLoader(true);
+      const { auth: loggedInUser } = getState();
+
       const {
         data: {
           followUser,
@@ -14,9 +17,9 @@ export const followUser = createAsyncThunk(
         },
       } = await axios.post(`/api/users/follow/${followUserId}`);
 
-      return { followUser, followers, following };
+      return { followUser, followers, following, loggedInUser };
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     } finally {
       setIsFollowLoader(false);
     }
@@ -25,9 +28,11 @@ export const followUser = createAsyncThunk(
 
 export const unfollowUser = createAsyncThunk(
   "profile/unfollowUser",
-  async ({ followingUserId, setIsFollowLoader }) => {
+  async ({ followingUserId, setIsFollowLoader }, { getState }) => {
     try {
       setIsFollowLoader(true);
+      const { auth: loggedInUser } = getState();
+
       const {
         data: {
           followUser,
@@ -35,7 +40,7 @@ export const unfollowUser = createAsyncThunk(
         },
       } = await axios.post(`/api/users/unfollow/${followingUserId}`);
 
-      return { followUser, followers, following };
+      return { followUser, followers, following, loggedInUser };
     } catch (error) {
       console.log(error.response);
     } finally {
@@ -59,10 +64,10 @@ export const getUser = createAsyncThunk("profile/getUser", async (userId) => {
 const profileSlice = createSlice({
   name: "profile",
   initialState: {
-    followers: [],
-    following: [],
     currentUser: null,
     isUserLoading: false,
+    loggedInUserfollowing: [],
+    loggedInUserfollowers: [],
   },
   reducers: {},
   extraReducers: {
@@ -78,18 +83,48 @@ const profileSlice = createSlice({
     },
     [followUser.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      state.following = payload.following;
-      state.followers = payload.followers;
-      state.currentUser = payload.followUser;
+      state.loggedInUserfollowing = payload.following;
+      state.loggedInUserfollowers = payload.followers;
+      state.currentUser =
+        payload.loggedInUser.user?._id === state.currentUser?._id
+          ? Object.assign(
+              {},
+              state.currentUser,
+              { following: payload.following },
+              { followers: payload.followers }
+            )
+          : payload.followUser._id === state.currentUser?._id
+          ? payload.followUser
+          : state.currentUser;
     },
     [unfollowUser.pending]: (state) => {
       state.isLoading = true;
     },
     [unfollowUser.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      state.following = payload.following;
-      state.followers = payload.followers;
-      state.currentUser = payload.followUser;
+      state.loggedInUserfollowing = payload.following;
+      state.loggedInUserfollowers = payload.followers;
+      state.currentUser =
+        payload.loggedInUser.user?._id === state.currentUser?._id
+          ? Object.assign(
+              {},
+              state.currentUser,
+              { following: payload.following },
+              { followers: payload.followers }
+            )
+          : payload.followUser._id === state.currentUser?._id
+          ? payload.followUser
+          : state.currentUser;
+    },
+    [loginUser.fulfilled]: (state, { payload }) => {
+      state.loggedInUserfollowing = payload.foundUser.following;
+      state.loggedInUserfollowers = payload.foundUser.followers;
+    },
+    [logoutUser]: (state) => {
+      state.currentUser = null;
+      state.isUserLoading = false;
+      state.loggedInUserfollowing = [];
+      state.loggedInUserfollowers = [];
     },
   },
 });

@@ -16,9 +16,9 @@ export const UserCard = ({
 }) => {
   const { user } = useAuth();
   const dispatch = useDispatch();
-  const { following } = useProfile();
+  const { loggedInUserfollowing } = useProfile();
   const [isFollowLoader, setIsFollowLoader] = useState(false);
-  const isFollowing = getFollowingStatus(following, _id);
+  const isFollowing = getFollowingStatus(loggedInUserfollowing, _id);
 
   const handleFollowClick = (userId) => {
     if (!isFollowing) {
@@ -29,7 +29,7 @@ export const UserCard = ({
   };
 
   return (
-    <article className="p-2 pt-3 my-2 lg:mr-1 rounded-lg flex items-center border">
+    <article className="p-2 pt-3 mb-4 rounded-lg shadow-md flex items-center border">
       <Link to={`/profile/${_id}`} className="flex items-center">
         {profileUrl ? (
           <img
