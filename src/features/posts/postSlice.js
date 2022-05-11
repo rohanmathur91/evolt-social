@@ -15,16 +15,16 @@ export const addPost = createAsyncThunk("posts/addPost", async (postData) => {
 
 export const deletePost = createAsyncThunk(
   "posts/deletePost",
-  async ({ postId, setIsDeleting }) => {
+  async ({ postId, loaderDispatch }) => {
     try {
-      setIsDeleting(true);
+      loaderDispatch({ type: "IS_DELETING", payload: true });
       const { data: posts } = await axios.delete(`/api/posts/${postId}`);
 
       return posts;
     } catch (error) {
       console.log(error);
     } finally {
-      setIsDeleting(false);
+      loaderDispatch({ type: "IS_DELETING", payload: false });
     }
   }
 );
@@ -41,9 +41,9 @@ export const getPosts = createAsyncThunk("posts/getPosts", async () => {
 
 export const likePost = createAsyncThunk(
   "posts/likePost",
-  async ({ postId, setIsLikeLoading }, { rejectWithValue }) => {
+  async ({ postId, loaderDispatch }, { rejectWithValue }) => {
     try {
-      setIsLikeLoading(true);
+      loaderDispatch({ type: "IS_LIKE_LOADING", payload: true });
       const {
         data: { posts },
       } = await axios.post(`/api/posts/like/${postId}`);
@@ -56,16 +56,16 @@ export const likePost = createAsyncThunk(
         return rejectWithValue("Something went wrong!");
       }
     } finally {
-      setIsLikeLoading(false);
+      loaderDispatch({ type: "IS_LIKE_LOADING", payload: false });
     }
   }
 );
 
 export const disLikePost = createAsyncThunk(
   "posts/disLikePost",
-  async ({ postId, setIsLikeLoading }, { rejectWithValue }) => {
+  async ({ postId, loaderDispatch }, { rejectWithValue }) => {
     try {
-      setIsLikeLoading(true);
+      loaderDispatch({ type: "IS_LIKE_LOADING", payload: true });
       const {
         data: { posts },
       } = await axios.post(`/api/posts/dislike/${postId}`);
@@ -78,7 +78,7 @@ export const disLikePost = createAsyncThunk(
         return rejectWithValue("Something went wrong!");
       }
     } finally {
-      setIsLikeLoading(false);
+      loaderDispatch({ type: "IS_LIKE_LOADING", payload: false });
     }
   }
 );
@@ -114,8 +114,9 @@ export const getBookmarkPosts = createAsyncThunk(
 
 export const addPostInBookmarks = createAsyncThunk(
   "posts/addPostInBookmarks",
-  async (postId) => {
+  async ({ postId, loaderDispatch }) => {
     try {
+      loaderDispatch({ type: "IS_BOOKMARK_LOADING", payload: true });
       const {
         data: { bookmarks },
       } = await axios.post(`/api/users/bookmark/${postId}`);
@@ -123,14 +124,17 @@ export const addPostInBookmarks = createAsyncThunk(
       return bookmarks;
     } catch (error) {
       console.log(error);
+    } finally {
+      loaderDispatch({ type: "IS_BOOKMARK_LOADING", payload: false });
     }
   }
 );
 
 export const removePostFromBookmarks = createAsyncThunk(
   "posts/removePostFromBookmarks",
-  async (postId) => {
+  async ({ postId, loaderDispatch }) => {
     try {
+      loaderDispatch({ type: "IS_BOOKMARK_LOADING", payload: true });
       const {
         data: { bookmarks },
       } = await axios.post(`/api/users/remove-bookmark/${postId}`);
@@ -138,6 +142,8 @@ export const removePostFromBookmarks = createAsyncThunk(
       return bookmarks;
     } catch (error) {
       console.log(error);
+    } finally {
+      loaderDispatch({ type: "IS_BOOKMARK_LOADING", payload: false });
     }
   }
 );
@@ -180,7 +186,7 @@ const postSlice = createSlice({
 
     setCurrentEditPost: (state, { payload }) => {
       state.currentEditPost = payload;
-      state.isEditMode = !payload ? false : true;
+      state.isEditMode = payload ? true : false;
     },
   },
   extraReducers: {
