@@ -4,7 +4,6 @@ export const EditProfileForm = ({ handleModalType }) => {
   const [profileImage, setProfileImage] = useState(null);
 
   const handleProfileImageChange = (e) => {
-    console.log(profileImage);
     setProfileImage(e.target.files[0]);
   };
   return (
@@ -26,7 +25,7 @@ export const EditProfileForm = ({ handleModalType }) => {
           <img
             alt="profile"
             loading="lazy"
-            src="https://i.pravatar.cc/300"
+            src={profileImage ?? "https://i.pravatar.cc/300"}
             className="w-10 h-10 sm:w-14 sm:h-14 bg-gray-200 rounded-full"
           />
 
