@@ -6,23 +6,25 @@ import { PostCard } from "./components";
 
 export const Bookmark = () => {
   const dispatch = useDispatch();
-  const { isLoading, bookmarks } = usePosts();
+  const { posts, isLoading, bookmarks } = usePosts();
 
   useEffect(() => {
     dispatch(getBookmarkPosts());
-  }, [dispatch]);
+  }, [posts, dispatch]);
 
   return (
     <div className="grid-container">
       <Sidebar />
       <TopContributors />
       <main className="main pb-20 px-2 md:px-0">
-        {isLoading ? (
+        {isLoading && bookmarks.length === 0 ? (
           <CircularLoader size="2rem" customStyle="mt-8 text-blue-500" />
         ) : bookmarks.length ? (
           bookmarks.map((post) => <PostCard key={post._id} post={post} />)
         ) : (
-          <p className="text-center font-semibold mt-8">No posts to show.</p>
+          <p className="text-center font-semibold mt-8">
+            No bookmarks to show.
+          </p>
         )}
       </main>
     </div>

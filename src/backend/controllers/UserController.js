@@ -104,7 +104,15 @@ export const getBookmarkPostsHandler = function (schema, request) {
         }
       );
     }
-    return new Response(200, {}, { bookmarks: user.bookmarks });
+
+    // getting updated posts which are in bookmarks
+    const bookmarkPostIds = user.bookmarks.map(({ _id }) => _id);
+    const bookmarkPostIdSet = new Set(bookmarkPostIds);
+    const bookmarks = this.db.posts.filter(({ _id }) =>
+      bookmarkPostIdSet.has(_id)
+    );
+
+    return new Response(200, {}, { bookmarks });
   } catch (error) {
     return new Response(
       500,
@@ -192,7 +200,13 @@ export const removePostFromBookmarkHandler = function (schema, request) {
     const filteredBookmarks = user.bookmarks.filter(
       (currPost) => currPost._id !== postId
     );
-    user = { ...user, bookmarks: filteredBookmarks };
+    const bookmarkPostIds = filteredBookmarks.map(({ _id }) => _id);
+    const bookmarkPostIdSet = new Set(bookmarkPostIds);
+    const bookmarks = this.db.posts.filter(({ _id }) =>
+      bookmarkPostIdSet.has(_id)
+    );
+
+    user = { ...user, bookmarks };
     this.db.users.update(
       { _id: user._id },
       { ...user, updatedAt: formatDate() }
