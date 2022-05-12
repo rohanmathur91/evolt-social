@@ -32,13 +32,13 @@ export const Profile = () => {
     firstName,
     lastName,
     username,
-    profileUrl,
+    profileImage,
     profileBackgroundUrl,
   } = currentUser ?? {};
 
   useEffect(() => {
     dispatch(getUser(userId));
-  }, [userId, dispatch]);
+  }, [userId, loggedInUser, dispatch]);
 
   const handleFollowClick = () => {
     if (!isFollowing) {
@@ -87,11 +87,11 @@ export const Profile = () => {
                   <div className="bg-gray-200 h-60 md:rounded-lg"></div>
                 )}
                 <div className="flex items-center px-4 md:px-10">
-                  {profileUrl ? (
+                  {profileImage ? (
                     <img
-                      alt={username}
                       loading="lazy"
-                      src={profileUrl}
+                      src={profileImage.url}
+                      alt={profileImage.original_filename}
                       className="-mt-16 md:mt-[-90px] object-cover border-4 border-white w-28 h-28 md:w-36 md:h-36 bg-gray-200 rounded-full"
                     />
                   ) : (

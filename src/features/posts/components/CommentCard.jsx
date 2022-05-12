@@ -4,18 +4,18 @@ import { getDate } from "../utils";
 export const CommentCard = ({
   comment,
   username,
-  profileUrl,
   firstName,
   lastName,
   createdAt,
+  profileImage,
 }) => {
   return (
     <article className="flex bg-white p-2 rounded-lg border mb-4 shadow">
-      {profileUrl ? (
+      {profileImage ? (
         <img
-          alt={username}
           loading="lazy"
-          src={profileUrl}
+          src={profileImage.url}
+          alt={profileImage.original_filename}
           className="w-10 h-10 mr-4 object-cover flex-shrink-0 rounded-full bg-gray-200"
         />
       ) : (
@@ -41,8 +41,8 @@ export const CommentCard = ({
 CommentCard.defaultProps = {
   comment: "",
   username: "",
-  profileUrl: "",
   firstName: "",
   lastName: "",
   createdAt: "",
+  profileImage: null,
 };

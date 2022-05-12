@@ -19,7 +19,7 @@ export const SinglePost = () => {
     comment: "",
     replies: [],
   });
-  const { username, profileUrl, firstName } = user ?? {};
+  const { username, profileImage, firstName } = user ?? {};
 
   useEffect(() => {
     setPost(getSinglePost(posts, postId));
@@ -60,11 +60,11 @@ export const SinglePost = () => {
               onSubmit={handleCommentSubmit}
               className="my-8 flex items-center"
             >
-              {profileUrl ? (
+              {profileImage ? (
                 <img
-                  alt={username}
                   loading="lazy"
-                  src={profileUrl}
+                  src={profileImage.url}
+                  alt={profileImage.original_filename}
                   className="w-10 h-10 flex-shrink-0 mr-2 object-cover rounded-full bg-gray-200"
                 />
               ) : (

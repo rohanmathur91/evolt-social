@@ -14,7 +14,10 @@ export const users = [
     profileBackgroundUrl: "https://picsum.photos/800/400",
     bio: "You only live once, but if you do it right, once is enough.",
     websiteUrl: "https://www.google.com/",
-    profileUrl: "https://i.pravatar.cc/300",
+    profileImage: {
+      url: "http://res.cloudinary.com/dexubgbx0/image/upload/v1652359022/ouidjets0yeocvts8en0.png",
+      original_filename: "Pngtree—businessman",
+    },
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },

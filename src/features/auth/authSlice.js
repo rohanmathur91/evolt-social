@@ -37,6 +37,22 @@ export const signupUser = createAsyncThunk(
   }
 );
 
+export const editUser = createAsyncThunk(
+  "auth/editUser",
+  async ({ userData, handleModalType }) => {
+    try {
+      const {
+        data: { user },
+      } = await axios.post("/api/users/edit", { userData });
+
+      handleModalType("");
+      return user;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const logoutUser = createAction("auth/logoutUser");
 export const persistUser = createAction("auth/persistUser");
 
@@ -89,6 +105,15 @@ export const authSlice = createSlice({
     [signupUser.rejected]: (state, { payload }) => {
       state.error = payload;
       state.isLoading = false;
+    },
+    [editUser.pending]: (state) => {
+      state.error = "";
+      state.isLoading = true;
+    },
+    [editUser.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.user = payload;
+      localStorage.setItem("myspace-user", JSON.stringify(payload));
     },
   },
 });
