@@ -4,13 +4,15 @@ import { useSelector } from "react-redux";
 
 export const getSearchedUsers = createAsyncThunk(
   "users/getSearchedUsers",
-  async (searchQuery) => {
+  async (searchQuery, { getState }) => {
     try {
-      const { data: users } = await axios.get(
-        `/api/users?search=${searchQuery}`
-      );
+      const { auth } = getState();
 
-      return users.users;
+      const {
+        data: { users },
+      } = await axios.get(`/api/users?search=${searchQuery}`);
+
+      return { users, loggedInUser: auth.user };
     } catch (error) {
       console.log(error.response);
     }
@@ -30,7 +32,9 @@ const userSlice = createSlice({
     },
     [getSearchedUsers.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      state.userlist = payload;
+      state.userlist = payload?.users.filter(
+        (user) => user._id !== payload.loggedInUser._id
+      );
     },
   },
 });
