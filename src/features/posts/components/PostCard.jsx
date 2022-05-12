@@ -96,7 +96,7 @@ export const PostCard = ({ post }) => {
               className="w-11 h-11 md:w-12 md:h-12 mr-4 object-cover rounded-full bg-gray-200"
             />
           ) : (
-            <div className="h-11 min-w-[2.75rem] text-xl md:w-12 md:h-12 mr-4 flex items-center justify-center font-semibold object-cover rounded-full bg-blue-500 text-white">
+            <div className="h-11 min-w-[2.75rem] text-xl md:w-12 md:h-12 mr-4 flex items-center justify-center font-semibold rounded-full bg-blue-500 text-white">
               {firstName[0].toUpperCase()}
             </div>
           )}

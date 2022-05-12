@@ -95,7 +95,7 @@ export const Profile = () => {
                       className="-mt-16 md:mt-[-90px] object-cover border-4 border-white w-28 h-28 md:w-36 md:h-36 bg-gray-200 rounded-full"
                     />
                   ) : (
-                    <div className="-mt-16 md:mt-[-90px] text-4xl md:text-6xl w-28 h-28 md:w-36 md:h-36 border-4 border-white flex items-center justify-center font-semibold object-cover rounded-full bg-blue-500 text-white">
+                    <div className="-mt-16 md:mt-[-90px] text-4xl md:text-6xl w-28 h-28 md:w-36 md:h-36 border-4 border-white flex items-center justify-center font-semibold rounded-full bg-blue-500 text-white">
                       {firstName[0].toUpperCase()}
                     </div>
                   )}

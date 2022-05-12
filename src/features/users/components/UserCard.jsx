@@ -39,7 +39,7 @@ export const UserCard = ({
             className="w-10 h-10 mr-4 object-cover flex-shrink-0 rounded-full bg-gray-200"
           />
         ) : (
-          <div className="w-10 h-10 mr-4 text-lg flex flex-shrink-0 items-center justify-center font-semibold object-cover rounded-full bg-blue-500 text-white">
+          <div className="w-10 h-10 mr-4 text-lg flex flex-shrink-0 items-center justify-center font-semibold rounded-full bg-blue-500 text-white">
             {firstName[0].toUpperCase()}
           </div>
         )}
