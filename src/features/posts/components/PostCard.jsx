@@ -123,7 +123,7 @@ export const PostCard = ({ post }) => {
         )}
 
         {showMore && (
-          <div className="absolute top-14 right-7 z-[1] w-32 bg-white shadow-md flex flex-col p-2 border rounded-lg">
+          <div className="absolute top-14 right-7 z-[1] w-32 bg-white shadow-xl flex flex-col p-2 border rounded-lg">
             <button
               onClick={handleEditPostClick}
               className="py-2 px-4 text-sm flex items-center hover:text-blue-500 hover:bg-blue-100 rounded"
