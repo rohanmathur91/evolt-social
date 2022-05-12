@@ -40,7 +40,11 @@ export const Navbar = () => {
                 </span>
               </button>
 
-              <Link to={`profile/${user?._id}`} className="ml-4 shrink-0">
+              <Link
+                data-tooltip="Profile"
+                to={`profile/${user?._id}`}
+                className="ml-4 shrink-0 tooltip"
+              >
                 {profileImage ? (
                   <img
                     src={profileImage.url}
