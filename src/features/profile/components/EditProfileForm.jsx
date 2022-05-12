@@ -104,7 +104,9 @@ export const EditProfileForm = ({ handleModalType }) => {
           <div className="flex items-center justify-center absolute right-[-4px] bottom-[-7px] text-blue-500 w-6 h-6 sm:w-8 sm:h-8 border border-blue-500 rounded-full bg-blue-100">
             <label
               htmlFor="image-upload"
-              data-tooltip="Add profile image"
+              data-tooltip={`${
+                updatedProfileImage ? "Update" : "Add"
+              } profile image`}
               className="tooltip hover:cursor-pointer flex items-center justify-center"
             >
               <span className="material-icons-outlined text-sm sm:text-base select-none">
