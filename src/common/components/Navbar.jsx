@@ -9,6 +9,7 @@ export const Navbar = () => {
   const { user } = useAuth();
   const { pathname } = useLocation();
   const { modalType, handleModalType } = useModal();
+  const { firstName = "", profileImage } = user;
 
   return (
     pathname !== "/login" &&
@@ -40,12 +41,17 @@ export const Navbar = () => {
               </button>
 
               <Link to={`profile/${user?._id}`} className="ml-4 shrink-0">
-                <img
-                  alt="profile"
-                  loading="lazy"
-                  src="https://i.pravatar.cc/300"
-                  className="w-11 h-11 border rounded-full bg-gray-200"
-                />
+                {profileImage ? (
+                  <img
+                    src={profileImage.url}
+                    alt={profileImage.original_filename}
+                    className="w-11 h-11 border object-contain rounded-full bg-gray-200"
+                  />
+                ) : (
+                  <div className="w-11 h-11 text-xl flex items-center justify-center font-semibold rounded-full bg-blue-500 text-white">
+                    {firstName[0].toUpperCase()}
+                  </div>
+                )}
               </Link>
             </div>
           </div>

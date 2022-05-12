@@ -15,7 +15,7 @@ export const users = [
     bio: "You only live once, but if you do it right, once is enough.",
     websiteUrl: "https://www.google.com/",
     profileImage: {
-      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652361875/t8a53o7fsjhitdb1gzrn.jpg",
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652362403/ct4fvtk6i5iu1mbnb6hj.jpg",
       original_filename: "Pngtree—businessman",
     },
     createdAt: formatDate(),
@@ -29,7 +29,7 @@ export const users = [
     password: "rohanmathur@123",
     profileImage: {
       url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652361355/g6uyad8oqzpx07uy1fuw.jpg",
-      original_filename: "rohanmathur",
+      original_filename: "rohanmathur-profile",
     },
     profileBackgroundUrl: "https://picsum.photos/800/400",
     websiteUrl: "https://www.google.com/",
