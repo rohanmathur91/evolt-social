@@ -15,7 +15,7 @@ export const users = [
     bio: "You only live once, but if you do it right, once is enough.",
     websiteUrl: "https://www.google.com/",
     profileImage: {
-      url: "http://res.cloudinary.com/dexubgbx0/image/upload/v1652359022/ouidjets0yeocvts8en0.png",
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652361875/t8a53o7fsjhitdb1gzrn.jpg",
       original_filename: "Pngtree—businessman",
     },
     createdAt: formatDate(),
@@ -27,6 +27,10 @@ export const users = [
     lastName: "Mathur",
     username: "rohanmathur",
     password: "rohanmathur@123",
+    profileImage: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652361355/g6uyad8oqzpx07uy1fuw.jpg",
+      original_filename: "rohanmathur",
+    },
     profileBackgroundUrl: "https://picsum.photos/800/400",
     websiteUrl: "https://www.google.com/",
     bio: "Many of life’s failures are people who did not realize how close they were to success when they gave up.",

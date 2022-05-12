@@ -70,9 +70,17 @@ export const editUserHandler = function (schema, request) {
         }
       );
     }
+
     const { userData } = JSON.parse(request.requestBody);
     user = { ...user, ...userData, updatedAt: formatDate() };
     this.db.users.update({ _id: user._id }, user);
+
+    this.db.posts.forEach((post) => {
+      if (post.userId === user._id) {
+        let updatedPost = { ...post, profileImage: user.profileImage };
+        this.db.posts.update({ _id: post._id }, updatedPost);
+      }
+    });
     return new Response(201, {}, { user });
   } catch (error) {
     return new Response(

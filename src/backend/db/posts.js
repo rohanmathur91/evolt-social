@@ -19,6 +19,10 @@ export const posts = [
     userId: "rohan-mathur-test-userId",
     comments: [],
     imageUrl: "https://picsum.photos/500/400",
+    profileImage: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652361355/g6uyad8oqzpx07uy1fuw.jpg",
+      original_filename: "rohanmathur",
+    },
     firstName: "Rohan",
     lastName: "Mathur",
     username: "rohanmathur",
@@ -37,7 +41,7 @@ export const posts = [
     userId: "adarsh-balika-test-userId",
     comments: [],
     profileImage: {
-      url: "http://res.cloudinary.com/dexubgbx0/image/upload/v1652359022/ouidjets0yeocvts8en0.png",
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652361875/t8a53o7fsjhitdb1gzrn.jpg",
       original_filename: "Pngtree—businessman",
     },
     imageUrl: "",

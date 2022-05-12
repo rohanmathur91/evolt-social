@@ -48,7 +48,7 @@ export const editUser = createAsyncThunk(
       handleModalType("");
       return user;
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   }
 );
@@ -66,7 +66,7 @@ export const authSlice = createSlice({
   reducers: {},
   extraReducers: {
     [persistUser]: (state) => {
-      state.user = JSON.parse(localStorage.getItem("myspace-user"));
+      state.user = JSON.parse(localStorage.getItem("myspace-user")) ?? null;
       axios.defaults.headers.common["authorization"] =
         localStorage.getItem("myspace-token");
     },
