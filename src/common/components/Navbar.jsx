@@ -9,7 +9,7 @@ export const Navbar = () => {
   const { user } = useAuth();
   const { pathname } = useLocation();
   const { modalType, handleModalType } = useModal();
-  const { firstName = "", profileImage } = user;
+  const { firstName = "", profileImage } = user ?? {};
 
   return (
     pathname !== "/login" &&
@@ -49,7 +49,7 @@ export const Navbar = () => {
                   />
                 ) : (
                   <div className="w-11 h-11 text-xl flex items-center justify-center font-semibold rounded-full bg-blue-500 text-white">
-                    {firstName[0].toUpperCase()}
+                    {firstName[0]?.toUpperCase()}
                   </div>
                 )}
               </Link>

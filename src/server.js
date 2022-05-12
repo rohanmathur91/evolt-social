@@ -92,7 +92,7 @@ export function makeServer({ environment = "development" } = {}) {
 
       this.passthrough();
       this.passthrough(
-        "https://api.cloudinary.com/v1_1/dexubgbx0/image/upload",
+        `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`,
         ["post"]
       );
     },
