@@ -25,16 +25,8 @@ export const Profile = () => {
   const [isFollowLoader, setIsFollowLoader] = useState(false);
   const isFollowing = getFollowingStatus(loggedInUserfollowing, userId);
   const currentUserPosts = getCurrentUserPosts(userId, posts);
-  const {
-    _id,
-    bio,
-    websiteUrl,
-    firstName,
-    lastName,
-    username,
-    profileImage,
-    profileBackgroundUrl,
-  } = currentUser ?? {};
+  const { _id, bio, websiteUrl, firstName, lastName, username, profileImage } =
+    currentUser ?? {};
 
   useEffect(() => {
     dispatch(getUser(userId));
@@ -76,26 +68,16 @@ export const Profile = () => {
           ) : (
             <>
               <div className="flex flex-col">
-                {profileBackgroundUrl ? (
-                  <img
-                    alt={username}
-                    loading="lazy"
-                    src={profileBackgroundUrl}
-                    className="w-full h-60 object-center object-cover bg-gray-200 md:rounded-lg"
-                  />
-                ) : (
-                  <div className="bg-gray-200 h-60 md:rounded-lg"></div>
-                )}
                 <div className="flex items-center px-4 md:px-10">
                   {profileImage ? (
                     <img
                       loading="lazy"
                       src={profileImage.url}
                       alt={profileImage.original_filename}
-                      className="-mt-16 md:mt-[-90px] object-cover border-4 border-white w-28 h-28 md:w-36 md:h-36 bg-gray-200 rounded-full"
+                      className="mt-8 object-cover border-4 border-white w-28 h-28 md:w-36 md:h-36 bg-gray-200 rounded-full"
                     />
                   ) : (
-                    <div className="-mt-16 md:mt-[-90px] text-4xl md:text-6xl w-28 h-28 md:w-36 md:h-36 border-4 border-white flex items-center justify-center font-semibold rounded-full bg-blue-500 text-white">
+                    <div className="mt-8 text-4xl md:text-6xl w-28 h-28 md:w-36 md:h-36 border-4 border-white flex items-center justify-center font-semibold rounded-full bg-blue-500 text-white">
                       {firstName[0].toUpperCase()}
                     </div>
                   )}

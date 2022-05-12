@@ -11,7 +11,7 @@ export const users = [
     lastName: "Balika",
     username: "adarshbalika",
     password: "adarshBalika123",
-    profileBackgroundUrl: "https://picsum.photos/800/400",
+    profileBackgroundUrl: "",
     bio: "You only live once, but if you do it right, once is enough.",
     websiteUrl: "https://www.google.com/",
     profileImage: {
@@ -31,7 +31,7 @@ export const users = [
       url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652361355/g6uyad8oqzpx07uy1fuw.jpg",
       original_filename: "rohanmathur-profile",
     },
-    profileBackgroundUrl: "https://picsum.photos/800/400",
+    profileBackgroundUrl: "",
     websiteUrl: "https://www.google.com/",
     bio: "Many of life’s failures are people who did not realize how close they were to success when they gave up.",
     createdAt: formatDate(),
