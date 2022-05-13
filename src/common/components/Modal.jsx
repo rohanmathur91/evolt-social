@@ -27,3 +27,5 @@ export const Modal = ({ children, handleModalType }) => {
     document.getElementById("modal")
   );
 };
+
+Modal.defaultProps = { children: null, handleModalType: () => {} };
