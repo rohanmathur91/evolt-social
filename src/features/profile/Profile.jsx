@@ -21,9 +21,9 @@ export const Profile = () => {
   const dispatch = useDispatch();
   const { user: loggedInUser } = useAuth();
   const { modalType, handleModalType } = useModal();
-  const { currentUser, loggedInUserfollowing, isUserLoading } = useProfile();
+  const { currentUser, loggedInUserfollowings, isUserLoading } = useProfile();
   const [isFollowLoader, setIsFollowLoader] = useState(false);
-  const isFollowing = getFollowingStatus(loggedInUserfollowing, userId);
+  const isFollowing = getFollowingStatus(loggedInUserfollowings, userId);
   const currentUserPosts = getCurrentUserPosts(userId, posts);
   const { _id, bio, websiteUrl, firstName, lastName, username, profileImage } =
     currentUser ?? {};

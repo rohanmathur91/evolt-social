@@ -16,9 +16,9 @@ export const UserCard = ({
 }) => {
   const { user } = useAuth();
   const dispatch = useDispatch();
-  const { loggedInUserfollowing } = useProfile();
+  const { loggedInUserfollowings } = useProfile();
   const [isFollowLoader, setIsFollowLoader] = useState(false);
-  const isFollowing = getFollowingStatus(loggedInUserfollowing, _id);
+  const isFollowing = getFollowingStatus(loggedInUserfollowings, _id);
 
   const handleFollowClick = (userId) => {
     if (!isFollowing) {

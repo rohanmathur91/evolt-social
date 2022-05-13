@@ -66,7 +66,7 @@ const profileSlice = createSlice({
   initialState: {
     currentUser: null,
     isUserLoading: false,
-    loggedInUserfollowing: [],
+    loggedInUserfollowings: [],
     loggedInUserfollowers: [],
   },
   reducers: {},
@@ -83,7 +83,7 @@ const profileSlice = createSlice({
     },
     [followUser.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      state.loggedInUserfollowing = payload.following;
+      state.loggedInUserfollowings = payload.following;
       state.loggedInUserfollowers = payload.followers;
       state.currentUser =
         payload.loggedInUser.user?._id === state.currentUser?._id
@@ -102,7 +102,7 @@ const profileSlice = createSlice({
     },
     [unfollowUser.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      state.loggedInUserfollowing = payload.following;
+      state.loggedInUserfollowings = payload.following;
       state.loggedInUserfollowers = payload.followers;
       state.currentUser =
         payload.loggedInUser.user?._id === state.currentUser?._id
@@ -117,13 +117,13 @@ const profileSlice = createSlice({
           : state.currentUser;
     },
     [loginUser.fulfilled]: (state, { payload }) => {
-      state.loggedInUserfollowing = payload.foundUser.following;
+      state.loggedInUserfollowings = payload.foundUser.following;
       state.loggedInUserfollowers = payload.foundUser.followers;
     },
     [logoutUser]: (state) => {
       state.currentUser = null;
       state.isUserLoading = false;
-      state.loggedInUserfollowing = [];
+      state.loggedInUserfollowings = [];
       state.loggedInUserfollowers = [];
     },
   },

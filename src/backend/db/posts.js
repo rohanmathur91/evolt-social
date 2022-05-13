@@ -69,4 +69,43 @@ export const posts = [
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },
+  {
+    _id: uuid(),
+    content: "Your first three emojis define your Friday mood🤩",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    userId: "adarsh-balika-test-userId",
+    comments: [],
+    profileImage: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652362403/ct4fvtk6i5iu1mbnb6hj.jpg",
+      original_filename: "Pngtree—businessman",
+    },
+    firstName: "Adarsh",
+    lastName: "Balika",
+    username: "adarshbalika",
+    imageUrl: "https://picsum.photos/500/400",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+  },
+  {
+    _id: uuid(),
+    content:
+      "If you're thinking about putting a TypeScript package up to NPM, you should be considering preconstruct. It makes setup EXTREMELY easy and takes many decisions out of your hands.",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    comments: [],
+    imageUrl: "https://picsum.photos/500/400",
+    userId: "john-doe-test-userId",
+    firstName: "John",
+    lastName: "Doe",
+    username: "johndoe",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+  },
 ];

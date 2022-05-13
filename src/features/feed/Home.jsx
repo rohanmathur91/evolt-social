@@ -22,7 +22,7 @@ export const Home = () => {
         ) : posts.length > 0 ? (
           posts.map((post) => <PostCard key={post._id} post={post} />)
         ) : (
-          "explore"
+          <p className="text-center font-semibold mt-8">No post to show.</p>
         )}
       </main>
     </div>
