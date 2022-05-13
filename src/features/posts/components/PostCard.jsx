@@ -33,6 +33,7 @@ export const PostCard = ({ post }) => {
     imageUrl,
     content,
     userId,
+    isEdited,
     username,
     firstName,
     lastName,
@@ -49,7 +50,7 @@ export const PostCard = ({ post }) => {
 
   const handleEditPostClick = () => {
     handleModalType(POSTMODAL);
-    dispatch(setCurrentEditPost(post));
+    dispatch(setCurrentEditPost({ ...post, isEdited: true }));
     loaderDispatch({ type: "SHOW_MORE", payload: false });
   };
 
@@ -108,6 +109,11 @@ export const PostCard = ({ post }) => {
             <span className="text-gray-500 text-sm font-normal flex items-center line-clamp-1">
               @{username} <span className="mx-1 font-semibold">•</span>
               {getDate(updatedAt)}
+              {isEdited && (
+                <>
+                  <span className="mx-1 font-semibold">•</span> edited
+                </>
+              )}
             </span>
           </div>
         </Link>
@@ -237,10 +243,13 @@ PostCard.defaultProps = {
     likes: null,
     imageUrl: "",
     content: "",
+    userId: "",
+    isEdited: false,
     username: "",
     firstName: "",
     lastName: "",
     updatedAt: "",
+    comments: [],
     profileImage: null,
   },
 };
