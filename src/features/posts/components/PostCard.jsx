@@ -132,7 +132,7 @@ export const PostCard = ({ post }) => {
           <div className="absolute top-14 right-7 z-[1] w-32 bg-white shadow-xl flex flex-col p-2 border rounded-lg">
             <button
               onClick={handleEditPostClick}
-              className="py-2 px-4 text-sm flex items-center hover:text-blue-500 hover:bg-blue-100 rounded"
+              className="py-2 px-4 text-sm flex items-center text-blue-500 hover:bg-blue-100 rounded"
             >
               <span className="material-icons-outlined text-xl mr-2">edit</span>
               Edit
@@ -142,7 +142,7 @@ export const PostCard = ({ post }) => {
               onClick={handleDeletePostClick}
               className={`${
                 isDeleting ? "relative" : ""
-              } py-2 px-4 text-sm flex items-center hover:text-red-500 hover:bg-red-100 rounded`}
+              } py-2 px-4 text-sm flex items-center text-red-500 hover:bg-red-100 rounded`}
             >
               {isDeleting && (
                 <CircularLoader
