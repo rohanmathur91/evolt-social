@@ -14,7 +14,7 @@ export const Search = () => {
 
     let timerId = setTimeout(() => {
       dispatch(getSearchedUsers(searchQuery));
-    }, 600);
+    }, 700);
 
     return () => timerId && clearTimeout(timerId);
   }, [dispatch, searchQuery]);
