@@ -22,11 +22,18 @@ export const Explore = () => {
     <div className="grid-container">
       <Sidebar />
       <TopContributors />
-      <main className="main pb-20 px-2 md:px-0">
+      <main className="main pb-12 px-2 md:px-0">
         {isLoading ? (
           <CircularLoader size="2rem" customStyle="mt-8 text-blue-500" />
         ) : exploreFeed.length > 0 ? (
-          exploreFeed.map((post) => <PostCard key={post._id} post={post} />)
+          <>
+            {exploreFeed.map((post) => (
+              <PostCard key={post._id} post={post} />
+            ))}
+            <p className="text-center text-gray-500 mt-8 text-sm">
+              You have reached the end.
+            </p>
+          </>
         ) : (
           <p className="text-center font-semibold mt-8">
             No post to show.

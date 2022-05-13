@@ -28,8 +28,8 @@ export const Home = () => {
     <div className="grid-container">
       <Sidebar />
       <TopContributors />
-      <main className="main pb-20 px-2 md:px-0">
-        <div className="flex gap-2 my-4 md:mt-0">
+      <main className="main pb-12 px-2 md:px-0">
+        <div className="flex gap-2 my-6 md:mt-0 max-w-xl mx-auto">
           <button
             onClick={() => handleSortTypeClick("SORT_BY_RECENT")}
             className="btn w-full flex items-center justify-center font-semibold py-2 px-4 bg-blue-100 text-blue-500 rouded text-sm"
@@ -49,7 +49,14 @@ export const Home = () => {
         {isLoading ? (
           <CircularLoader size="2rem" customStyle="mt-8 text-blue-500" />
         ) : sortedHomeFeed.length > 0 ? (
-          sortedHomeFeed.map((post) => <PostCard key={post._id} post={post} />)
+          <>
+            {sortedHomeFeed.map((post) => (
+              <PostCard key={post._id} post={post} />
+            ))}
+            <p className="text-center text-gray-500 mt-8 text-sm">
+              You have reached the end.
+            </p>
+          </>
         ) : (
           <p className="text-center font-semibold mt-8">
             Add a new post or follow users.

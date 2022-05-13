@@ -119,7 +119,7 @@ export const Profile = () => {
                   </div>
                 </div>
 
-                <div className="px-4 md:px-10 font-semibold">
+                <div className="px-4 md:px-10 font-semibold mt-2">
                   <h3 className="text-lg md:text-2xl">
                     {firstName} {lastName}
                   </h3>
