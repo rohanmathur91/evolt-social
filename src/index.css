@@ -108,7 +108,7 @@
 
   .main {
     grid-area: main;
-    @apply mt-[10vh] md:mr-4 md:mt-[15vh] min-h-[85vh];
+    @apply mt-[10vh] md:mr-4 lg:mr-0 md:mt-[15vh] min-h-[85vh];
   }
 
   .right-aside {
