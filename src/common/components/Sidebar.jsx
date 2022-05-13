@@ -11,34 +11,29 @@ export const Sidebar = () => {
   return (
     <aside className="sticky bottom-0 left-0 right-0 z-[2] md:top-[15vh] md:left-aside md:ml-auto md:w-[16rem] md:py-2 md:h-[80vh] rounded-lg md:border bg-white/60 backdrop-blur-sm">
       <ul className="w-full grid grid-cols-5 md:block gap-1 md:gap-0">
-        {sideBarData.map(({ icon, text, path }, index) => (
-          <>
-            {index === 2 && (
-              <li
-                key="add-post"
-                className={`${
-                  index === 2 ? "block md:hidden" : ""
-                } md:mb-1 md:mx-2 hover:transition-all`}
+        {sideBarData.map(({ icon, type, text, path }) => (
+          <li
+            key={icon}
+            className={`${
+              text === "Profile"
+                ? "hidden md:block"
+                : type === "button"
+                ? "block md:hidden"
+                : ""
+            } md:mb-1 md:mx-2 hover:transition-all`}
+          >
+            {type === "button" ? (
+              <button
+                title="Add post"
+                onClick={() => handleModalType(POSTMODAL)}
+                className="p-3 md:py-2 md:px-4 flex flex-col text-xs md:text-base md:flex-row justify-center md:justify-start items-center hover:text-blue-500 hover:bg-blue-100 rounded w-full"
               >
-                <button
-                  title="Add post"
-                  onClick={() => handleModalType(POSTMODAL)}
-                  className="p-3 md:py-2 md:px-4 flex flex-col text-xs md:text-base md:flex-row justify-center md:justify-start items-center hover:text-blue-500 hover:bg-blue-100 rounded w-full"
-                >
-                  <span className="material-icons-outlined text-2xl md:mr-3 md:text-3xl">
-                    add_box
-                  </span>
-                  <span className="hidden sm:block">Add post</span>
-                </button>
-              </li>
-            )}
-
-            <li
-              key={icon}
-              className={`${
-                text === "Profile" ? "hidden md:block" : ""
-              } md:mb-1 md:mx-2 hover:transition-all`}
-            >
+                <span className="material-icons-outlined text-2xl md:mr-3 md:text-3xl">
+                  {icon}
+                </span>
+                <span className="hidden sm:block">{text}</span>
+              </button>
+            ) : (
               <NavLink
                 title={text}
                 to={text === "Profile" ? `/profile/${user?._id}` : path}
@@ -53,10 +48,9 @@ export const Sidebar = () => {
                 </span>
                 <span className="hidden sm:block">{text}</span>
               </NavLink>
-            </li>
-          </>
+            )}
+          </li>
         ))}
-
         <li key="add-post-btn" className="mt-2 hidden md:block mx-2">
           <button
             title="Add post"

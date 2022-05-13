@@ -107,11 +107,12 @@ export const PostCard = ({ post }) => {
               {firstName} {lastName}
             </span>
             <span className="text-gray-500 text-sm font-normal flex items-center line-clamp-1">
-              @{username} <span className="mx-1 font-semibold">•</span>
+              @{username}
+              <span className="mx-[6px] font-semibold">•</span>
               {getDate(updatedAt)}
               {isEdited && (
                 <>
-                  <span className="mx-1 font-semibold">•</span> edited
+                  <span className="mx-[6px] font-semibold">•</span>edited
                 </>
               )}
             </span>
