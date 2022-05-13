@@ -23,6 +23,9 @@ export const Explore = () => {
       <Sidebar />
       <TopContributors />
       <main className="main pb-12 px-2 md:px-0">
+        <h4 className="font-semibold text-blue-500 my-6 md:mt-0 max-w-xl mx-auto">
+          Explore Feed
+        </h4>
         {isLoading ? (
           <CircularLoader size="2rem" customStyle="mt-8 text-blue-500" />
         ) : exploreFeed.length > 0 ? (

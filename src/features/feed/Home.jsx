@@ -29,21 +29,26 @@ export const Home = () => {
       <Sidebar />
       <TopContributors />
       <main className="main pb-12 px-2 md:px-0">
-        <div className="flex gap-2 my-6 md:mt-0 max-w-xl mx-auto">
-          <button
-            onClick={() => handleSortTypeClick("SORT_BY_RECENT")}
-            className="btn w-full flex items-center justify-center font-semibold py-2 px-4 bg-blue-100 text-blue-500 rouded text-sm"
-          >
-            <span className="material-icons-outlined mr-2">view_timeline</span>
-            Recent
-          </button>
-          <button
-            onClick={() => handleSortTypeClick("SORT_BY_TRENDING")}
-            className="btn w-full flex items-center justify-center font-semibold py-2 px-4 bg-blue-100 text-blue-500 rouded text-sm"
-          >
-            <span className="material-icons-outlined mr-2">trending_up</span>
-            Trending
-          </button>
+        <div className="mt-6 md:mt-0 max-w-xl mx-auto">
+          <h4 className="font-semibold text-blue-500 mb-4">User Feed</h4>
+          <div className="flex gap-2 my-6 md:mt-0">
+            <button
+              onClick={() => handleSortTypeClick("SORT_BY_RECENT")}
+              className="btn w-full flex items-center justify-center font-semibold py-2 px-4 bg-blue-100 text-blue-500 rouded text-sm"
+            >
+              <span className="material-icons-outlined mr-2">
+                view_timeline
+              </span>
+              Recent
+            </button>
+            <button
+              onClick={() => handleSortTypeClick("SORT_BY_TRENDING")}
+              className="btn w-full flex items-center justify-center font-semibold py-2 px-4 bg-blue-100 text-blue-500 rouded text-sm"
+            >
+              <span className="material-icons-outlined mr-2">trending_up</span>
+              Trending
+            </button>
+          </div>
         </div>
 
         {isLoading ? (
