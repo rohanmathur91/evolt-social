@@ -39,10 +39,10 @@ export const Navbar = () => {
                 <img
                   src={profileImage.url}
                   alt={profileImage.original_filename}
-                  className="w-11 h-11 border object-contain rounded-full bg-gray-200"
+                  className="w-11 h-11 md:w-12 md:h-12 border object-contain rounded-full bg-gray-200"
                 />
               ) : (
-                <div className="w-11 h-11 text-xl flex items-center justify-center font-semibold rounded-full bg-blue-500 text-white">
+                <div className="w-11 h-11 md:w-12 md:h-12 text-xl flex items-center justify-center font-semibold rounded-full bg-blue-500 text-white">
                   {firstName[0]?.toUpperCase()}
                 </div>
               )}

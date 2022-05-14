@@ -33,7 +33,9 @@ export const Search = () => {
       <TopContributors />
 
       <main className="main py-3 px-4 bg-white rounded-lg">
-        <h4 className="font-semibold my-3">Search your friends.</h4>
+        <h4 className="font-semibold my-3 text-center text-blue-500">
+          Search your friends
+        </h4>
         <label htmlFor="search" className="relative">
           <span className="material-icons-outlined absolute text-slate-500 left-[10px] top-[-2px]">
             search

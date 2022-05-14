@@ -17,7 +17,7 @@ export const Bookmark = () => {
       <Sidebar />
       <TopContributors />
       <main className="main pb-20 px-2 md:px-0">
-        <h4 className="font-semibold text-blue-500 my-6 md:mt-0 max-w-xl mx-auto">
+        <h4 className="font-semibold text-blue-500 my-6 md:mt-0 max-w-xl mx-auto text-center">
           Your bookmarks
         </h4>
         {isLoading && bookmarks.length === 0 ? (

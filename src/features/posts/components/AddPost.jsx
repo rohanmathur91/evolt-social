@@ -153,7 +153,7 @@ export const AddPost = ({ handleModalType }) => {
 
         {showEmojis && (
           <div
-            className="absolute left-0 bottom-[-140px] p-2 flex flex-row items-center justify-center flex-wrap max-w-xs rounded bg-white border"
+            className="absolute left-0 bottom-[-140px] z-[1] p-2 flex flex-row items-center justify-center flex-wrap max-w-xs rounded bg-white border"
             onClick={(e) => e.stopPropagation()}
           >
             {emojis.map((emoji, index) => (
