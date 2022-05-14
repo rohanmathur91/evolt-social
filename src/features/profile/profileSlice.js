@@ -1,39 +1,23 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
+import { loginUser, logoutUser } from "../auth";
 
 export const followUser = createAsyncThunk(
   "profile/followUser",
-  async ({ followUserId, setIsFollowLoader }) => {
+  async ({ followUserId, setIsFollowLoader }, { getState }) => {
     try {
       setIsFollowLoader(true);
+      const { auth: loggedInUser } = getState();
+
       const {
         data: {
-          user: { following },
+          followUser,
+          user: { followers, following },
         },
       } = await axios.post(`/api/users/follow/${followUserId}`);
 
-      return following;
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsFollowLoader(false);
-    }
-  }
-);
-
-export const unfollowUser = createAsyncThunk(
-  "profile/unfollowUser",
-  async ({ followUserId, setIsFollowLoader }) => {
-    try {
-      setIsFollowLoader(true);
-      const {
-        data: {
-          user: { following },
-        },
-      } = await axios.post(`/api/users/unfollow/${followUserId}`);
-
-      return following;
+      return { followUser, followers, following, loggedInUser };
     } catch (error) {
       console.log(error.response);
     } finally {
@@ -42,19 +26,105 @@ export const unfollowUser = createAsyncThunk(
   }
 );
 
+export const unfollowUser = createAsyncThunk(
+  "profile/unfollowUser",
+  async ({ followingUserId, setIsFollowLoader }, { getState }) => {
+    try {
+      setIsFollowLoader(true);
+      const { auth: loggedInUser } = getState();
+
+      const {
+        data: {
+          followUser,
+          user: { followers, following },
+        },
+      } = await axios.post(`/api/users/unfollow/${followingUserId}`);
+
+      return { followUser, followers, following, loggedInUser };
+    } catch (error) {
+      console.log(error.response);
+    } finally {
+      setIsFollowLoader(false);
+    }
+  }
+);
+
+export const getUser = createAsyncThunk("profile/getUser", async (userId) => {
+  try {
+    const {
+      data: { user },
+    } = await axios.get(`/api/users/${userId}`);
+
+    return user;
+  } catch (error) {
+    console.log(error.response);
+  }
+});
+
 const profileSlice = createSlice({
   name: "profile",
   initialState: {
-    followers: [],
-    following: [],
+    currentUser: null,
+    isUserLoading: false,
+    loggedInUserfollowing: [],
+    loggedInUserfollowers: [],
   },
   reducers: {},
   extraReducers: {
+    [getUser.pending]: (state) => {
+      state.isUserLoading = true;
+    },
+    [getUser.fulfilled]: (state, { payload }) => {
+      state.isUserLoading = false;
+      state.currentUser = payload;
+    },
+    [followUser.pending]: (state) => {
+      state.isLoading = true;
+    },
     [followUser.fulfilled]: (state, { payload }) => {
-      state.following = payload;
+      state.isLoading = false;
+      state.loggedInUserfollowing = payload.following;
+      state.loggedInUserfollowers = payload.followers;
+      state.currentUser =
+        payload.loggedInUser.user?._id === state.currentUser?._id
+          ? Object.assign(
+              {},
+              state.currentUser,
+              { following: payload.following },
+              { followers: payload.followers }
+            )
+          : payload.followUser._id === state.currentUser?._id
+          ? payload.followUser
+          : state.currentUser;
+    },
+    [unfollowUser.pending]: (state) => {
+      state.isLoading = true;
     },
     [unfollowUser.fulfilled]: (state, { payload }) => {
-      state.following = payload;
+      state.isLoading = false;
+      state.loggedInUserfollowing = payload.following;
+      state.loggedInUserfollowers = payload.followers;
+      state.currentUser =
+        payload.loggedInUser.user?._id === state.currentUser?._id
+          ? Object.assign(
+              {},
+              state.currentUser,
+              { following: payload.following },
+              { followers: payload.followers }
+            )
+          : payload.followUser._id === state.currentUser?._id
+          ? payload.followUser
+          : state.currentUser;
+    },
+    [loginUser.fulfilled]: (state, { payload }) => {
+      state.loggedInUserfollowing = payload.foundUser.following;
+      state.loggedInUserfollowers = payload.foundUser.followers;
+    },
+    [logoutUser]: (state) => {
+      state.currentUser = null;
+      state.isUserLoading = false;
+      state.loggedInUserfollowing = [];
+      state.loggedInUserfollowers = [];
     },
   },
 });

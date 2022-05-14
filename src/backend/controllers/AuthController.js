@@ -36,12 +36,14 @@ export const signupHandler = function (schema, request) {
       updatedAt: formatDate(),
       bio: "",
       profileUrl: "",
+      websiteUrl: "",
       username,
       password,
       ...rest,
       followers: [],
       following: [],
       bookmarks: [],
+      profileBackgroundUrl: "",
     };
     const createdUser = schema.users.create(newUser);
     const encodedToken = sign(

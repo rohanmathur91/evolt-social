@@ -1,218 +1,239 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, Outlet, NavLink } from "react-router-dom";
-import { Modal, Sidebar, useModal } from "../../common";
-import { logoutUser } from "../auth";
+import { Link, Outlet, NavLink, useParams } from "react-router-dom";
+import { getUser, useProfile, followUser, unfollowUser } from "./profileSlice";
+import { logoutUser, useAuth } from "../auth";
+import {
+  Modal,
+  Sidebar,
+  useModal,
+  PROFILEMODAL,
+  CircularLoader,
+} from "../../common";
+import { usePosts } from "../posts";
+import { getFollowingStatus } from "../users";
+import { EditProfileForm } from "./components";
+import { getCurrentUserPosts } from "./utils";
 
 export const Profile = () => {
-  const { showModal, handleShowModal } = useModal();
-  const [profileImage, setProfileImage] = useState(null);
+  const { posts } = usePosts();
+  const { userId } = useParams();
   const dispatch = useDispatch();
+  const { user: loggedInUser } = useAuth();
+  const { modalType, handleModalType } = useModal();
+  const { currentUser, loggedInUserfollowing, isUserLoading } = useProfile();
+  const [isFollowLoader, setIsFollowLoader] = useState(false);
+  const isFollowing = getFollowingStatus(loggedInUserfollowing, userId);
+  const currentUserPosts = getCurrentUserPosts(userId, posts);
+  const {
+    _id,
+    bio,
+    websiteUrl,
+    firstName,
+    lastName,
+    username,
+    profileUrl,
+    profileBackgroundUrl,
+  } = currentUser ?? {};
 
-  const handleProfileImageChange = (e) => {
-    console.log(profileImage);
-    setProfileImage(e.target.files[0]);
+  useEffect(() => {
+    dispatch(getUser(userId));
+  }, [userId, dispatch]);
+
+  const handleFollowClick = () => {
+    if (!isFollowing) {
+      dispatch(
+        followUser({
+          followUserId: userId,
+          setIsFollowLoader,
+        })
+      );
+    } else {
+      dispatch(
+        unfollowUser({
+          followingUserId: userId,
+          setIsFollowLoader,
+        })
+      );
+    }
   };
 
   const handleLogout = () => dispatch(logoutUser());
 
   return (
     <>
-      {showModal && (
-        <Modal handleShowModal={handleShowModal}>
-          <form className="bg-white flex flex-col p-4 rounded relative">
-            <div className="absolute right-0 top-0">
-              <button
-                type="button"
-                data-tooltip="Close"
-                onClick={() => handleShowModal(false)}
-                className="tooltip p-2 m-2 flex rounded items-center justify-center hover:bg-blue-100 hover:text-blue-500"
-              >
-                <span className="material-icons-outlined">close</span>
-              </button>
-            </div>
-
-            <div className="flex flex-row items-center mb-4">
-              <span>Profile image: </span>
-              <div className="ml-4 relative rounded-full border">
-                <img
-                  alt="profile"
-                  loading="lazy"
-                  src="https://i.pravatar.cc/300"
-                  className="w-10 h-10 sm:w-14 sm:h-14 bg-gray-200 rounded-full"
-                />
-
-                <div className="flex items-center justify-center absolute right-[-4px] bottom-[-7px] text-blue-500 w-6 h-6 sm:w-8 sm:h-8 border border-blue-500 rounded-full bg-blue-100">
-                  <label
-                    htmlFor="image-upload"
-                    data-tooltip="Add profile image"
-                    className="tooltip hover:cursor-pointer flex items-center justify-center"
-                  >
-                    <span className="material-icons-outlined text-sm sm:text-base">
-                      add_a_photo
-                    </span>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      id="image-upload"
-                      className="invisible w-0 p-0"
-                      onChange={handleProfileImageChange}
-                    />
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex flex-row mb-4">
-              <span>Name:</span>
-              <span className="ml-4 font-semibold">Adarsh Balika</span>
-            </div>
-
-            <div className="flex flex-row mb-4">
-              <span>Username:</span>
-              <span className="ml-4 font-semibold">@adarshBalika</span>
-            </div>
-
-            <label>
-              Website link:
-              <input
-                type="text"
-                placeholder="Link..."
-                className="border border-slate-300 rounded w-full focus:border focus:border-blue-500"
-              />
-            </label>
-
-            <label className="mt-4">
-              Bio:
-              <textarea
-                type="text"
-                maxLength="80"
-                placeholder="Bio..."
-                className="border border-slate-300 rounded w-full py-2 px-4 outline-none focus:border focus:border-blue-500"
-              />
-            </label>
-
-            <button className="btn btn-primary mt-2 self-end py-2 px-4 text-sm sm:text-base">
-              Update
-            </button>
-          </form>
+      {modalType === PROFILEMODAL && (
+        <Modal handleModalType={handleModalType}>
+          <EditProfileForm handleModalType={handleModalType} />
         </Modal>
       )}
 
       <div className="grid-container">
         <Sidebar />
-        <main className="main bg-white mt-[10vh] min-h-[90vh] md:col-start-2 md:col-end-[-1]">
-          <div className="flex flex-col pt-6 mb-10">
-            <div className="flex flex-row items-center justify-center p-2 mb-2">
-              <img
-                alt="profile"
-                loading="lazy"
-                src="https://i.pravatar.cc/300"
-                className="w-28 h-28 md:w-36 md:h-36 bg-gray-200 rounded-full border"
-              />
-              <div className="ml-4">
-                <div className="flex flex-row items-center flex-wrap">
-                  <span className="text-xl md:text-2xl font-semibold mr-4">
-                    adarshBalika
-                  </span>
+        <main className="main bg-white rounded-lg md:col-start-2 md:col-end-[-1]">
+          {!currentUser || isUserLoading ? (
+            <CircularLoader size="2rem" customStyle="mt-8 text-blue-500" />
+          ) : (
+            <>
+              <div className="flex flex-col">
+                {profileBackgroundUrl ? (
+                  <img
+                    alt={username}
+                    loading="lazy"
+                    src={profileBackgroundUrl}
+                    className="w-full h-60 object-center object-cover bg-gray-200 md:rounded-lg"
+                  />
+                ) : (
+                  <div className="bg-gray-200 h-60 md:rounded-lg"></div>
+                )}
+                <div className="flex items-center px-4 md:px-10">
+                  {profileUrl ? (
+                    <img
+                      alt={username}
+                      loading="lazy"
+                      src={profileUrl}
+                      className="-mt-16 md:mt-[-90px] object-cover border-4 border-white w-28 h-28 md:w-36 md:h-36 bg-gray-200 rounded-full"
+                    />
+                  ) : (
+                    <div className="-mt-16 md:mt-[-90px] text-4xl md:text-6xl w-28 h-28 md:w-36 md:h-36 border-4 border-white flex items-center justify-center font-semibold object-cover rounded-full bg-blue-500 text-white">
+                      {firstName[0].toUpperCase()}
+                    </div>
+                  )}
 
-                  <div className="mt-2 md:mt-0 flex flex-row items-center">
+                  <div className="ml-auto mt-2 flex flex-col">
+                    {userId === loggedInUser._id ? (
+                      <button
+                        onClick={() => handleModalType(PROFILEMODAL)}
+                        className="btn btn-primary py-1 px-3 md:h-9 text-sm md:text-base"
+                      >
+                        Edit Profile
+                      </button>
+                    ) : (
+                      <button
+                        disabled={isFollowLoader}
+                        onClick={handleFollowClick}
+                        className={`${
+                          isFollowLoader ? "relative" : ""
+                        } btn btn-primary py-1 px-3 md:h-9 text-sm md:text-base`}
+                      >
+                        {isFollowLoader && (
+                          <CircularLoader size="1rem" position="center" />
+                        )}
+                        <span className={isFollowLoader ? "invisible" : ""}>
+                          {isFollowing ? "Following" : "Follow"}
+                        </span>
+                      </button>
+                    )}
+
                     <button
-                      onClick={() => handleShowModal(true)}
-                      className="mr-4 rounded text-sm border border-blue-500 text-blue-500 py-1 px-3 hover:transition-all hover:text-white hover:bg-blue-500"
-                    >
-                      Edit Profile
-                    </button>
-                    <button
-                      data-tooltip="Logout"
                       onClick={handleLogout}
-                      className="flex tooltip flex-row items-center justify-center"
+                      className="flex mt-2 md:h-9 items-center py-1 px-3 justify-center border border-red-400 text-red-500 rounded hover:bg-red-500 hover:text-white text-sm md:text-base hover:transition-all"
                     >
-                      <span className="material-icons-outlined md:text-3xl">
+                      Logout
+                      <span className="material-icons-outlined text-base ml-2">
                         logout
                       </span>
                     </button>
                   </div>
                 </div>
 
-                <div className="flex flex-row my-4">
-                  <Link
-                    to="/profile/1"
-                    className="mr-4 text-xs sm:text-sm flex flex-col items-center justify-center"
+                <div className="px-4 md:px-10 font-semibold">
+                  <h3 className="text-lg md:text-2xl">
+                    {firstName} {lastName}
+                  </h3>
+                  <span className="text-sm md:text-base text-gray-500">
+                    @{username}
+                  </span>
+                </div>
+                <div className="mt-2 mx-4 md:mx-10">
+                  <p className="leading-tight text-sm mb-3">{bio}</p>
+                  <span className="flex items-center">
+                    <span className="font-semibold text-sm mr-2">Website:</span>
+                    <a
+                      target="_blank"
+                      rel="noreferrer"
+                      href={websiteUrl}
+                      className="text-sm sm:text-sm text-blue-500 font-semibold hover:underline line-clamp-1"
+                    >
+                      {websiteUrl}
+                    </a>
+                  </span>
+
+                  <div className="mt-3 mb-4">
+                    <Link to={`/profile/${_id}`}>
+                      <span className="font-semibold">
+                        {currentUserPosts.length || 0}
+                      </span>
+                      <span className="ml-2 text-sm hover:underline">
+                        Posts
+                      </span>
+                    </Link>
+                    <Link to={`/profile/${_id}/followers`} className="ml-4">
+                      <span className="font-semibold">
+                        {currentUser.followers.length || 0}
+                      </span>
+                      <span className="ml-2 text-sm hover:underline">
+                        Followers
+                      </span>
+                    </Link>
+                    <Link to={`/profile/${_id}/following`} className="ml-4">
+                      <span className="font-semibold">
+                        {currentUser.following.length || 0}
+                      </span>
+                      <span className="ml-2 text-sm hover:underline">
+                        Following
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="max-w-xl mx-auto mt-4 pb-32">
+                <div className="border-b flex items-center justify-between">
+                  <NavLink
+                    end
+                    to={`/profile/${_id}`}
+                    className={({ isActive }) =>
+                      `${
+                        isActive
+                          ? "text-blue-500 border-b-2 mb-[-0.8px] border-blue-500"
+                          : ""
+                      } font-semibold text-sm md:text-base py-2 px-4 hover:text-blue-500`
+                    }
                   >
-                    <span className="font-semibold mr-1">10</span>{" "}
-                    <span>Posts</span>
-                  </Link>
-                  <Link
-                    to="/profile/1/followers"
-                    className="mr-4 text-xs sm:text-sm flex flex-col items-center justify-center"
+                    Posts
+                  </NavLink>
+                  <NavLink
+                    end
+                    to={`/profile/${_id}/followers`}
+                    className={({ isActive }) =>
+                      `${
+                        isActive
+                          ? "text-blue-500 border-b-2 mb-[-0.8px] border-blue-500"
+                          : ""
+                      } font-semibold text-sm md:text-base py-2 px-4 hover:text-blue-500`
+                    }
                   >
-                    <span className="font-semibold mr-1">20</span>
-                    <span>Followers</span>
-                  </Link>
-                  <Link
-                    to="/profile/1/following"
-                    className="mr-4 text-xs sm:text-sm flex flex-col items-center justify-center"
+                    Followers
+                  </NavLink>
+                  <NavLink
+                    end
+                    to={`/profile/${_id}/following`}
+                    className={({ isActive }) =>
+                      `${
+                        isActive
+                          ? "text-blue-500 border-b-2 mb-[-0.8px] border-blue-500"
+                          : ""
+                      } font-semibold text-sm md:text-base py-2 px-4 hover:text-blue-500`
+                    }
                   >
-                    <span className="font-semibold mr-1">12</span>
-                    <span>Following</span>
-                  </Link>
+                    Following
+                  </NavLink>
                 </div>
 
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  href={`https://google.com`}
-                  className="text-sm sm:text-sm text-blue-500 font-semibold hover:underline line-clamp-1 pr-4"
-                >
-                  https://google.com
-                </a>
+                <Outlet />
               </div>
-            </div>
-            <p className="mx-4 font-semibold text-sm text-center sm:text-sm line-clamp-1">
-              Utilities for controlling the color of an element's borders.
-            </p>
-          </div>
-
-          <div className="max-w-2xl mx-auto">
-            <div className="border-t flex items-center justify-between">
-              <NavLink
-                end
-                to="/profile/1"
-                className={({ isActive }) =>
-                  `${
-                    isActive ? "text-blue-500 border-t border-blue-500" : ""
-                  } font-semibold text-sm md:text-base py-2 px-4`
-                }
-              >
-                Posts
-              </NavLink>
-              <NavLink
-                end
-                to="/profile/1/followers"
-                className={({ isActive }) =>
-                  `${
-                    isActive ? "text-blue-500 border-t border-blue-500" : ""
-                  } font-semibold text-sm md:text-base py-2 px-4`
-                }
-              >
-                Followers
-              </NavLink>
-              <NavLink
-                end
-                to="/profile/1/following"
-                className={({ isActive }) =>
-                  `${
-                    isActive ? "text-blue-500 border-t border-blue-500" : ""
-                  } font-semibold text-sm md:text-base py-2 px-4`
-                }
-              >
-                Following
-              </NavLink>
-            </div>
-
-            <Outlet />
-          </div>
+            </>
+          )}
         </main>
       </div>
     </>

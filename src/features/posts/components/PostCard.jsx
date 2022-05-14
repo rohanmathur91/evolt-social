@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,8 @@ import {
   removePostFromBookmarks,
 } from "../postSlice";
 import { useAuth } from "../../auth";
-import { useModal, CircularLoader } from "../../../common";
+import { loaderReducer, initialLoaderState } from "../reducers";
+import { useModal, CircularLoader, POSTMODAL } from "../../../common";
 import { getDate, getPostLikedStatus, getPostBookmarkStatus } from "../utils";
 
 export const PostCard = ({ post }) => {
@@ -21,16 +22,18 @@ export const PostCard = ({ post }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const dispatch = useDispatch();
-  const { handleShowModal } = useModal();
-  const [showMore, setShowMore] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isLikeLoading, setIsLikeLoading] = useState(false);
+  const { handleModalType } = useModal();
+  const [
+    { showMore, isDeleting, isLikeLoading, isBookmarkLoading },
+    loaderDispatch,
+  ] = useReducer(loaderReducer, initialLoaderState);
   const {
     _id,
     likes,
     imageUrl,
     profileUrl,
     content,
+    userId,
     username,
     firstName,
     lastName,
@@ -41,32 +44,35 @@ export const PostCard = ({ post }) => {
   const isBookmarked = getPostBookmarkStatus(_id, bookmarks);
 
   const handleShowMoreClick = () => {
-    setShowMore((prevShowMore) => !prevShowMore);
+    loaderDispatch({ type: "SHOW_MORE", payload: !showMore });
   };
 
   const handleEditPostClick = () => {
-    setShowMore(false);
-    handleShowModal(true);
+    handleModalType(POSTMODAL);
     dispatch(setCurrentEditPost(post));
+    loaderDispatch({ type: "SHOW_MORE", payload: false });
   };
 
   const handleDeletePostClick = () => {
-    dispatch(deletePost({ postId: _id, navigate, setIsDeleting }));
+    dispatch(deletePost({ postId: _id, loaderDispatch }));
+    if (pathname.includes("post")) {
+      navigate("/");
+    }
   };
 
   const handleLikePostClick = () => {
     if (!isPostLiked) {
-      dispatch(likePost({ postId: _id, setIsLikeLoading }));
+      dispatch(likePost({ postId: _id, loaderDispatch }));
     } else {
-      dispatch(disLikePost({ postId: _id, setIsLikeLoading }));
+      dispatch(disLikePost({ postId: _id, loaderDispatch }));
     }
   };
 
   const handleBookmarkPostClick = () => {
     if (!isBookmarked) {
-      dispatch(addPostInBookmarks(_id));
+      dispatch(addPostInBookmarks({ postId: _id, loaderDispatch }));
     } else {
-      dispatch(removePostFromBookmarks(_id));
+      dispatch(removePostFromBookmarks({ postId: _id, loaderDispatch }));
     }
   };
 
@@ -79,7 +85,7 @@ export const PostCard = ({ post }) => {
       <section className="p-2 pl-4 pt-4 flex items-center">
         <Link
           title={username}
-          to={`/profile/${username}`}
+          to={`/profile/${userId}`}
           className="flex items-center"
         >
           {profileUrl ? (
@@ -164,7 +170,7 @@ export const PostCard = ({ post }) => {
 
       <p
         onClick={handleSinglePostClick}
-        className="py-2 px-5 text-sm lg:text-base cursor-pointer mb-2"
+        className="py-2 px-5 text-sm lg:text-base cursor-pointer mb-2 break-normal"
       >
         {content}
       </p>
@@ -206,6 +212,7 @@ export const PostCard = ({ post }) => {
 
         <button
           data-tooltip="Bookmark"
+          disabled={isBookmarkLoading}
           onClick={handleBookmarkPostClick}
           className="tooltip w-10 h-10 flex items-center justify-center rounded-full hover:text-blue-500 hover:bg-blue-100"
         >

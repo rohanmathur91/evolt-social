@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../auth";
@@ -34,12 +34,6 @@ export const SinglePost = () => {
     dispatch(commentOnPost({ postId, comment, setIsCommentPosting }));
     setComment((prevComment) => ({ ...prevComment, comment: "" }));
   };
-
-  const handleInputFocus = useCallback((node) => {
-    if (node) {
-      node.focus();
-    }
-  }, []);
 
   return (
     <div className="grid-container">
@@ -81,9 +75,9 @@ export const SinglePost = () => {
 
               <div className="ml-2 w-full bg-white border border-blue-300 rounded-lg flex items-center px-2">
                 <input
+                  autoFocus
                   type="text"
                   value={comment.comment}
-                  ref={handleInputFocus}
                   onChange={handleCommentChange}
                   placeholder="Post your comment..."
                   className="mt-1 text-base w-full"

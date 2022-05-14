@@ -1,13 +1,16 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addPost, editPost, usePosts } from "../postSlice";
 import { useAuth } from "../../auth";
 import { CircularLoader } from "../../../common";
 import { emojis, postLimit } from "../data";
 
-export const AddPost = ({ handleShowModal }) => {
+export const AddPost = ({ handleModalType }) => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const { isLoading } = usePosts();
   const { isEditMode, currentEditPost } = usePosts();
   const [postImage, setPostImage] = useState("");
@@ -37,12 +40,6 @@ export const AddPost = ({ handleShowModal }) => {
     setPostContent((prev) => (prev.length < postLimit ? prev + emoji : prev));
   };
 
-  const handleTextAreaFocus = useCallback((node) => {
-    if (node) {
-      node.focus();
-    }
-  }, []);
-
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const { firstName, lastName } = user;
@@ -59,6 +56,10 @@ export const AddPost = ({ handleShowModal }) => {
     } else {
       dispatch(editPost({ ...currentEditPost, ...postData }));
     }
+
+    if (pathname !== "/" && !pathname.includes("profile")) {
+      navigate("/");
+    }
   };
 
   return (
@@ -69,9 +70,9 @@ export const AddPost = ({ handleShowModal }) => {
       >
         <textarea
           required
+          autoFocus
           maxLength={postLimit}
           value={postContent}
-          ref={handleTextAreaFocus}
           onChange={handleContentChange}
           placeholder="What's on your mind?"
           className="w-full h-36 p-3 resize-none rounded border focus:outline-2 focus:outline-blue-500"
@@ -125,8 +126,8 @@ export const AddPost = ({ handleShowModal }) => {
           <div className="ml-auto md:ml-1 mt-1 md:mt-0">
             <button
               type="button"
-              onClick={() => handleShowModal(false)}
-              className="rounded text-sm md:text-base border mx-2 border-blue-500 text-blue-500 py-1 px-3 hover:transition-all hover:text-white hover:bg-blue-500"
+              onClick={() => handleModalType("")}
+              className="rounded text-sm md:text-base border mx-2 border-blue-500 text-blue-500 py-1 px-3 hover:text-white hover:bg-blue-500"
             >
               Cancel
             </button>
@@ -173,5 +174,5 @@ export const AddPost = ({ handleShowModal }) => {
 };
 
 AddPost.defaultProps = {
-  handleShowModal: () => {},
+  handleModalType: () => {},
 };
