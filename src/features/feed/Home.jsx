@@ -77,13 +77,17 @@ export const Home = () => {
           </button>
 
           <div className="flex items-center gap-2 my-6">
-            <span className="flex-shrink-0 text-sm text-gray-500">
+            <span className="flex-shrink-0 text-sm text-blue-500 font-semibold">
               Sort by:
             </span>
             <button
               title="Sort by Recent"
               onClick={() => handleSortTypeClick("SORT_BY_RECENT")}
-              className="btn w-full flex items-center justify-center font-semibold py-2 px-4 bg-blue-100 text-blue-500 rouded text-sm"
+              className={`${
+                sortType === "SORT_BY_RECENT"
+                  ? "border-blue-400"
+                  : "border-transparent"
+              } btn w-full border flex items-center justify-center font-semibold py-2 px-4 bg-blue-100 text-blue-500 rouded text-sm`}
             >
               <span className="material-icons-outlined mr-2">
                 view_timeline
@@ -93,7 +97,11 @@ export const Home = () => {
             <button
               title="Sort by Trending"
               onClick={() => handleSortTypeClick("SORT_BY_TRENDING")}
-              className="btn w-full flex items-center justify-center font-semibold py-2 px-4 bg-blue-100 text-blue-500 rouded text-sm"
+              className={`${
+                sortType === "SORT_BY_TRENDING"
+                  ? "border-blue-400"
+                  : "border-transparent"
+              } btn w-full border flex items-center justify-center font-semibold py-2 px-4 bg-blue-100 text-blue-500 rouded text-sm`}
             >
               <span className="material-icons-outlined mr-2">trending_up</span>
               Trending

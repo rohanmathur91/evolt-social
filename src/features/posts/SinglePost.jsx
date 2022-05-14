@@ -43,7 +43,7 @@ export const SinglePost = () => {
       <main className="main w-full pb-10 px-2 md:px-0 max-w-xl mx-auto">
         <button
           onClick={() => navigate(-1)}
-          className="mb-4 py-2 px-4 flex items-center justify-center rounded text-blue-500 hover:bg-blue-100"
+          className="mb-4 mt-4 md:mt-0 py-2 px-4 flex items-center justify-center rounded text-blue-500 hover:bg-blue-100"
         >
           <span className="material-icons-outlined text-xl mr-1">
             arrow_back
