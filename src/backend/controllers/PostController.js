@@ -362,7 +362,7 @@ export const commentPostHandler = function (schema, request) {
     const { firstName, lastName, username, profileImage } = user;
 
     post.comments.push({
-      ...comment,
+      comment,
       _id: uuid(),
       firstName,
       lastName,

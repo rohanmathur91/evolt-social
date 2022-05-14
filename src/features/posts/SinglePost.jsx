@@ -14,25 +14,21 @@ export const SinglePost = () => {
   const dispatch = useDispatch();
   const { posts } = usePosts();
   const [post, setPost] = useState(null);
+  const [comment, setComment] = useState("");
   const [isCommentPosting, setIsCommentPosting] = useState(false);
-  const [comment, setComment] = useState({
-    comment: "",
-    replies: [],
-  });
-  const { profileImage, firstName } = user ?? {};
 
   useEffect(() => {
     setPost(getSinglePost(posts, postId));
   }, [posts, postId]);
 
   const handleCommentChange = (e) => {
-    setComment((prevComment) => ({ ...prevComment, comment: e.target.value }));
+    setComment(e.target.value);
   };
 
   const handleCommentSubmit = (e) => {
     e.preventDefault();
     dispatch(commentOnPost({ postId, comment, setIsCommentPosting }));
-    setComment((prevComment) => ({ ...prevComment, comment: "" }));
+    setComment("");
   };
 
   return (
@@ -60,16 +56,16 @@ export const SinglePost = () => {
               onSubmit={handleCommentSubmit}
               className="my-8 flex items-center"
             >
-              {profileImage ? (
+              {user?.profileImage ? (
                 <img
                   loading="lazy"
-                  src={profileImage.url}
-                  alt={profileImage.original_filename}
+                  src={user.profileImage?.url || ""}
+                  alt={user.profileImage?.original_filename || ""}
                   className="w-10 h-10 flex-shrink-0 mr-2 object-cover rounded-full bg-gray-200"
                 />
               ) : (
                 <div className="w-10 h-10 text-lg flex-shrink-0 flex items-center justify-center font-semibold rounded-full bg-blue-500 text-white">
-                  {firstName[0].toUpperCase()}
+                  {user?.firstName[0].toUpperCase()}
                 </div>
               )}
 
@@ -77,13 +73,13 @@ export const SinglePost = () => {
                 <input
                   autoFocus
                   type="text"
-                  value={comment.comment}
+                  value={comment}
                   onChange={handleCommentChange}
                   placeholder="Post your comment..."
                   className="mt-1 text-base w-full"
                 />
                 <button
-                  disabled={!comment.comment}
+                  disabled={!comment}
                   className={`btn btn-primary text-sm md:text-base py-1 px-3 ${
                     isCommentPosting ? "relative" : ""
                   }`}
