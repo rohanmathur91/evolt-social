@@ -7,9 +7,11 @@ import { getPosts, usePosts, PostCard, setPostSortType } from "../posts";
 import {
   Sidebar,
   useModal,
-  TopContributors,
-  CircularLoader,
   POSTMODAL,
+  CircularLoader,
+  useScrollToTop,
+  TopContributors,
+  useDocumentTitle,
 } from "../../common";
 import { getHomeFeed, getPostsBySortType } from "./utils";
 
@@ -21,6 +23,9 @@ export const Home = () => {
   const { posts, isLoading, postSortType } = usePosts();
   const homeFeed = getHomeFeed(user, posts, loggedInUserfollowings);
   const sortedHomeFeed = getPostsBySortType(homeFeed, postSortType);
+
+  useScrollToTop();
+  useDocumentTitle("Feed");
 
   useEffect(() => {
     dispatch(getPosts());

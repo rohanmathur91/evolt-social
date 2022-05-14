@@ -9,6 +9,8 @@ import {
   useModal,
   PROFILEMODAL,
   CircularLoader,
+  useScrollToTop,
+  useDocumentTitle,
 } from "../../common";
 import { usePosts } from "../posts";
 import { getFollowingStatus } from "../users";
@@ -27,6 +29,11 @@ export const Profile = () => {
   const currentUserPosts = getCurrentUserPosts(userId, posts);
   const { _id, bio, websiteUrl, firstName, lastName, username, profileImage } =
     currentUser ?? {};
+
+  useScrollToTop();
+  useDocumentTitle(
+    firstName && lastName ? `${firstName} ${lastName}` : "Profile"
+  );
 
   useEffect(() => {
     dispatch(getUser(userId));

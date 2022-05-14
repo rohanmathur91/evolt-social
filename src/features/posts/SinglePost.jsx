@@ -3,7 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../auth";
 import { usePosts, commentOnPost } from "./postSlice";
-import { Sidebar, TopContributors, CircularLoader } from "../../common";
+import {
+  Sidebar,
+  TopContributors,
+  CircularLoader,
+  useDocumentTitle,
+  useScrollToTop,
+} from "../../common";
 import { PostCard, CommentCard } from "./components";
 import { getSinglePost } from "./utils";
 
@@ -16,6 +22,9 @@ export const SinglePost = () => {
   const [post, setPost] = useState(null);
   const [comment, setComment] = useState("");
   const [isCommentPosting, setIsCommentPosting] = useState(false);
+
+  useScrollToTop();
+  useDocumentTitle(post ? `${post.firstName} ${post.lastName}` : "Post");
 
   useEffect(() => {
     setPost(getSinglePost(posts, postId));

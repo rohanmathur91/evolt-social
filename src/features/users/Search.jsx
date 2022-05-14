@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useUsers, getSearchedUsers } from "./userSlice";
-import { Sidebar, TopContributors, CircularLoader } from "../../common";
+import {
+  Sidebar,
+  TopContributors,
+  CircularLoader,
+  useScrollToTop,
+  useDocumentTitle,
+} from "../../common";
 import { UserCard } from "./components";
 
 export const Search = () => {
   const dispatch = useDispatch();
   const { userlist, isLoading } = useUsers();
   const [searchQuery, setSearchQuery] = useState("");
+
+  useScrollToTop();
+  useDocumentTitle("Search");
 
   useEffect(() => {
     dispatch(getSearchedUsers.pending());

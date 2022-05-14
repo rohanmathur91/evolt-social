@@ -1,12 +1,21 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { usePosts, getBookmarkPosts } from "./postSlice";
-import { Sidebar, TopContributors, CircularLoader } from "../../common";
+import {
+  Sidebar,
+  TopContributors,
+  CircularLoader,
+  useScrollToTop,
+  useDocumentTitle,
+} from "../../common";
 import { PostCard } from "./components";
 
 export const Bookmark = () => {
   const dispatch = useDispatch();
   const { posts, isLoading, bookmarks } = usePosts();
+
+  useScrollToTop();
+  useDocumentTitle("Bookmark");
 
   useEffect(() => {
     dispatch(getBookmarkPosts());

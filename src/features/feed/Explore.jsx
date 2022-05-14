@@ -5,7 +5,13 @@ import { useAuth } from "../auth";
 import { getPosts, PostCard, usePosts } from "../posts";
 import { useProfile } from "../profile";
 import { getExploreFeed } from "./utils";
-import { CircularLoader, Sidebar, TopContributors } from "../../common";
+import {
+  Sidebar,
+  CircularLoader,
+  TopContributors,
+  useScrollToTop,
+  useDocumentTitle,
+} from "../../common";
 
 export const Explore = () => {
   const { user } = useAuth();
@@ -13,6 +19,9 @@ export const Explore = () => {
   const { posts, isLoading } = usePosts();
   const { loggedInUserfollowings } = useProfile();
   const exploreFeed = getExploreFeed(user, posts, loggedInUserfollowings);
+
+  useScrollToTop();
+  useDocumentTitle("Explore");
 
   useEffect(() => {
     dispatch(getPosts());

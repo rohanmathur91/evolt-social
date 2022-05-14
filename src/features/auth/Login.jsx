@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuthForm } from "./useAuthForm";
 import { useAuth, loginUser } from "./authSlice";
-import { Input } from "../../common";
-import { useEffect } from "react";
+import { Input, useDocumentTitle } from "../../common";
 
 export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
   const { user, isLoading, error } = useAuth();
+
+  useDocumentTitle("Login");
 
   useEffect(() => {
     if (user) {

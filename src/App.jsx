@@ -12,7 +12,6 @@ import {
   Followers,
   Following,
   SinglePost,
-  Notifications,
   PrivateRoute,
   persistUser,
 } from "./features";
@@ -41,7 +40,6 @@ const App = () => {
           <Route path="/post/:postId" element={<SinglePost />} />
           <Route path="/bookmarks" element={<Bookmark />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/notifications" element={<Notifications />} />
           <Route path="/profile/:userId/" element={<Profile />}>
             <Route index element={<Posts />} />
             <Route path="followers" element={<Followers />} />

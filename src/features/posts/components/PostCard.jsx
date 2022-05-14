@@ -54,8 +54,8 @@ export const PostCard = ({ post }) => {
     loaderDispatch({ type: "SHOW_MORE", payload: !showMore });
   };
 
-  const memoziedHandler = useCallback(handleShowMoreClick, [showMore]);
-  useOutsideClick(showMoreOptionsRef, showMore, memoziedHandler);
+  const memoizedHandler = useCallback(handleShowMoreClick, [showMore]);
+  useOutsideClick(showMoreOptionsRef, showMore, memoizedHandler);
 
   const handleEditPostClick = () => {
     handleModalType(POSTMODAL);
