@@ -109,7 +109,7 @@ export const Profile = () => {
 
                     <button
                       onClick={handleLogout}
-                      className="flex mt-2 md:h-9 items-center py-1 px-3 justify-center border border-red-400 text-red-500 rounded hover:bg-red-500 hover:text-white text-sm md:text-base hover:transition-all"
+                      className="flex mt-3 md:h-9 items-center py-1 px-3 justify-center border border-red-400 text-red-500 rounded hover:bg-red-500 hover:text-white text-sm md:text-base hover:transition-all"
                     >
                       Logout
                       <span className="material-icons-outlined text-base ml-2">
@@ -215,7 +215,6 @@ export const Profile = () => {
                     Following
                   </NavLink>
                 </div>
-
                 <Outlet />
               </div>
             </>

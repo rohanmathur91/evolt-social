@@ -1,12 +1,16 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../../features";
+import { useAuth, logoutUser } from "../../features";
 import { POSTMODAL, sideBarData } from "../helpers";
 import { useModal } from "../hooks";
 
 export const Sidebar = () => {
   const { user } = useAuth();
+  const dispatch = useDispatch();
   const { handleModalType } = useModal();
+
+  const handleLogout = () => dispatch(logoutUser());
 
   return (
     <aside className="sticky bottom-0 left-0 right-0 z-[2] md:top-[15vh] md:left-aside md:ml-auto md:w-[16rem] md:py-2 md:h-[80vh] rounded-lg md:border bg-white/60 backdrop-blur-sm">
@@ -58,6 +62,18 @@ export const Sidebar = () => {
             className="w-full btn btn-primary py-2 px-4 text-base rounded"
           >
             Add post
+          </button>
+        </li>
+        <li key="logout-btn" className="hidden mt-36 md:block mx-2">
+          <button
+            title="Logout"
+            onClick={handleLogout}
+            className="w-full flex items-center justify-center py-2 px-4 border border-red-400 text-red-500 rounded hover:bg-red-500 hover:text-white text-sm md:text-base hover:transition-all"
+          >
+            Logout
+            <span className="material-icons-outlined text-base ml-2">
+              logout
+            </span>
           </button>
         </li>
       </ul>
