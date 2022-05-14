@@ -170,6 +170,7 @@ const postSlice = createSlice({
   name: "posts",
   initialState: {
     posts: [],
+    postSortType: "",
     bookmarks: [],
     modalType: "",
     isLoading: false,
@@ -180,6 +181,10 @@ const postSlice = createSlice({
     currentEditPost: null,
   },
   reducers: {
+    setPostSortType: (state, { payload }) => {
+      state.postSortType = payload;
+    },
+
     setModalType: (state, { payload }) => {
       state.modalType = payload;
     },
@@ -276,5 +281,6 @@ const postSlice = createSlice({
 });
 
 export const postReducer = postSlice.reducer;
-export const { setModalType, setCurrentEditPost } = postSlice.actions;
+export const { setModalType, setCurrentEditPost, setPostSortType } =
+  postSlice.actions;
 export const usePosts = () => useSelector((state) => state.posts);

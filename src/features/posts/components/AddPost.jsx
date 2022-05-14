@@ -12,20 +12,44 @@ export const AddPost = ({ handleModalType }) => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const { isLoading } = usePosts();
+  const [isImageUploading, setIsImageUploading] = useState(false);
   const { isEditMode, currentEditPost } = usePosts();
-  const [postImage, setPostImage] = useState("");
+  const [postMedia, setPostMedia] = useState(null);
   const [postContent, setPostContent] = useState("");
   const [showEmojis, setShowEmojis] = useState(false);
 
   useEffect(() => {
     if (currentEditPost) {
-      setPostImage(currentEditPost.imageUrl);
+      setPostMedia(currentEditPost.postMedia);
       setPostContent(currentEditPost.content);
     }
   }, [currentEditPost]);
 
-  const handleImageFileChange = (e) => {
-    setPostImage(e.target.files[0]);
+  const handleImageFileChange = async (e) => {
+    try {
+      setIsImageUploading(true);
+      const postMediaFormData = new FormData();
+      postMediaFormData.append("file", e.target.files[0]);
+      postMediaFormData.append(
+        "upload_preset",
+        process.env.REACT_APP_UPLOAD_PRESET_NAME
+      );
+
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`,
+        {
+          method: "POST",
+          body: postMediaFormData,
+        }
+      );
+      const { url, original_filename } = await response.json();
+
+      setPostMedia({ url, original_filename });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsImageUploading(false);
+    }
   };
 
   const handleContentChange = (e) => {
@@ -47,7 +71,7 @@ export const AddPost = ({ handleModalType }) => {
     const postData = {
       lastName,
       firstName,
-      imageUrl: postImage,
+      postMedia,
       content: postContent,
     };
 
@@ -78,6 +102,14 @@ export const AddPost = ({ handleModalType }) => {
           className="w-full h-36 p-3 resize-none rounded border focus:outline-2 focus:outline-blue-500"
         ></textarea>
 
+        {postMedia && (
+          <img
+            loading="lazy"
+            src={postMedia.url}
+            alt={postMedia.original_filename}
+            className="w-64 mx-auto h-32 object-contain"
+          />
+        )}
         <div className="flex items-center justify-between flex-wrap">
           <div className="flex items-center">
             <button
@@ -86,7 +118,7 @@ export const AddPost = ({ handleModalType }) => {
               onClick={handleShowEmoji}
               className="tooltip mr-2 w-10 h-10 rounded-full hover:cursor-pointer text-2xl text-blue-500 hover:bg-blue-100"
             >
-              <span className="material-icons-outlined flex items-center justify-center">
+              <span className="material-icons-outlined flex items-center justify-center select-none">
                 add_reaction
               </span>
             </button>
@@ -96,7 +128,7 @@ export const AddPost = ({ handleModalType }) => {
               data-tooltip="Add image"
               className="tooltip flex items-center"
             >
-              <span className="material-icons-outlined w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer text-2xl text-blue-500 hover:bg-blue-100">
+              <span className="material-icons-outlined select-none w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer text-2xl text-blue-500 hover:bg-blue-100">
                 add_photo_alternate
               </span>
               <input
@@ -108,7 +140,7 @@ export const AddPost = ({ handleModalType }) => {
               />
 
               <span className="text-xs text-gray-500 max-w-[8ch] line-clamp-1">
-                {postImage?.name}
+                {postMedia?.name}
               </span>
             </label>
           </div>

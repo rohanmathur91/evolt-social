@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../auth";
 import { useProfile } from "../profile";
-import { getPosts, usePosts, PostCard } from "../posts";
+import { getPosts, usePosts, PostCard, setPostSortType } from "../posts";
 import {
   Sidebar,
   useModal,
@@ -17,18 +17,17 @@ export const Home = () => {
   const { user } = useAuth();
   const dispatch = useDispatch();
   const { handleModalType } = useModal();
-  const { posts, isLoading } = usePosts();
   const { loggedInUserfollowings } = useProfile();
-  const [sortType, setSortType] = useState("");
+  const { posts, isLoading, postSortType } = usePosts();
   const homeFeed = getHomeFeed(user, posts, loggedInUserfollowings);
-  const sortedHomeFeed = getPostsBySortType(homeFeed, sortType);
+  const sortedHomeFeed = getPostsBySortType(homeFeed, postSortType);
 
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
 
   const handleSortTypeClick = (type) => {
-    setSortType(type);
+    dispatch(setPostSortType(type));
   };
 
   return (
@@ -38,7 +37,7 @@ export const Home = () => {
       <main className="main pb-12 px-2 md:px-0">
         <div className="mt-6 md:mt-0 max-w-xl mx-auto mb-4">
           <h4 className="font-semibold text-blue-500 mb-4 text-center">
-            User Feed
+            Your Feed
           </h4>
 
           <button
@@ -60,7 +59,7 @@ export const Home = () => {
                 </span>
               )}
 
-              <span className="text-gray-400 border p-2 w-full text-left rounded-lg">
+              <span className="text-gray-400 border p-2 w-full text-left rounded-lg hover:bg-slate-100">
                 What's on your mind?
               </span>
             </span>
@@ -72,7 +71,7 @@ export const Home = () => {
               <span className="material-icons-outlined hover:cursor-pointer text-2xl text-blue-500">
                 add_photo_alternate
               </span>
-              <span className="text-sm text-gray-400 ml-2">Photo</span>
+              <span className="text-sm text-gray-400 ml-2">Photo or Video</span>
             </span>
           </button>
 
@@ -84,7 +83,7 @@ export const Home = () => {
               title="Sort by Recent"
               onClick={() => handleSortTypeClick("SORT_BY_RECENT")}
               className={`${
-                sortType === "SORT_BY_RECENT"
+                postSortType === "SORT_BY_RECENT"
                   ? "border-blue-400"
                   : "border-transparent"
               } btn w-full border flex items-center justify-center font-semibold py-2 px-4 bg-blue-100 text-blue-500 rouded text-sm`}
@@ -98,7 +97,7 @@ export const Home = () => {
               title="Sort by Trending"
               onClick={() => handleSortTypeClick("SORT_BY_TRENDING")}
               className={`${
-                sortType === "SORT_BY_TRENDING"
+                postSortType === "SORT_BY_TRENDING"
                   ? "border-blue-400"
                   : "border-transparent"
               } btn w-full border flex items-center justify-center font-semibold py-2 px-4 bg-blue-100 text-blue-500 rouded text-sm`}

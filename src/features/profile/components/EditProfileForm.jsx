@@ -21,9 +21,9 @@ export const EditProfileForm = ({ handleModalType }) => {
     e.preventDefault();
     try {
       setImageUploading(true);
-      const imageFormData = new FormData();
-      imageFormData.append("file", e.target.files[0]);
-      imageFormData.append(
+      const profileImageFormData = new FormData();
+      profileImageFormData.append("file", e.target.files[0]);
+      profileImageFormData.append(
         "upload_preset",
         process.env.REACT_APP_UPLOAD_PRESET_NAME
       );
@@ -32,7 +32,7 @@ export const EditProfileForm = ({ handleModalType }) => {
         `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`,
         {
           method: "POST",
-          body: imageFormData,
+          body: profileImageFormData,
         }
       );
 
@@ -44,7 +44,6 @@ export const EditProfileForm = ({ handleModalType }) => {
     } finally {
       setImageUploading(false);
     }
-    //
   };
 
   const handleWebsiteUrlChange = (e) => {
@@ -153,7 +152,7 @@ export const EditProfileForm = ({ handleModalType }) => {
           value={editedBio}
           onChange={handleBioChange}
           className="border border-slate-300 h-28 mt-1 rounded w-full py-2 px-4 outline-none focus:border focus:border-blue-500"
-        />
+        ></textarea>
       </label>
       {editedBio.length > 80 && (
         <span className="text-sm text-red-500 flex items-center">

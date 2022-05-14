@@ -30,7 +30,6 @@ export const PostCard = ({ post }) => {
   const {
     _id,
     likes,
-    imageUrl,
     content,
     userId,
     isEdited,
@@ -39,6 +38,7 @@ export const PostCard = ({ post }) => {
     lastName,
     updatedAt,
     comments,
+    postMedia,
     profileImage,
   } = post;
   const isPostLiked = getPostLikedStatus(user, likes);
@@ -165,13 +165,13 @@ export const PostCard = ({ post }) => {
         )}
       </section>
 
-      {imageUrl && (
+      {postMedia && (
         <img
-          alt={username}
           loading="lazy"
-          src={imageUrl}
+          src={postMedia.url}
+          alt={postMedia.original_filename}
           onClick={handleSinglePostClick}
-          className="w-full h-80 cursor-pointer aspect-[2/1] mt-1 mb-2 bg-gray-200"
+          className="w-full h-80 cursor-pointer aspect-[2/1] object-cover object-top mt-1 mb-2 bg-gray-200"
         />
       )}
 
@@ -251,6 +251,7 @@ PostCard.defaultProps = {
     lastName: "",
     updatedAt: "",
     comments: [],
+    postMedia: null,
     profileImage: null,
   },
 };

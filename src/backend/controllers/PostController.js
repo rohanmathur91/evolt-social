@@ -103,6 +103,7 @@ export const createPostHandler = function (schema, request) {
     const { postData } = JSON.parse(request.requestBody);
     const post = {
       _id: uuid(),
+      postMedia: null,
       ...postData,
       likes: {
         likeCount: 0,
@@ -110,7 +111,6 @@ export const createPostHandler = function (schema, request) {
         dislikedBy: [],
       },
       comments: [],
-      imageUrl: "",
       userId: user._id,
       username: user.username,
       profileImage: user.profileImage,
