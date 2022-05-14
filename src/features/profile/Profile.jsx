@@ -128,18 +128,22 @@ export const Profile = () => {
                   </span>
                 </div>
                 <div className="mt-2 mx-4 md:mx-10">
-                  <p className="leading-tight text-sm mb-3">{bio}</p>
-                  <span className="flex items-center">
-                    <span className="font-semibold text-sm mr-2">Website:</span>
-                    <a
-                      target="_blank"
-                      rel="noreferrer"
-                      href={websiteUrl}
-                      className="text-sm sm:text-sm text-blue-500 font-semibold hover:underline line-clamp-1"
-                    >
-                      {websiteUrl}
-                    </a>
-                  </span>
+                  {bio && <p className="leading-tight text-sm mb-3">{bio}</p>}
+                  {websiteUrl && (
+                    <span className="flex items-center">
+                      <span className="font-semibold text-sm mr-2">
+                        Website:
+                      </span>
+                      <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href={websiteUrl}
+                        className="text-sm sm:text-sm text-blue-500 font-semibold hover:underline line-clamp-1"
+                      >
+                        {websiteUrl}
+                      </a>
+                    </span>
+                  )}
 
                   <div className="mt-3 mb-4">
                     <Link to={`/profile/${_id}`}>
