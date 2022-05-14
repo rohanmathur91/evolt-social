@@ -12,7 +12,7 @@ export const AddPost = ({ handleModalType }) => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const { isLoading } = usePosts();
-  const [isImageUploading, setIsImageUploading] = useState(false);
+  const [isMediaUploading, setIsMediaUploading] = useState(false);
   const { isEditMode, currentEditPost } = usePosts();
   const [postMedia, setPostMedia] = useState(null);
   const [postContent, setPostContent] = useState("");
@@ -27,7 +27,7 @@ export const AddPost = ({ handleModalType }) => {
 
   const handleImageFileChange = async (e) => {
     try {
-      setIsImageUploading(true);
+      setIsMediaUploading(true);
       const postMediaFormData = new FormData();
       postMediaFormData.append("file", e.target.files[0]);
       postMediaFormData.append(
@@ -48,7 +48,7 @@ export const AddPost = ({ handleModalType }) => {
     } catch (error) {
       console.log(error);
     } finally {
-      setIsImageUploading(false);
+      setIsMediaUploading(false);
     }
   };
 
@@ -92,24 +92,30 @@ export const AddPost = ({ handleModalType }) => {
         onSubmit={handleFormSubmit}
         className="max-w-xl w-full relative bg-white border p-3 rounded-lg"
       >
-        <textarea
-          required
-          autoFocus
-          maxLength={postLimit}
-          value={postContent}
-          onChange={handleContentChange}
-          placeholder="What's on your mind?"
-          className="w-full h-36 p-3 resize-none rounded border focus:outline-2 focus:outline-blue-500"
-        ></textarea>
+        <div className="rounded-lg border-2 border-blue-500 p-3 mb-3">
+          <textarea
+            required
+            autoFocus
+            maxLength={postLimit}
+            value={postContent}
+            onChange={handleContentChange}
+            placeholder="What's on your mind?"
+            className="w-full h-36 resize-none outline-none"
+          ></textarea>
 
-        {postMedia && (
-          <img
-            loading="lazy"
-            src={postMedia.url}
-            alt={postMedia.original_filename}
-            className="w-64 mx-auto h-32 object-contain"
-          />
-        )}
+          {isMediaUploading ? (
+            <CircularLoader size="2.5rem" customStyle="text-blue-500 h-32" />
+          ) : (
+            postMedia && (
+              <img
+                loading="lazy"
+                src={postMedia.url}
+                alt={postMedia.original_filename}
+                className="w-64 mx-auto h-32 object-contain"
+              />
+            )
+          )}
+        </div>
         <div className="flex items-center justify-between flex-wrap">
           <div className="flex items-center">
             <button
@@ -167,6 +173,7 @@ export const AddPost = ({ handleModalType }) => {
             <button
               disabled={
                 isLoading ||
+                isMediaUploading ||
                 postContent.length === 0 ||
                 postContent.length > postLimit
               }
@@ -185,7 +192,7 @@ export const AddPost = ({ handleModalType }) => {
 
         {showEmojis && (
           <div
-            className="absolute left-0 bottom-[-140px] z-[1] p-2 flex flex-row items-center justify-center flex-wrap max-w-xs rounded bg-white border"
+            className="absolute left-0 bottom-[-130px] z-[1] p-2 flex flex-row items-center justify-center flex-wrap max-w-xs rounded bg-white border"
             onClick={(e) => e.stopPropagation()}
           >
             {emojis.map((emoji, index) => (
