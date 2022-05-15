@@ -35,15 +35,15 @@ export const signupHandler = function (schema, request) {
       createdAt: formatDate(),
       updatedAt: formatDate(),
       bio: "",
-      profileUrl: "",
       websiteUrl: "",
+      profileImage: null,
       username,
       password,
       ...rest,
       followers: [],
       following: [],
       bookmarks: [],
-      profileBackgroundUrl: "",
+      profileBackgroundImage: null,
     };
     const createdUser = schema.users.create(newUser);
     const encodedToken = sign(

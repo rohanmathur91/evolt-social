@@ -113,7 +113,7 @@ export const createPostHandler = function (schema, request) {
       imageUrl: "",
       userId: user._id,
       username: user.username,
-      profileUrl: user.profileUrl,
+      profileImage: user.profileImage,
       firstName: user.firstName,
       lastName: user.lastName,
       createdAt: formatDate(),
@@ -359,7 +359,7 @@ export const commentPostHandler = function (schema, request) {
     const postId = request.params.postId;
     const { comment } = JSON.parse(request.requestBody);
     const post = schema.posts.findBy({ _id: postId }).attrs;
-    const { firstName, lastName, username, profileUrl } = user;
+    const { firstName, lastName, username, profileImage } = user;
 
     post.comments.push({
       ...comment,
@@ -367,7 +367,7 @@ export const commentPostHandler = function (schema, request) {
       firstName,
       lastName,
       username,
-      profileUrl,
+      profileImage,
       createdAt: formatDate(),
     });
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useUsers, getSearchedUsers } from "./userSlice";
 import { Sidebar, TopContributors, CircularLoader } from "../../common";
@@ -27,12 +27,6 @@ export const Search = () => {
     setSearchQuery("");
   };
 
-  const handleInputFocus = useCallback((node) => {
-    if (node) {
-      node.focus();
-    }
-  }, []);
-
   return (
     <div className="grid-container">
       <Sidebar />
@@ -45,12 +39,12 @@ export const Search = () => {
             search
           </span>
           <input
+            autoFocus
             id="search"
             type="text"
             value={searchQuery}
             autoComplete="off"
             placeholder="Search..."
-            ref={handleInputFocus}
             onChange={handleSearchQuery}
             className="bg-slate-100 shadow-sm px-10 rounded-lg focus:bg-slate-50 w-full border focus:border focus:border-slate-300"
           />

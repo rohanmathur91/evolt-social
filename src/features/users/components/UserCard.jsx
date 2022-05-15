@@ -12,7 +12,7 @@ export const UserCard = ({
   firstName,
   lastName,
   username,
-  profileUrl,
+  profileImage,
 }) => {
   const { user } = useAuth();
   const dispatch = useDispatch();
@@ -31,15 +31,15 @@ export const UserCard = ({
   return (
     <article className="p-2 pt-3 mb-4 rounded-lg shadow-md flex items-center border">
       <Link to={`/profile/${_id}`} className="flex items-center">
-        {profileUrl ? (
+        {profileImage ? (
           <img
-            alt={username}
             loading="lazy"
-            src={profileUrl}
+            src={profileImage.url}
+            alt={profileImage.original_filename}
             className="w-10 h-10 mr-4 object-cover flex-shrink-0 rounded-full bg-gray-200"
           />
         ) : (
-          <div className="w-10 h-10 mr-4 text-lg flex flex-shrink-0 items-center justify-center font-semibold object-cover rounded-full bg-blue-500 text-white">
+          <div className="w-10 h-10 mr-4 text-lg flex flex-shrink-0 items-center justify-center font-semibold rounded-full bg-blue-500 text-white">
             {firstName[0].toUpperCase()}
           </div>
         )}
@@ -76,5 +76,5 @@ UserCard.defaultProps = {
   firstName: "",
   lastName: "",
   username: "",
-  profileUrl: "",
+  profileImage: null,
 };

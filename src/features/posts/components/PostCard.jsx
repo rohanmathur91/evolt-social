@@ -31,7 +31,6 @@ export const PostCard = ({ post }) => {
     _id,
     likes,
     imageUrl,
-    profileUrl,
     content,
     userId,
     username,
@@ -39,6 +38,7 @@ export const PostCard = ({ post }) => {
     lastName,
     updatedAt,
     comments,
+    profileImage,
   } = post;
   const isPostLiked = getPostLikedStatus(user, likes);
   const isBookmarked = getPostBookmarkStatus(_id, bookmarks);
@@ -88,15 +88,15 @@ export const PostCard = ({ post }) => {
           to={`/profile/${userId}`}
           className="flex items-center"
         >
-          {profileUrl ? (
+          {profileImage ? (
             <img
-              alt={username}
               loading="lazy"
-              src={profileUrl}
+              src={profileImage.url}
+              alt={profileImage.original_filename}
               className="w-11 h-11 md:w-12 md:h-12 mr-4 object-cover rounded-full bg-gray-200"
             />
           ) : (
-            <div className="h-11 min-w-[2.75rem] text-xl md:w-12 md:h-12 mr-4 flex items-center justify-center font-semibold object-cover rounded-full bg-blue-500 text-white">
+            <div className="w-11 h-11 md:w-12 md:h-12 text-xl mr-4 flex flex-shrink-0 items-center justify-center font-semibold rounded-full bg-blue-500 text-white">
               {firstName[0].toUpperCase()}
             </div>
           )}
@@ -123,7 +123,7 @@ export const PostCard = ({ post }) => {
         )}
 
         {showMore && (
-          <div className="absolute top-14 right-7 z-[1] w-32 bg-white shadow-md flex flex-col p-2 border rounded-lg">
+          <div className="absolute top-14 right-7 z-[1] w-32 bg-white shadow-xl flex flex-col p-2 border rounded-lg">
             <button
               onClick={handleEditPostClick}
               className="py-2 px-4 text-sm flex items-center hover:text-blue-500 hover:bg-blue-100 rounded"
@@ -236,11 +236,11 @@ PostCard.defaultProps = {
     _id: "",
     likes: null,
     imageUrl: "",
-    profileUrl: "",
     content: "",
     username: "",
     firstName: "",
     lastName: "",
     updatedAt: "",
+    profileImage: null,
   },
 };

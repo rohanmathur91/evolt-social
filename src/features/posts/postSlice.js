@@ -93,7 +93,7 @@ export const editPost = createAsyncThunk("posts/editPost", async (postData) => {
 
     return posts;
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
   }
 });
 
@@ -257,7 +257,7 @@ const postSlice = createSlice({
     },
     [getBookmarkPosts.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      state.bookmarks = payload.reverse();
+      state.bookmarks = payload;
     },
     [getBookmarkPosts.rejected]: (state) => {
       state.isLoading = false;

@@ -4,22 +4,22 @@ import { getDate } from "../utils";
 export const CommentCard = ({
   comment,
   username,
-  profileUrl,
   firstName,
   lastName,
   createdAt,
+  profileImage,
 }) => {
   return (
     <article className="flex bg-white p-2 rounded-lg border mb-4 shadow">
-      {profileUrl ? (
+      {profileImage ? (
         <img
-          alt={username}
           loading="lazy"
-          src={profileUrl}
+          src={profileImage.url}
+          alt={profileImage.original_filename}
           className="w-10 h-10 mr-4 object-cover flex-shrink-0 rounded-full bg-gray-200"
         />
       ) : (
-        <div className="w-10 h-10 mr-4 text-lg flex flex-shrink-0 items-center justify-center font-semibold object-cover rounded-full bg-blue-500 text-white">
+        <div className="w-10 h-10 mr-4 text-lg flex flex-shrink-0 items-center justify-center font-semibold rounded-full bg-blue-500 text-white">
           {firstName[0].toUpperCase()}
         </div>
       )}
@@ -41,8 +41,8 @@ export const CommentCard = ({
 CommentCard.defaultProps = {
   comment: "",
   username: "",
-  profileUrl: "",
   firstName: "",
   lastName: "",
   createdAt: "",
+  profileImage: null,
 };
