@@ -39,10 +39,10 @@ export const signupHandler = function (schema, request) {
       profileImage: null,
       username,
       password,
-      ...rest,
       followers: [],
       following: [],
       bookmarks: [],
+      ...rest,
       profileBackgroundImage: null,
     };
     const createdUser = schema.users.create(newUser);

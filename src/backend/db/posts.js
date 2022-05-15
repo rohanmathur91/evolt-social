@@ -10,10 +10,77 @@ export const posts = [
   {
     _id: uuid(),
     content:
-      "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores lor repellendus.",
+      "Leadership is lifting a person's vision to high sights, the raising of a person's performance to a higher standard, the building of a personality beyond its normal limitations. —Peter Drucker",
     likes: {
       likeCount: 0,
       likedBy: [],
+      dislikedBy: [],
+    },
+    userId: "adarsh-balika-test-userId",
+    comments: [],
+    profileImage: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652362403/ct4fvtk6i5iu1mbnb6hj.jpg",
+      original_filename: "Pngtree—businessman",
+    },
+    postMedia: null,
+    firstName: "Adarsh",
+    lastName: "Balika",
+    username: "adarshbalika",
+    createdAt: "2022-05-15T16:43:34+05:30",
+    updatedAt: "2022-05-15T16:43:34+05:30",
+  },
+  {
+    _id: uuid(),
+    content:
+      "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores lor repellendus.",
+    likes: {
+      likeCount: 1,
+      likedBy: [
+        {
+          _id: "rohan-mathur-test-userId",
+          username: "rohanmathur",
+          firstName: "Rohan",
+          lastName: "Mathur",
+          likeUpdateDate: "2022-05-15T16:30:17+05:30",
+        },
+      ],
+      dislikedBy: [],
+    },
+    userId: "adarsh-balika-test-userId",
+    comments: [],
+    profileImage: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652362403/ct4fvtk6i5iu1mbnb6hj.jpg",
+      original_filename: "Pngtree—businessman",
+    },
+    postMedia: null,
+    firstName: "Adarsh",
+    lastName: "Balika",
+    username: "adarshbalika",
+    createdAt: "2022-05-15T16:43:34+05:30",
+    updatedAt: "2022-05-15T16:43:34+05:30",
+  },
+  {
+    _id: uuid(),
+    content:
+      "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores lor repellendus.",
+    likes: {
+      likeCount: 2,
+      likedBy: [
+        {
+          _id: "adarsh-balika-test-userId",
+          username: "adarshbalika",
+          firstName: "Adarsh",
+          lastName: "Balika",
+          likeUpdateDate: "2022-05-15T16:30:17+05:30",
+        },
+        {
+          _id: "rohan-mathur-test-userId",
+          username: "rohanmathur",
+          firstName: "Rohan",
+          lastName: "Mathur",
+          likeUpdateDate: "2022-05-15T16:30:17+05:30",
+        },
+      ],
       dislikedBy: [],
     },
     userId: "rohan-mathur-test-userId",
@@ -34,30 +101,16 @@ export const posts = [
     content:
       "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores lor repellendus.",
     likes: {
-      likeCount: 0,
-      likedBy: [],
-      dislikedBy: [],
-    },
-    userId: "adarsh-balika-test-userId",
-    comments: [],
-    profileImage: {
-      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652362403/ct4fvtk6i5iu1mbnb6hj.jpg",
-      original_filename: "Pngtree—businessman",
-    },
-    postMedia: null,
-    firstName: "Adarsh",
-    lastName: "Balika",
-    username: "adarshbalika",
-    createdAt: formatDate(),
-    updatedAt: formatDate(),
-  },
-  {
-    _id: uuid(),
-    content:
-      "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores lor repellendus.",
-    likes: {
-      likeCount: 0,
-      likedBy: [],
+      likeCount: 1,
+      likedBy: [
+        {
+          _id: "rohan-mathur-test-userId",
+          username: "rohanmathur",
+          firstName: "Rohan",
+          lastName: "Mathur",
+          likeUpdateDate: "2022-05-15T16:30:17+05:30",
+        },
+      ],
       dislikedBy: [],
     },
     userId: "john-doe-test-userId",
@@ -71,10 +124,25 @@ export const posts = [
   },
   {
     _id: uuid(),
-    content: "Your first three emojis define your Friday mood🤩",
+    content: "Flowers 🌻",
     likes: {
-      likeCount: 0,
-      likedBy: [],
+      likeCount: 2,
+      likedBy: [
+        {
+          _id: "john-doe-test-userId",
+          username: "johndoe",
+          firstName: "John",
+          lastName: "Doe",
+          likeUpdateDate: "2022-05-15T16:30:17+05:30",
+        },
+        {
+          _id: "adarsh-balika-test-userId",
+          username: "adarshbalika",
+          firstName: "Adarsh",
+          lastName: "Balika",
+          likeUpdateDate: "2022-05-15T16:30:17+05:30",
+        },
+      ],
       dislikedBy: [],
     },
     userId: "adarsh-balika-test-userId",
@@ -86,7 +154,10 @@ export const posts = [
     firstName: "Adarsh",
     lastName: "Balika",
     username: "adarshbalika",
-    postMedia: { url: "https://picsum.photos/500/400", original_filename: "" },
+    postMedia: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1649665177/sample.jpg",
+      original_filename: "flowers",
+    },
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },
@@ -105,7 +176,146 @@ export const posts = [
     firstName: "John",
     lastName: "Doe",
     username: "johndoe",
-    createdAt: formatDate(),
-    updatedAt: formatDate(),
+    createdAt: "2022-05-15T16:43:34+05:30",
+    updatedAt: "2022-05-15T16:43:34+05:30",
+  },
+  {
+    _id: uuid(),
+    content:
+      "Experience is not the amount of time you have held a position but the amount of time you have put into your craft ✨",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    userId: "adarsh-balika-test-userId",
+    comments: [],
+    profileImage: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652362403/ct4fvtk6i5iu1mbnb6hj.jpg",
+      original_filename: "test-image-1",
+    },
+    firstName: "Adarsh",
+    lastName: "Balika",
+    username: "adarshbalika",
+    postMedia: null,
+    createdAt: "2022-05-15T16:43:34+05:30",
+    updatedAt: "2022-05-15T16:43:34+05:30",
+  },
+  {
+    _id: uuid(),
+    content: "This is a panda. 👀",
+    likes: {
+      likeCount: 2,
+      likedBy: [
+        {
+          _id: "john-doe-test-userId",
+          username: "johndoe",
+          firstName: "John",
+          lastName: "Doe",
+          likeUpdateDate: "2022-05-15T16:30:17+05:30",
+        },
+        {
+          _id: "adarsh-balika-test-userId",
+          username: "adarshbalika",
+          firstName: "Adarsh",
+          lastName: "Balika",
+          likeUpdateDate: "2022-05-15T16:30:17+05:30",
+        },
+      ],
+      dislikedBy: [],
+    },
+    userId: "adarsh-balika-test-userId",
+    comments: [],
+    profileImage: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652362403/ct4fvtk6i5iu1mbnb6hj.jpg",
+      original_filename: "Pngtree—businessman",
+    },
+    firstName: "Adarsh",
+    lastName: "Balika",
+    username: "adarshbalika",
+    postMedia: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1649834647/wildlife_txpxpo.webp",
+      original_filename: "panda",
+    },
+    createdAt: "2022-05-15T16:43:34+05:30",
+    updatedAt: "2022-05-15T16:43:34+05:30",
+  },
+  {
+    _id: uuid(),
+    content: `This man has been inspiring me for a couple of decades now.
+      Selflessness, dealing with failure, handling success, staying calm in adversity, getting the best out of resources! 🚀`,
+    likes: {
+      likeCount: 1,
+      likedBy: [
+        {
+          _id: "john-doe-test-userId",
+          username: "johndoe",
+          firstName: "John",
+          lastName: "Doe",
+          likeUpdateDate: "2022-05-15T16:30:17+05:30",
+        },
+      ],
+      dislikedBy: [],
+    },
+    userId: "adarsh-balika-test-userId",
+    comments: [],
+    profileImage: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652362403/ct4fvtk6i5iu1mbnb6hj.jpg",
+      original_filename: "Pngtree—businessman",
+    },
+    firstName: "Adarsh",
+    lastName: "Balika",
+    username: "adarshbalika",
+    postMedia: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652616473/ss_jjlh2c.jpg",
+      original_filename: "dhoni-book",
+    },
+    createdAt: "2022-05-15T16:43:34+05:30",
+    updatedAt: "2022-05-15T16:43:34+05:30",
+  },
+  {
+    _id: uuid(),
+    content:
+      "A leader is best when people barely know he exists, when his work is done, his aim fulfilled, they will say: we did it ourselves. —Lao Tzu",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    userId: "adarsh-balika-test-userId",
+    comments: [],
+    profileImage: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652362403/ct4fvtk6i5iu1mbnb6hj.jpg",
+      original_filename: "Pngtree—businessman",
+    },
+    postMedia: null,
+    firstName: "Adarsh",
+    lastName: "Balika",
+    username: "adarshbalika",
+    createdAt: "2022-05-15T16:43:34+05:30",
+    updatedAt: "2022-05-15T16:43:34+05:30",
+  },
+
+  {
+    _id: uuid(),
+    content:
+      "Before you are a leader, success is all about growing yourself. When you become a leader, success is all about growing others. —Jack Welch",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    userId: "adarsh-balika-test-userId",
+    comments: [],
+    profileImage: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652362403/ct4fvtk6i5iu1mbnb6hj.jpg",
+      original_filename: "Pngtree—businessman",
+    },
+    postMedia: null,
+    firstName: "Adarsh",
+    lastName: "Balika",
+    username: "adarshbalika",
+    createdAt: "2022-05-15T16:43:34+05:30",
+    updatedAt: "2022-05-15T16:43:34+05:30",
   },
 ];
