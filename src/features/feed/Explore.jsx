@@ -11,6 +11,7 @@ import {
   TopContributors,
   useScrollToTop,
   useDocumentTitle,
+  useInfiniteScroll,
 } from "../../common";
 
 export const Explore = () => {
@@ -19,6 +20,7 @@ export const Explore = () => {
   const { posts, isLoading } = usePosts();
   const { loggedInUserfollowings } = useProfile();
   const exploreFeed = getExploreFeed(user, posts, loggedInUserfollowings);
+  const { feed, hasMorePosts, setObserverRef } = useInfiniteScroll(exploreFeed);
 
   useScrollToTop();
   useDocumentTitle("Explore");
@@ -37,14 +39,20 @@ export const Explore = () => {
         </h4>
         {isLoading ? (
           <CircularLoader size="2rem" customStyle="mt-8 text-blue-500" />
-        ) : exploreFeed.length > 0 ? (
+        ) : feed.length > 0 ? (
           <>
-            {exploreFeed.map((post) => (
+            {feed.map((post) => (
               <PostCard key={post._id} post={post} />
             ))}
-            <p className="text-center text-gray-500 mt-8 text-sm">
-              You have reached the end.
-            </p>
+            {hasMorePosts ? (
+              <span ref={setObserverRef}>
+                <CircularLoader size="2rem" customStyle="mt-8 text-blue-500" />
+              </span>
+            ) : (
+              <p className="text-center text-gray-500 mt-8 text-sm">
+                You have reached the end.
+              </p>
+            )}
           </>
         ) : (
           <p className="text-center font-semibold mt-8">

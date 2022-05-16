@@ -12,6 +12,7 @@ import {
   useScrollToTop,
   TopContributors,
   useDocumentTitle,
+  useInfiniteScroll,
 } from "../../common";
 import { getHomeFeed, getPostsBySortType } from "./utils";
 
@@ -23,6 +24,8 @@ export const Home = () => {
   const { posts, isLoading, postSortType } = usePosts();
   const homeFeed = getHomeFeed(user, posts, loggedInUserfollowings);
   const sortedHomeFeed = getPostsBySortType(homeFeed, postSortType);
+  const { feed, hasMorePosts, setObserverRef } =
+    useInfiniteScroll(sortedHomeFeed);
 
   useScrollToTop();
   useDocumentTitle("Feed");
@@ -115,14 +118,20 @@ export const Home = () => {
 
         {isLoading ? (
           <CircularLoader size="2rem" customStyle="mt-8 text-blue-500" />
-        ) : sortedHomeFeed.length > 0 ? (
+        ) : feed.length > 0 ? (
           <>
-            {sortedHomeFeed.map((post) => (
+            {feed.map((post) => (
               <PostCard key={post._id} post={post} />
             ))}
-            <p className="text-center text-gray-500 mt-8 text-sm">
-              You have reached the end.
-            </p>
+            {hasMorePosts ? (
+              <span ref={setObserverRef}>
+                <CircularLoader size="2rem" customStyle="mt-8 text-blue-500" />
+              </span>
+            ) : (
+              <p className="text-center text-gray-500 mt-8 text-sm">
+                You have reached the end.
+              </p>
+            )}
           </>
         ) : (
           <p className="text-center font-semibold mt-8">
