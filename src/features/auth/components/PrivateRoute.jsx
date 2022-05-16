@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet, Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../authSlice";
-import { Sidebar, TopContributors } from "../../../common";
+import { Sidebar, Suggestions } from "../../../common";
 
 export const PrivateRoute = () => {
   const { user } = useAuth();
@@ -11,7 +11,7 @@ export const PrivateRoute = () => {
     <div className="grid-container">
       <Sidebar />
       <Outlet />
-      <TopContributors />
+      <Suggestions />
     </div>
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />
