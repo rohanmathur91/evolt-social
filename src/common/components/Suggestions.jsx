@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useUsers, getFollowingStatus, useProfile } from "../../features";
 import suggestionsFallback from "../../assets/images/suggestions.svg";
 import { SuggestionCard } from "../components";
@@ -28,11 +28,11 @@ export const Suggestions = () => {
               className="w-28 h-28 mx-auto"
             />
 
-            <p className="text-sm font-semibold">
-              <span>You're All Caught Up, </span>
-              <Link to="/explore" className="text-blue-500 hover:underline">
-                explore.
-              </Link>
+            <p className="text-sm font-semibold flex items-center justify-center">
+              <span className="material-icons-outlined text-lg mr-1 text-green-500">
+                task_alt
+              </span>
+              <span>You're All Caught Up.</span>
             </p>
             <p className="text-xs text-gray-500">
               No more new users to follow.
