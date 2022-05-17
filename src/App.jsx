@@ -15,7 +15,7 @@ import {
   PrivateRoute,
   persistUser,
 } from "./features";
-import { Navbar } from "./common";
+import { Navbar, NotFound } from "./common";
 import { useDispatch } from "react-redux";
 
 const App = () => {
@@ -46,6 +46,7 @@ const App = () => {
             <Route path="following" element={<Following />} />
           </Route>
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
