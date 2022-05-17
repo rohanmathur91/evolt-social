@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 export const getSearchedUsers = createAsyncThunk(
   "users/getSearchedUsers",
-  async (searchQuery = "", { getState }) => {
+  async (searchQuery = "", { getState, rejectWithValue }) => {
     try {
       const { auth } = getState();
 
@@ -14,7 +14,7 @@ export const getSearchedUsers = createAsyncThunk(
 
       return { users, loggedInUser: auth.user, searchQuery };
     } catch (error) {
-      console.log(error.response);
+      return rejectWithValue(error.response.data);
     }
   }
 );
