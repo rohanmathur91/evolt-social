@@ -13,7 +13,7 @@ export const Sidebar = () => {
   const handleLogout = () => dispatch(logoutUser());
 
   return (
-    <aside className="sticky bottom-0 left-0 right-0 z-[2] md:top-[15vh] md:left-aside md:ml-auto md:w-[16rem] md:py-2 md:h-[80vh] rounded-lg md:border bg-white/60 backdrop-blur-sm">
+    <aside className="sticky bottom-0 left-0 right-0 z-[2] md:top-[6.2rem] md:left-aside md:ml-auto md:w-[16rem] md:py-2 md:h-[80vh] rounded-lg md:border bg-white/60 backdrop-blur-sm">
       <ul className="w-full grid grid-cols-5 md:block gap-1 md:gap-0">
         {sideBarData.map(({ icon, type, text, path }) => (
           <li

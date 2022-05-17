@@ -4,7 +4,7 @@ import notFound from "../../assets/images/notFound.png";
 
 export const NotFound = () => {
   return (
-    <main className="mt-[10vh] px-2 min-h-[90vh] bg-white flex flex-col items-center justify-center">
+    <main className="mt-[4rem] px-2 min-h-[calc(100vh-4rem)] bg-white flex flex-col items-center justify-center">
       <img src={notFound} alt="notFound" className="w-1/2" />
       <h4 className="font-bold my-2">Oops 404, page not found.</h4>
 

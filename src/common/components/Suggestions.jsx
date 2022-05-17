@@ -27,7 +27,7 @@ export const Suggestions = () => {
 
   return (
     !pathname.includes("profile") && (
-      <aside className="hidden py-2 px-4 lg:block lg:right-aside border rounded-lg sticky h-max md:mt-[15vh] md:top-[15vh] w-[20rem]">
+      <aside className="hidden py-2 px-4 lg:block lg:right-aside border rounded-lg sticky h-max md:mt-[6.2rem] md:top-[6.2rem] w-[20rem]">
         <h4 className="font-semibold my-4 text-center">Suggestions</h4>
         {isLoading ? (
           <CircularLoader size="2rem" customStyle="my-8 text-blue-500" />
