@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
@@ -7,7 +7,7 @@ import {
   getSearchedUsers,
   getFollowingStatus,
 } from "../../features";
-import { SuggestionCard } from "../components";
+import { SuggestionCard, CircularLoader } from "../components";
 import suggestionsFallback from "../../assets/images/suggestions.svg";
 
 export const Suggestions = () => {
@@ -15,19 +15,23 @@ export const Suggestions = () => {
   const { pathname } = useLocation();
   const { suggestions } = useUsers();
   const { loggedInUserfollowings } = useProfile();
+  const [isLoading, setIsLoading] = useState(false);
   const userSuggestionList = suggestions.filter(
     (user) => !getFollowingStatus(loggedInUserfollowings, user._id)
   );
 
   useEffect(() => {
-    dispatch(getSearchedUsers(""));
+    setIsLoading(true);
+    dispatch(getSearchedUsers("")).finally(() => setIsLoading(false));
   }, [dispatch]);
 
   return (
     !pathname.includes("profile") && (
       <aside className="hidden py-2 px-4 lg:block lg:right-aside border rounded-lg sticky h-max md:mt-[15vh] md:top-[15vh] w-[20rem]">
         <h4 className="font-semibold my-4 text-center">Suggestions</h4>
-        {userSuggestionList.length > 0 ? (
+        {isLoading ? (
+          <CircularLoader size="2rem" customStyle="my-8 text-blue-500" />
+        ) : userSuggestionList.length > 0 ? (
           userSuggestionList
             .slice(0, 2)
             .map((user) => <SuggestionCard key={user._id} {...user} />)
