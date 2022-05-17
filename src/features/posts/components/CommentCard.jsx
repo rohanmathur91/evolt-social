@@ -1,9 +1,9 @@
 import React, { useRef, useState, useCallback } from "react";
+import { useDispatch } from "react-redux";
 import { useAuth } from "../../auth";
+import { editPostComment, deletePostComment } from "../postSlice";
 import { CircularLoader, useOutsideClick } from "../../../common";
 import { getDate } from "../utils";
-import { editPostComment } from "../postSlice";
-import { useDispatch } from "react-redux";
 
 export const CommentCard = ({ postId, commentData }) => {
   const { user } = useAuth();
@@ -14,27 +14,37 @@ export const CommentCard = ({ postId, commentData }) => {
   const [showMoreOptions, setShowMoreOptions] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const [editedComment, setEditedComment] = useState("");
-  const { comment, username, firstName, lastName, commentDate, profileImage } =
-    commentData;
+  const {
+    _id,
+    comment,
+    username,
+    firstName,
+    lastName,
+    commentDate,
+    profileImage,
+  } = commentData;
 
   const handleShowMoreOptionsClick = () => {
     setShowMoreOptions((previousValue) => !previousValue);
   };
 
-  const memoizedHandler = useCallback(handleShowMoreOptionsClick, [
-    showMoreOptions,
-  ]);
+  const memoizedHandler = useCallback(handleShowMoreOptionsClick, []);
   useOutsideClick(showMoreOptionsRef, showMoreOptions, memoizedHandler);
 
   const handleEditCommentClick = () => {
-    setEditedComment(comment);
     setShowInput(true);
+    setEditedComment(comment);
     setShowMoreOptions(false);
   };
 
-  const handleDeleteCommentClick = () => {};
+  const handleDeleteCommentClick = () => {
+    setIsDeleting(true);
+    dispatch(deletePostComment({ postId, commentId: _id })).finally(() => {
+      setIsDeleting(false);
+    });
+  };
 
-  const handleEditCommentInput = (e) => {
+  const handleCommentInputChange = (e) => {
     setEditedComment(e.target.value);
   };
 
@@ -144,7 +154,7 @@ export const CommentCard = ({ postId, commentData }) => {
               autoFocus
               type="text"
               value={editedComment}
-              onChange={handleEditCommentInput}
+              onChange={handleCommentInputChange}
               className="border-b px-0 w-full mr-2"
             />
             <div className="flex items-center">
@@ -176,6 +186,7 @@ export const CommentCard = ({ postId, commentData }) => {
 CommentCard.defaultProps = {
   postId: "",
   commentData: {
+    _id: "",
     comment: "",
     username: "",
     firstName: "",

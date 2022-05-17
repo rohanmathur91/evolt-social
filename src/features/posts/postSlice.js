@@ -173,6 +173,21 @@ export const editPostComment = createAsyncThunk(
   }
 );
 
+export const deletePostComment = createAsyncThunk(
+  "posts/deletePostComment",
+  async ({ postId, commentId }, { rejectWithValue }) => {
+    try {
+      const {
+        data: { comments },
+      } = await axios.post(`/api/comment/delete/${postId}/${commentId}`);
+
+      return { comments, postId };
+    } catch (error) {
+      return rejectWithValue("Could not delete the comment.");
+    }
+  }
+);
+
 const postSlice = createSlice({
   name: "posts",
   initialState: {
@@ -288,6 +303,12 @@ const postSlice = createSlice({
       state.posts[postIndex].comments = payload.comments;
     },
     [editPostComment.fulfilled]: (state, { payload }) => {
+      const postIndex = state.posts.findIndex(
+        (post) => post._id === payload.postId
+      );
+      state.posts[postIndex].comments = payload.comments;
+    },
+    [deletePostComment.fulfilled]: (state, { payload }) => {
       const postIndex = state.posts.findIndex(
         (post) => post._id === payload.postId
       );

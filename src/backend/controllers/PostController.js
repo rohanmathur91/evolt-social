@@ -433,3 +433,53 @@ export const editPostCommentHandler = function (schema, request) {
     );
   }
 };
+
+/**
+ * This handler handles deleting a comment to a particular post in the db.
+ * send DELETE Request at /api/comment/delete/:postId/:commentId
+ * */
+
+export const deletePostCommentHandler = function (schema, request) {
+  const user = requiresAuth.call(this, request);
+  try {
+    if (!user) {
+      return new Response(
+        404,
+        {},
+        {
+          errors: [
+            "The username you entered is not Registered. Not Found error",
+          ],
+        }
+      );
+    }
+    const { postId, commentId } = request.params;
+    const post = schema.posts.findBy({ _id: postId }).attrs;
+    const commentIndex = post.comments.findIndex(
+      (comment) => comment._id === commentId
+    );
+    if (
+      post.comments[commentIndex].username !== user.username &&
+      post.username !== user.username
+    ) {
+      return new Response(
+        400,
+        {},
+        { errors: ["Cannot delete a comment doesn't belong to the User."] }
+      );
+    }
+    post.comments = post.comments.filter(
+      (comment) => comment._id !== commentId
+    );
+    this.db.posts.update({ _id: postId }, post);
+    return new Response(201, {}, { comments: post.comments });
+  } catch (error) {
+    return new Response(
+      500,
+      {},
+      {
+        error,
+      }
+    );
+  }
+};

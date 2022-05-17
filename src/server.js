@@ -16,6 +16,7 @@ import {
   getAllUserPostsHandler,
   commentPostHandler,
   editPostCommentHandler,
+  deletePostCommentHandler,
 } from "./backend/controllers/PostController";
 import {
   followUserHandler,
@@ -77,6 +78,10 @@ export function makeServer({ environment = "development" } = {}) {
       this.post(
         "/comment/edit/:postId/:commentId",
         editPostCommentHandler.bind(this)
+      );
+      this.post(
+        "/comment/delete/:postId/:commentId",
+        deletePostCommentHandler.bind(this)
       );
 
       // user routes (public)
