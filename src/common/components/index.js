@@ -6,3 +6,4 @@ export { Suggestions } from "./Suggestions";
 export { CircularLoader } from "./CircularLoader";
 export { SuggestionCard } from "./SuggestionCard";
 export { NotFound } from "./NotFound";
+export { ToastBox } from "./ToastBox/ToastBox";

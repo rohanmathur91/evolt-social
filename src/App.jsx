@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import {
   Home,
   Login,
@@ -16,8 +17,7 @@ import {
   persistUser,
   getPosts,
 } from "./features";
-import { Navbar, NotFound } from "./common";
-import { useDispatch } from "react-redux";
+import { Navbar, NotFound, ToastBox } from "./common";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -33,6 +33,7 @@ const App = () => {
   return (
     <div className="text-neutral-900 bg-gray-100">
       <Navbar />
+      <ToastBox />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
