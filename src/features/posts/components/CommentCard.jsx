@@ -9,8 +9,7 @@ export const CommentCard = ({ postId, commentData }) => {
   const { user } = useAuth();
   const dispatch = useDispatch();
   const showMoreOptionsRef = useRef(null);
-  const [isSaving, setIsSaving] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const [editedComment, setEditedComment] = useState("");
@@ -39,9 +38,9 @@ export const CommentCard = ({ postId, commentData }) => {
   };
 
   const handleDeleteCommentClick = () => {
-    setIsDeleting(true);
+    setIsUpdating(true);
     dispatch(deletePostComment({ postId, commentId: _id })).finally(() => {
-      setIsDeleting(false);
+      setIsUpdating(false);
     });
   };
 
@@ -55,7 +54,7 @@ export const CommentCard = ({ postId, commentData }) => {
 
   const handleCommentFormSubmit = (e) => {
     e.preventDefault();
-    setIsSaving(true);
+    setIsUpdating(true);
 
     dispatch(
       editPostComment({
@@ -63,7 +62,7 @@ export const CommentCard = ({ postId, commentData }) => {
         commentData: { ...commentData, comment: editedComment, isEdited: true },
       })
     ).finally(() => {
-      setIsSaving(false);
+      setIsUpdating(false);
       setShowInput(false);
     });
   };
@@ -125,13 +124,13 @@ export const CommentCard = ({ postId, commentData }) => {
                     Edit
                   </button>
                   <button
-                    disabled={isDeleting}
+                    disabled={isUpdating}
                     onClick={handleDeleteCommentClick}
                     className={`${
-                      isDeleting ? "relative" : ""
+                      isUpdating ? "relative" : ""
                     } py-2 px-4 text-sm flex items-center text-red-500 hover:bg-red-100 rounded`}
                   >
-                    {isDeleting && (
+                    {isUpdating && (
                       <CircularLoader
                         size="1rem"
                         position="center"
@@ -140,12 +139,12 @@ export const CommentCard = ({ postId, commentData }) => {
                     )}
                     <span
                       className={`${
-                        isDeleting ? "invisible" : ""
+                        isUpdating ? "invisible" : ""
                       } material-icons-outlined text-xl mr-2`}
                     >
                       delete
                     </span>
-                    <span className={isDeleting ? "invisible" : ""}>
+                    <span className={isUpdating ? "invisible" : ""}>
                       Delete
                     </span>
                   </button>
@@ -173,7 +172,7 @@ export const CommentCard = ({ postId, commentData }) => {
                 <span className="material-icons-outlined text-lg">close</span>
               </button>
               <button
-                disabled={isSaving}
+                disabled={isUpdating}
                 data-tooltip="Save"
                 className="tooltip flex items-center justify-center w-4 h-4 p-3 rounded-full border border-blue-500 text-blue-500"
               >
