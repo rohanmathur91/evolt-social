@@ -39,7 +39,7 @@ export const signupUser = createAsyncThunk(
 
 export const editLoggedInUser = createAsyncThunk(
   "auth/editLoggedInUser",
-  async (userData) => {
+  async (userData, { rejectWithValue }) => {
     try {
       const {
         data: { user },
@@ -47,7 +47,7 @@ export const editLoggedInUser = createAsyncThunk(
 
       return user;
     } catch (error) {
-      console.log(error.response);
+      return rejectWithValue("Could not edit the user data!");
     }
   }
 );

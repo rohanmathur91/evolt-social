@@ -1,6 +1,7 @@
 import React, { useReducer, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useAuthForm } from "./useAuthForm";
 import { useAuth, signupUser } from "./authSlice";
 import { signupErrorReducer, signUpErrorInitialState } from "./reducers";
@@ -43,7 +44,14 @@ export const Signup = () => {
     });
 
     if (isSignupFormValid) {
-      dispatch(signupUser(credentials));
+      dispatch(signupUser(credentials))
+        .unwrap()
+        .then(() => {
+          toast.success("You signed up successfully.");
+        })
+        .catch((error) => {
+          toast.error(error);
+        });
     }
   };
 
