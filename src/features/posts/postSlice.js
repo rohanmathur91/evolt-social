@@ -5,7 +5,9 @@ import { logoutUser } from "../auth";
 
 export const addPost = createAsyncThunk("posts/addPost", async (postData) => {
   try {
-    const { data: posts } = await axios.post("/api/posts", { postData });
+    const {
+      data: { posts },
+    } = await axios.post("/api/posts", { postData });
 
     return posts;
   } catch (error) {
@@ -15,23 +17,24 @@ export const addPost = createAsyncThunk("posts/addPost", async (postData) => {
 
 export const deletePost = createAsyncThunk(
   "posts/deletePost",
-  async ({ postId, loaderDispatch }) => {
+  async (postId) => {
     try {
-      loaderDispatch({ type: "IS_DELETING", payload: true });
-      const { data: posts } = await axios.delete(`/api/posts/${postId}`);
+      const {
+        data: { posts },
+      } = await axios.delete(`/api/posts/${postId}`);
 
       return posts;
     } catch (error) {
       console.log(error);
-    } finally {
-      loaderDispatch({ type: "IS_DELETING", payload: false });
     }
   }
 );
 
 export const getPosts = createAsyncThunk("posts/getPosts", async () => {
   try {
-    const { data: posts } = await axios.get("/api/posts");
+    const {
+      data: { posts },
+    } = await axios.get("/api/posts");
 
     return posts;
   } catch (error) {
@@ -41,9 +44,8 @@ export const getPosts = createAsyncThunk("posts/getPosts", async () => {
 
 export const likePost = createAsyncThunk(
   "posts/likePost",
-  async ({ postId, loaderDispatch }, { rejectWithValue }) => {
+  async (postId, { rejectWithValue }) => {
     try {
-      loaderDispatch({ type: "IS_LIKE_LOADING", payload: true });
       const {
         data: { posts },
       } = await axios.post(`/api/posts/like/${postId}`);
@@ -55,17 +57,14 @@ export const likePost = createAsyncThunk(
       else {
         return rejectWithValue("Something went wrong!");
       }
-    } finally {
-      loaderDispatch({ type: "IS_LIKE_LOADING", payload: false });
     }
   }
 );
 
 export const disLikePost = createAsyncThunk(
   "posts/disLikePost",
-  async ({ postId, loaderDispatch }, { rejectWithValue }) => {
+  async (postId, { rejectWithValue }) => {
     try {
-      loaderDispatch({ type: "IS_LIKE_LOADING", payload: true });
       const {
         data: { posts },
       } = await axios.post(`/api/posts/dislike/${postId}`);
@@ -77,8 +76,6 @@ export const disLikePost = createAsyncThunk(
       else {
         return rejectWithValue("Something went wrong!");
       }
-    } finally {
-      loaderDispatch({ type: "IS_LIKE_LOADING", payload: false });
     }
   }
 );
@@ -114,9 +111,8 @@ export const getBookmarkPosts = createAsyncThunk(
 
 export const addPostInBookmarks = createAsyncThunk(
   "posts/addPostInBookmarks",
-  async ({ postId, loaderDispatch }) => {
+  async (postId) => {
     try {
-      loaderDispatch({ type: "IS_BOOKMARK_LOADING", payload: true });
       const {
         data: { bookmarks },
       } = await axios.post(`/api/users/bookmark/${postId}`);
@@ -124,17 +120,14 @@ export const addPostInBookmarks = createAsyncThunk(
       return bookmarks;
     } catch (error) {
       console.log(error);
-    } finally {
-      loaderDispatch({ type: "IS_BOOKMARK_LOADING", payload: false });
     }
   }
 );
 
 export const removePostFromBookmarks = createAsyncThunk(
   "posts/removePostFromBookmarks",
-  async ({ postId, loaderDispatch }) => {
+  async (postId) => {
     try {
-      loaderDispatch({ type: "IS_BOOKMARK_LOADING", payload: true });
       const {
         data: { bookmarks },
       } = await axios.post(`/api/users/remove-bookmark/${postId}`);
@@ -142,26 +135,23 @@ export const removePostFromBookmarks = createAsyncThunk(
       return bookmarks;
     } catch (error) {
       console.log(error);
-    } finally {
-      loaderDispatch({ type: "IS_BOOKMARK_LOADING", payload: false });
     }
   }
 );
 
 export const commentOnPost = createAsyncThunk(
   "posts/commentOnPost",
-  async ({ postId, comment, setIsCommentPosting }, { rejectWithValue }) => {
+  async ({ postId, comment }, { rejectWithValue }) => {
     try {
-      setIsCommentPosting(true);
-      const { data: posts } = await axios.post(`/api/posts/comment/${postId}`, {
+      const {
+        data: { posts },
+      } = await axios.post(`/api/posts/comment/${postId}`, {
         comment,
       });
 
       return posts;
     } catch (error) {
       return rejectWithValue("Something went wrong!");
-    } finally {
-      setIsCommentPosting(false);
     }
   }
 );
@@ -204,7 +194,7 @@ const postSlice = createSlice({
     },
     [getPosts.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      state.posts = payload.posts.reverse();
+      state.posts = payload.reverse();
     },
     [getPosts.rejected]: (state) => {
       state.isLoading = false;
@@ -216,7 +206,7 @@ const postSlice = createSlice({
     [addPost.fulfilled]: (state, { payload }) => {
       state.modalType = "";
       state.isLoading = false;
-      state.posts = payload.posts.reverse();
+      state.posts = payload.reverse();
     },
     [addPost.rejected]: (state) => {
       state.modalType = "";
@@ -224,7 +214,7 @@ const postSlice = createSlice({
       state.errorMessage = "Could not add the posts!";
     },
     [deletePost.fulfilled]: (state, { payload }) => {
-      state.posts = payload.posts.reverse();
+      state.posts = payload.reverse();
     },
     [deletePost.rejected]: (state) => {
       state.deleteError = "Could not delete the post!";
@@ -275,7 +265,7 @@ const postSlice = createSlice({
       state.bookmarks = payload.reverse();
     },
     [commentOnPost.fulfilled]: (state, { payload }) => {
-      state.posts = payload.posts.reverse();
+      state.posts = payload.reverse();
     },
   },
 });

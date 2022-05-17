@@ -30,7 +30,12 @@ export const SinglePost = () => {
 
   const handleCommentSubmit = (e) => {
     e.preventDefault();
-    dispatch(commentOnPost({ postId, comment, setIsCommentPosting }));
+
+    setIsCommentPosting(true);
+    dispatch(commentOnPost({ postId, comment })).finally(() => {
+      setIsCommentPosting(false);
+    });
+
     setComment("");
   };
 

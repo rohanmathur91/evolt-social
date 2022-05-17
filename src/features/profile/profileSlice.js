@@ -5,9 +5,8 @@ import { loginUser, logoutUser } from "../auth";
 
 export const followUser = createAsyncThunk(
   "profile/followUser",
-  async ({ followUserId, setIsFollowLoader }, { getState }) => {
+  async (followUserId, { getState }) => {
     try {
-      setIsFollowLoader(true);
       const { auth: loggedInUser } = getState();
 
       const {
@@ -20,17 +19,14 @@ export const followUser = createAsyncThunk(
       return { followUser, followers, following, loggedInUser };
     } catch (error) {
       console.log(error.response);
-    } finally {
-      setIsFollowLoader(false);
     }
   }
 );
 
 export const unfollowUser = createAsyncThunk(
   "profile/unfollowUser",
-  async ({ followingUserId, setIsFollowLoader }, { getState }) => {
+  async (followingUserId, { getState }) => {
     try {
-      setIsFollowLoader(true);
       const { auth: loggedInUser } = getState();
 
       const {
@@ -43,8 +39,6 @@ export const unfollowUser = createAsyncThunk(
       return { followUser, followers, following, loggedInUser };
     } catch (error) {
       console.log(error.response);
-    } finally {
-      setIsFollowLoader(false);
     }
   }
 );

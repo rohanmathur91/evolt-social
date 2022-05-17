@@ -56,12 +56,14 @@ export const EditProfileForm = ({ handleModalType }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+
     const userData = {
       bio: editedBio,
       websiteUrl: updatedWebsitelUrl,
       profileImage: updatedProfileImage,
     };
-    dispatch(editLoggedInUser(userData)).then(() => handleModalType(""));
+
+    dispatch(editLoggedInUser(userData)).finally(() => handleModalType(""));
   };
 
   return (

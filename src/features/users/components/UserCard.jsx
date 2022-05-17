@@ -21,11 +21,18 @@ export const UserCard = ({
   const isFollowing = getFollowingStatus(loggedInUserfollowings, _id);
 
   const handleFollowClick = (userId) => {
+    let followClickDispatchPromise;
+    setIsFollowLoader(true);
+
     if (!isFollowing) {
-      dispatch(followUser({ followUserId: userId, setIsFollowLoader }));
+      followClickDispatchPromise = dispatch(followUser(userId));
     } else {
-      dispatch(unfollowUser({ followingUserId: userId, setIsFollowLoader }));
+      followClickDispatchPromise = dispatch(unfollowUser(userId));
     }
+
+    followClickDispatchPromise.finally(() => {
+      setIsFollowLoader(false);
+    });
   };
 
   return (

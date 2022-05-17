@@ -64,26 +64,45 @@ export const PostCard = ({ post }) => {
   };
 
   const handleDeletePostClick = () => {
-    dispatch(deletePost({ postId: _id, loaderDispatch }));
+    loaderDispatch({ type: "IS_DELETING", payload: true });
+
+    dispatch(deletePost(_id)).finally(() => {
+      loaderDispatch({ type: "IS_DELETING", payload: false });
+    });
+
     if (pathname.includes("post")) {
       navigate("/");
     }
   };
 
   const handleLikePostClick = () => {
+    let likeDispatchPromise;
+    loaderDispatch({ type: "IS_LIKE_LOADING", payload: true });
+
     if (!isPostLiked) {
-      dispatch(likePost({ postId: _id, loaderDispatch }));
+      likeDispatchPromise = dispatch(likePost(_id));
     } else {
-      dispatch(disLikePost({ postId: _id, loaderDispatch }));
+      likeDispatchPromise = dispatch(disLikePost(_id));
     }
+
+    likeDispatchPromise.finally(() => {
+      loaderDispatch({ type: "IS_LIKE_LOADING", payload: false });
+    });
   };
 
   const handleBookmarkPostClick = () => {
+    let bookmarkDispatchPromise;
+    loaderDispatch({ type: "IS_BOOKMARK_LOADING", payload: true });
+
     if (!isBookmarked) {
-      dispatch(addPostInBookmarks({ postId: _id, loaderDispatch }));
+      bookmarkDispatchPromise = dispatch(addPostInBookmarks(_id));
     } else {
-      dispatch(removePostFromBookmarks({ postId: _id, loaderDispatch }));
+      bookmarkDispatchPromise = dispatch(removePostFromBookmarks(_id));
     }
+
+    bookmarkDispatchPromise.finally(() => {
+      loaderDispatch({ type: "IS_BOOKMARK_LOADING", payload: false });
+    });
   };
 
   const handleSinglePostClick = () => {

@@ -39,21 +39,18 @@ export const Profile = () => {
   }, [userId, loggedInUser, dispatch]);
 
   const handleFollowClick = () => {
+    let followClickDispatchPromise;
+    setIsFollowLoader(true);
+
     if (!isFollowing) {
-      dispatch(
-        followUser({
-          followUserId: userId,
-          setIsFollowLoader,
-        })
-      );
+      followClickDispatchPromise = dispatch(followUser(userId));
     } else {
-      dispatch(
-        unfollowUser({
-          followingUserId: userId,
-          setIsFollowLoader,
-        })
-      );
+      followClickDispatchPromise = dispatch(unfollowUser(userId));
     }
+
+    followClickDispatchPromise.finally(() => {
+      setIsFollowLoader(false);
+    });
   };
 
   const handleLogout = () => dispatch(logoutUser());
