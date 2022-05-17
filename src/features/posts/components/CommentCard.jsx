@@ -19,6 +19,7 @@ export const CommentCard = ({ postId, commentData }) => {
     comment,
     username,
     firstName,
+    isEdited,
     lastName,
     commentDate,
     profileImage,
@@ -59,7 +60,7 @@ export const CommentCard = ({ postId, commentData }) => {
     dispatch(
       editPostComment({
         postId,
-        commentData: { ...commentData, comment: editedComment },
+        commentData: { ...commentData, comment: editedComment, isEdited: true },
       })
     ).finally(() => {
       setIsSaving(false);
@@ -92,6 +93,11 @@ export const CommentCard = ({ postId, commentData }) => {
               @{username}
               <span className="mx-[6px] font-semibold">•</span>
               {getDate(commentDate)}
+              {isEdited && (
+                <>
+                  <span className="mx-[6px] font-semibold">•</span>edited
+                </>
+              )}
             </p>
           </div>
 
@@ -192,6 +198,7 @@ CommentCard.defaultProps = {
     firstName: "",
     lastName: "",
     createdAt: "",
+    isEdited: false,
     profileImage: null,
   },
 };
