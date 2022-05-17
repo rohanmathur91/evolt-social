@@ -14,6 +14,7 @@ import {
   SinglePost,
   PrivateRoute,
   persistUser,
+  getPosts,
 } from "./features";
 import { Navbar, NotFound } from "./common";
 import { useDispatch } from "react-redux";
@@ -25,6 +26,7 @@ const App = () => {
     const token = localStorage.getItem("myspace-token");
     if (token) {
       dispatch(persistUser());
+      dispatch(getPosts());
     }
   }, [dispatch]);
 

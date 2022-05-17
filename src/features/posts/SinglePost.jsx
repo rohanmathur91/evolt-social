@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -5,7 +6,6 @@ import { useAuth } from "../auth";
 import { usePosts, commentOnPost } from "./postSlice";
 import { CircularLoader, useDocumentTitle, useScrollToTop } from "../../common";
 import { PostCard, CommentCard } from "./components";
-import { getSinglePost } from "./utils";
 
 export const SinglePost = () => {
   const { user } = useAuth();
@@ -21,7 +21,17 @@ export const SinglePost = () => {
   useDocumentTitle(post ? `${post.firstName} ${post.lastName}` : "Post");
 
   useEffect(() => {
-    setPost(getSinglePost(posts, postId));
+    (async () => {
+      try {
+        const {
+          data: { post },
+        } = await axios.get(`/api/posts/${postId}`);
+
+        setPost(post);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   }, [posts, postId]);
 
   const handleCommentChange = (e) => {

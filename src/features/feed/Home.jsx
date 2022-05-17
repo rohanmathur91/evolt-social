@@ -74,7 +74,7 @@ export const Home = () => {
             <span className="material-icons-outlined hover:cursor-pointer text-2xl text-blue-500">
               add_photo_alternate
             </span>
-            <span className="text-sm text-gray-400 ml-2">Photo or Video</span>
+            <span className="text-sm text-gray-400 ml-2">Photo or GIFs</span>
           </span>
         </button>
 
