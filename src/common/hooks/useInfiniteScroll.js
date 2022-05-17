@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 
 export const useInfiniteScroll = (allPosts) => {
-  const LIMIT = 3;
+  const POSTLIMIT = 3;
   const totalPosts = allPosts.length;
   const [pageNumber, setPageNumber] = useState(1);
   const [observerRef, setObserverRef] = useState(null);
-  const feed = allPosts.slice(0, pageNumber * LIMIT);
+  const feed = allPosts.slice(0, pageNumber * POSTLIMIT);
   const hasMorePosts = pageNumber < Math.ceil(totalPosts / pageNumber);
 
   useEffect(() => {
