@@ -5,7 +5,7 @@ import { loginUser, logoutUser } from "../auth";
 
 export const followUser = createAsyncThunk(
   "profile/followUser",
-  async (followUserId, { getState }) => {
+  async (followUserId, { getState, rejectWithValue }) => {
     try {
       const { auth: loggedInUser } = getState();
 
@@ -18,14 +18,14 @@ export const followUser = createAsyncThunk(
 
       return { followUser, followers, following, loggedInUser };
     } catch (error) {
-      console.log(error.response);
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
 export const unfollowUser = createAsyncThunk(
   "profile/unfollowUser",
-  async (followingUserId, { getState }) => {
+  async (followingUserId, { getState, rejectWithValue }) => {
     try {
       const { auth: loggedInUser } = getState();
 
@@ -38,22 +38,25 @@ export const unfollowUser = createAsyncThunk(
 
       return { followUser, followers, following, loggedInUser };
     } catch (error) {
-      console.log(error.response);
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
-export const getUser = createAsyncThunk("profile/getUser", async (userId) => {
-  try {
-    const {
-      data: { user },
-    } = await axios.get(`/api/users/${userId}`);
+export const getUser = createAsyncThunk(
+  "profile/getUser",
+  async (userId, { rejectWithValue }) => {
+    try {
+      const {
+        data: { user },
+      } = await axios.get(`/api/users/${userId}`);
 
-    return user;
-  } catch (error) {
-    console.log(error.response);
+      return user;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
 const profileSlice = createSlice({
   name: "profile",
@@ -81,12 +84,11 @@ const profileSlice = createSlice({
       state.loggedInUserfollowers = payload.followers;
       state.currentUser =
         payload.loggedInUser.user?._id === state.currentUser?._id
-          ? Object.assign(
-              {},
-              state.currentUser,
-              { following: payload.following },
-              { followers: payload.followers }
-            )
+          ? {
+              ...state.currentUser,
+              following: payload.following,
+              followers: payload.followers,
+            }
           : payload.followUser._id === state.currentUser?._id
           ? payload.followUser
           : state.currentUser;
@@ -100,12 +102,11 @@ const profileSlice = createSlice({
       state.loggedInUserfollowers = payload.followers;
       state.currentUser =
         payload.loggedInUser.user?._id === state.currentUser?._id
-          ? Object.assign(
-              {},
-              state.currentUser,
-              { following: payload.following },
-              { followers: payload.followers }
-            )
+          ? {
+              ...state.currentUser,
+              following: payload.following,
+              followers: payload.followers,
+            }
           : payload.followUser._id === state.currentUser?._id
           ? payload.followUser
           : state.currentUser;
