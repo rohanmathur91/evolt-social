@@ -40,7 +40,7 @@ export const SinglePost = () => {
   };
 
   return (
-    <main className="main w-full pb-10 px-2 md:px-0 max-w-xl mx-auto">
+    <main className="main w-full pb-20 px-2 md:px-0 max-w-xl mx-auto">
       <button
         onClick={() => navigate(-1)}
         className="mb-4 mt-4 md:mt-0 py-2 px-4 flex items-center justify-center rounded text-blue-500 hover:bg-blue-100"
@@ -102,9 +102,15 @@ export const SinglePost = () => {
 
           <div>
             {post.comments.length > 0 &&
-              post.comments.map((comment) => (
-                <CommentCard key={comment._id} {...comment} />
-              ))}
+              [...post.comments]
+                .reverse()
+                .map((comment) => (
+                  <CommentCard
+                    key={comment._id}
+                    postId={postId}
+                    commentData={comment}
+                  />
+                ))}
           </div>
         </>
       )}

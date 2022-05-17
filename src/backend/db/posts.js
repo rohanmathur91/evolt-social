@@ -8,7 +8,7 @@ import { formatDate } from "../utils/authUtils";
 
 export const posts = [
   {
-    _id: uuid(),
+    _id: "a572a19c-68de1",
     content:
       "Leadership is lifting a person's vision to high sights, the raising of a person's performance to a higher standard, the building of a personality beyond its normal limitations. —Peter Drucker",
     likes: {
@@ -30,7 +30,7 @@ export const posts = [
     updatedAt: "2022-05-15T16:43:34+05:30",
   },
   {
-    _id: uuid(),
+    _id: "4670-acf8-6b4892ec621e2",
     content:
       "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores lor repellendus.",
     likes: {
@@ -60,7 +60,7 @@ export const posts = [
     updatedAt: "2022-05-15T16:43:34+05:30",
   },
   {
-    _id: uuid(),
+    _id: "b09f0083-85c53",
     content:
       "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores lor repellendus.",
     likes: {
@@ -97,7 +97,7 @@ export const posts = [
     updatedAt: formatDate(),
   },
   {
-    _id: uuid(),
+    _id: "4d62-aa68-24c201367a354",
     content:
       "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores lor repellendus.",
     likes: {
@@ -123,7 +123,7 @@ export const posts = [
     updatedAt: formatDate(),
   },
   {
-    _id: uuid(),
+    _id: "4302618b-3cdd5",
     content: "Flowers 🌻",
     likes: {
       likeCount: 2,
@@ -162,7 +162,7 @@ export const posts = [
     updatedAt: formatDate(),
   },
   {
-    _id: uuid(),
+    _id: "414d-9208-cb8d79b928bf6",
     content:
       "If you're thinking about putting a TypeScript package up to NPM, you should be considering preconstruct. It makes setup EXTREMELY easy and takes many decisions out of your hands.",
     likes: {
@@ -180,7 +180,7 @@ export const posts = [
     updatedAt: "2022-05-15T16:43:34+05:30",
   },
   {
-    _id: uuid(),
+    _id: "b1c2091e-265b7",
     content:
       "Experience is not the amount of time you have held a position but the amount of time you have put into your craft ✨",
     likes: {
@@ -202,7 +202,7 @@ export const posts = [
     updatedAt: "2022-05-15T16:43:34+05:30",
   },
   {
-    _id: uuid(),
+    _id: "48bc-9b0a-3c66d5634ad48",
     content: "This is a panda. 👀",
     likes: {
       likeCount: 2,
@@ -241,7 +241,7 @@ export const posts = [
     updatedAt: "2022-05-15T16:43:34+05:30",
   },
   {
-    _id: uuid(),
+    _id: "f8add63b-9e289",
     content: `This man has been inspiring me for a couple of decades now.
       Selflessness, dealing with failure, handling success, staying calm in adversity, getting the best out of resources! 🚀`,
     likes: {
@@ -274,7 +274,7 @@ export const posts = [
     updatedAt: "2022-05-15T16:43:34+05:30",
   },
   {
-    _id: uuid(),
+    _id: "404a-902910",
     content:
       "A leader is best when people barely know he exists, when his work is done, his aim fulfilled, they will say: we did it ourselves. —Lao Tzu",
     likes: {
@@ -297,7 +297,7 @@ export const posts = [
   },
 
   {
-    _id: uuid(),
+    _id: "fa2a5e1e870c11",
     content:
       "Before you are a leader, success is all about growing yourself. When you become a leader, success is all about growing others. —Jack Welch",
     likes: {

@@ -1,16 +1,64 @@
-import React from "react";
+import React, { useRef, useState, useCallback } from "react";
+import { useAuth } from "../../auth";
+import { CircularLoader, useOutsideClick } from "../../../common";
 import { getDate } from "../utils";
+import { editPostComment } from "../postSlice";
+import { useDispatch } from "react-redux";
 
-export const CommentCard = ({
-  comment,
-  username,
-  firstName,
-  lastName,
-  commentDate,
-  profileImage,
-}) => {
+export const CommentCard = ({ postId, commentData }) => {
+  const { user } = useAuth();
+  const dispatch = useDispatch();
+  const showMoreOptionsRef = useRef(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showMoreOptions, setShowMoreOptions] = useState(false);
+  const [showInput, setShowInput] = useState(false);
+  const [editedComment, setEditedComment] = useState("");
+  const { comment, username, firstName, lastName, commentDate, profileImage } =
+    commentData;
+
+  const handleShowMoreOptionsClick = () => {
+    setShowMoreOptions((previousValue) => !previousValue);
+  };
+
+  const memoizedHandler = useCallback(handleShowMoreOptionsClick, [
+    showMoreOptions,
+  ]);
+  useOutsideClick(showMoreOptionsRef, showMoreOptions, memoizedHandler);
+
+  const handleEditCommentClick = () => {
+    setEditedComment(comment);
+    setShowInput(true);
+    setShowMoreOptions(false);
+  };
+
+  const handleDeleteCommentClick = () => {};
+
+  const handleEditCommentInput = (e) => {
+    setEditedComment(e.target.value);
+  };
+
+  const handleCancelClick = () => {
+    setShowInput(false);
+  };
+
+  const handleCommentFormSubmit = (e) => {
+    e.preventDefault();
+    setIsSaving(true);
+
+    dispatch(
+      editPostComment({
+        postId,
+        commentData: { ...commentData, comment: editedComment },
+      })
+    ).finally(() => {
+      setIsSaving(false);
+      setShowInput(false);
+    });
+  };
+
   return (
-    <article className="flex bg-white p-2 rounded-lg border mb-4 shadow">
+    <article className="flex bg-white p-2 rounded-lg border mb-4 shadow text-sm">
       {profileImage ? (
         <img
           loading="lazy"
@@ -24,26 +72,115 @@ export const CommentCard = ({
         </div>
       )}
 
-      <div className="flex flex-col text-sm">
-        <p className="text-gray-500 first-letter:font-normal flex items-center line-clamp-1">
-          <span className="font-semibold text-neutral-900 mr-1">
-            {firstName} {lastName}
-          </span>
-          <span className="mx-1 font-semibold">•</span>
-          {getDate(commentDate)}
-        </p>
-        <p className="text-gray-500 line-clamp-1">@{username}</p>
-        <p className="break-normal mt-2">{comment}</p>
+      <div className="w-full">
+        <div className="flex">
+          <div>
+            <p className="font-semibold flex items-center line-clamp-1">
+              {firstName} {lastName}
+            </p>
+            <p className="text-gray-500 line-clamp-1">
+              @{username}
+              <span className="mx-[6px] font-semibold">•</span>
+              {getDate(commentDate)}
+            </p>
+          </div>
+
+          {username === user?.username && (
+            <div ref={showMoreOptionsRef} className="ml-auto relative">
+              <button
+                data-tooltip="More"
+                onClick={handleShowMoreOptionsClick}
+                className="tooltip mx-2 w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
+              >
+                <span className="material-icons-outlined text-2xl">
+                  more_horiz
+                </span>
+              </button>
+
+              {showMoreOptions && (
+                <div className="absolute top-8 right-4 z-[1] w-32 bg-white shadow-xl flex flex-col p-2 border rounded-lg">
+                  <button
+                    onClick={handleEditCommentClick}
+                    className="py-2 px-4 text-sm flex items-center text-blue-500 hover:bg-blue-100 rounded"
+                  >
+                    <span className="material-icons-outlined text-xl mr-2">
+                      edit
+                    </span>
+                    Edit
+                  </button>
+                  <button
+                    disabled={isDeleting}
+                    onClick={handleDeleteCommentClick}
+                    className={`${
+                      isDeleting ? "relative" : ""
+                    } py-2 px-4 text-sm flex items-center text-red-500 hover:bg-red-100 rounded`}
+                  >
+                    {isDeleting && (
+                      <CircularLoader
+                        size="1rem"
+                        position="center"
+                        customStyle="text-red-500"
+                      />
+                    )}
+                    <span
+                      className={`${
+                        isDeleting ? "invisible" : ""
+                      } material-icons-outlined text-xl mr-2`}
+                    >
+                      delete
+                    </span>
+                    <span className={isDeleting ? "invisible" : ""}>
+                      Delete
+                    </span>
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+        {showInput ? (
+          <form onSubmit={handleCommentFormSubmit} className="flex w-full">
+            <input
+              autoFocus
+              type="text"
+              value={editedComment}
+              onChange={handleEditCommentInput}
+              className="border-b px-0 w-full mr-2"
+            />
+            <div className="flex items-center">
+              <button
+                type="button"
+                data-tooltip="Cancel"
+                onClick={handleCancelClick}
+                className="tooltip flex items-center justify-center w-4 h-4 p-3 rounded-full border border-red-400 text-red-500 mr-2"
+              >
+                <span className="material-icons-outlined text-lg">close</span>
+              </button>
+              <button
+                disabled={isSaving}
+                data-tooltip="Save"
+                className="tooltip flex items-center justify-center w-4 h-4 p-3 rounded-full border border-blue-500 text-blue-500"
+              >
+                <span className="material-icons-outlined text-lg">done</span>
+              </button>
+            </div>
+          </form>
+        ) : (
+          <p className="break-normal mt-2">{comment}</p>
+        )}
       </div>
     </article>
   );
 };
 
 CommentCard.defaultProps = {
-  comment: "",
-  username: "",
-  firstName: "",
-  lastName: "",
-  createdAt: "",
-  profileImage: null,
+  postId: "",
+  commentData: {
+    comment: "",
+    username: "",
+    firstName: "",
+    lastName: "",
+    createdAt: "",
+    profileImage: null,
+  },
 };

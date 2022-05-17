@@ -144,14 +144,31 @@ export const commentOnPost = createAsyncThunk(
   async ({ postId, comment }, { rejectWithValue }) => {
     try {
       const {
-        data: { posts },
-      } = await axios.post(`/api/posts/comment/${postId}`, {
+        data: { comments },
+      } = await axios.post(`/api/comment/${postId}`, {
         comment,
       });
 
-      return posts;
+      return { comments, postId };
     } catch (error) {
       return rejectWithValue("Something went wrong!");
+    }
+  }
+);
+
+export const editPostComment = createAsyncThunk(
+  "posts/editPostComment",
+  async ({ postId, commentData }, { rejectWithValue }) => {
+    try {
+      const {
+        data: { comments },
+      } = await axios.post(`/api/comment/edit/${postId}/${commentData._id}`, {
+        commentData,
+      });
+
+      return { comments, postId };
+    } catch (error) {
+      return rejectWithValue("Could not edit the comment.");
     }
   }
 );
@@ -265,7 +282,16 @@ const postSlice = createSlice({
       state.bookmarks = payload.reverse();
     },
     [commentOnPost.fulfilled]: (state, { payload }) => {
-      state.posts = payload.reverse();
+      const postIndex = state.posts.findIndex(
+        (post) => post._id === payload.postId
+      );
+      state.posts[postIndex].comments = payload.comments;
+    },
+    [editPostComment.fulfilled]: (state, { payload }) => {
+      const postIndex = state.posts.findIndex(
+        (post) => post._id === payload.postId
+      );
+      state.posts[postIndex].comments = payload.comments;
     },
   },
 });
