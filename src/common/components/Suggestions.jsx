@@ -1,16 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useUsers, getFollowingStatus, useProfile } from "../../features";
-import suggestionsFallback from "../../assets/images/suggestions.svg";
+import { useDispatch } from "react-redux";
+import {
+  useUsers,
+  useProfile,
+  getSearchedUsers,
+  getFollowingStatus,
+} from "../../features";
 import { SuggestionCard } from "../components";
+import suggestionsFallback from "../../assets/images/suggestions.svg";
 
 export const Suggestions = () => {
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
   const { suggestions } = useUsers();
   const { loggedInUserfollowings } = useProfile();
   const userSuggestionList = suggestions.filter(
     (user) => !getFollowingStatus(loggedInUserfollowings, user._id)
   );
+
+  useEffect(() => {
+    dispatch(getSearchedUsers(""));
+  }, [dispatch]);
 
   return (
     !pathname.includes("profile") && (
