@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { useAuth } from "../auth";
 import { usePosts, commentOnPost } from "./postSlice";
 import { CircularLoader, useDocumentTitle, useScrollToTop } from "../../common";
@@ -29,7 +30,7 @@ export const SinglePost = () => {
 
         setPost(post);
       } catch (error) {
-        console.log(error);
+        toast.error("Could not fetch the post!");
       }
     })();
   }, [posts, postId]);

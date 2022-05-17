@@ -3,21 +3,24 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 import { logoutUser } from "../auth";
 
-export const addPost = createAsyncThunk("posts/addPost", async (postData) => {
-  try {
-    const {
-      data: { posts },
-    } = await axios.post("/api/posts", { postData });
+export const addPost = createAsyncThunk(
+  "posts/addPost",
+  async (postData, { rejectWithValue }) => {
+    try {
+      const {
+        data: { posts },
+      } = await axios.post("/api/posts", { postData });
 
-    return posts;
-  } catch (error) {
-    console.log(error.response);
+      return posts;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
 export const deletePost = createAsyncThunk(
   "posts/deletePost",
-  async (postId) => {
+  async (postId, { rejectWithValue }) => {
     try {
       const {
         data: { posts },
@@ -25,22 +28,25 @@ export const deletePost = createAsyncThunk(
 
       return posts;
     } catch (error) {
-      console.log(error);
+      return rejectWithValue("Could not delete the post!");
     }
   }
 );
 
-export const getPosts = createAsyncThunk("posts/getPosts", async () => {
-  try {
-    const {
-      data: { posts },
-    } = await axios.get("/api/posts");
+export const getPosts = createAsyncThunk(
+  "posts/getPosts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const {
+        data: { posts },
+      } = await axios.get("/api/posts");
 
-    return posts;
-  } catch (error) {
-    console.log(error);
+      return posts;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
 export const likePost = createAsyncThunk(
   "posts/likePost",
@@ -55,7 +61,7 @@ export const likePost = createAsyncThunk(
       if (error.response.status === 400)
         return rejectWithValue("Post already liked!");
       else {
-        return rejectWithValue("Something went wrong!");
+        return rejectWithValue(error.response.data);
       }
     }
   }
@@ -74,29 +80,32 @@ export const disLikePost = createAsyncThunk(
       if (error.response.status === 400)
         return rejectWithValue("Cannot dislike a post.");
       else {
-        return rejectWithValue("Something went wrong!");
+        return rejectWithValue(error.response.data);
       }
     }
   }
 );
 
-export const editPost = createAsyncThunk("posts/editPost", async (postData) => {
-  try {
-    const {
-      data: { posts },
-    } = await axios.post(`/api/posts/edit/${postData._id}`, {
-      postData,
-    });
+export const editPost = createAsyncThunk(
+  "posts/editPost",
+  async (postData, { rejectWithValue }) => {
+    try {
+      const {
+        data: { posts },
+      } = await axios.post(`/api/posts/edit/${postData._id}`, {
+        postData,
+      });
 
-    return posts;
-  } catch (error) {
-    console.log(error.response);
+      return posts;
+    } catch (error) {
+      return rejectWithValue("Could not edit the post!");
+    }
   }
-});
+);
 
 export const getBookmarkPosts = createAsyncThunk(
   "posts/getBookmarkPosts",
-  async () => {
+  async (_, { rejectWithValue }) => {
     try {
       const {
         data: { bookmarks },
@@ -104,14 +113,14 @@ export const getBookmarkPosts = createAsyncThunk(
 
       return bookmarks;
     } catch (error) {
-      console.log(error);
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
 export const addPostInBookmarks = createAsyncThunk(
   "posts/addPostInBookmarks",
-  async (postId) => {
+  async (postId, { rejectWithValue }) => {
     try {
       const {
         data: { bookmarks },
@@ -119,14 +128,14 @@ export const addPostInBookmarks = createAsyncThunk(
 
       return bookmarks;
     } catch (error) {
-      console.log(error);
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
 export const removePostFromBookmarks = createAsyncThunk(
   "posts/removePostFromBookmarks",
-  async (postId) => {
+  async (postId, { rejectWithValue }) => {
     try {
       const {
         data: { bookmarks },
@@ -134,7 +143,7 @@ export const removePostFromBookmarks = createAsyncThunk(
 
       return bookmarks;
     } catch (error) {
-      console.log(error);
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -151,7 +160,7 @@ export const commentOnPost = createAsyncThunk(
 
       return { comments, postId };
     } catch (error) {
-      return rejectWithValue("Something went wrong!");
+      return rejectWithValue("Could not comment on post!");
     }
   }
 );
@@ -168,7 +177,7 @@ export const editPostComment = createAsyncThunk(
 
       return { comments, postId };
     } catch (error) {
-      return rejectWithValue("Could not edit the comment.");
+      return rejectWithValue("Could not edit the comment!");
     }
   }
 );
@@ -183,7 +192,7 @@ export const deletePostComment = createAsyncThunk(
 
       return { comments, postId };
     } catch (error) {
-      return rejectWithValue("Could not delete the comment.");
+      return rejectWithValue("Could not delete the comment!");
     }
   }
 );
@@ -196,9 +205,7 @@ const postSlice = createSlice({
     bookmarks: [],
     modalType: "",
     isLoading: false,
-    likeError: "",
-    deleteError: "",
-    errorMessage: "",
+    postError: "",
     isEditMode: false,
     currentEditPost: null,
   },
@@ -228,9 +235,9 @@ const postSlice = createSlice({
       state.isLoading = false;
       state.posts = payload.reverse();
     },
-    [getPosts.rejected]: (state) => {
+    [getPosts.rejected]: (state, { payload }) => {
       state.isLoading = false;
-      state.errorMessage = "Could not fetch the posts!";
+      state.postError = payload;
     },
     [addPost.pending]: (state) => {
       state.isLoading = true;
@@ -240,28 +247,28 @@ const postSlice = createSlice({
       state.isLoading = false;
       state.posts = payload.reverse();
     },
-    [addPost.rejected]: (state) => {
+    [addPost.rejected]: (state, { payload }) => {
       state.modalType = "";
       state.isLoading = false;
-      state.errorMessage = "Could not add the posts!";
+      state.postError = payload;
     },
     [deletePost.fulfilled]: (state, { payload }) => {
       state.posts = payload.reverse();
     },
-    [deletePost.rejected]: (state) => {
-      state.deleteError = "Could not delete the post!";
+    [deletePost.rejected]: (state, { payload }) => {
+      state.postError = payload;
     },
     [likePost.fulfilled]: (state, { payload }) => {
       state.posts = payload.reverse();
     },
     [likePost.rejected]: (state, { payload }) => {
-      state.likeError = payload;
+      state.postError = payload;
     },
     [disLikePost.fulfilled]: (state, { payload }) => {
       state.posts = payload.reverse();
     },
     [disLikePost.rejected]: (state, { payload }) => {
-      state.likeError = payload;
+      state.postError = payload;
     },
     [editPost.pending]: (state) => {
       state.isLoading = true;
@@ -280,15 +287,14 @@ const postSlice = createSlice({
     },
     [getBookmarkPosts.pending]: (state) => {
       state.isLoading = true;
-      state.errorMessage = "";
     },
     [getBookmarkPosts.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
       state.bookmarks = payload;
     },
-    [getBookmarkPosts.rejected]: (state) => {
+    [getBookmarkPosts.rejected]: (state, { payload }) => {
       state.isLoading = false;
-      state.errorMessage = "Could not fetch the bookmarks!";
+      state.postError = payload;
     },
     [addPostInBookmarks.fulfilled]: (state, { payload }) => {
       state.bookmarks = payload.reverse();
