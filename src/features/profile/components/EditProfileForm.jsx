@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { editUser, useAuth } from "../../auth";
+import { useAuth, editLoggedInUser } from "../../auth";
 import { CircularLoader } from "../../../common";
 
 export const EditProfileForm = ({ handleModalType }) => {
@@ -61,7 +61,7 @@ export const EditProfileForm = ({ handleModalType }) => {
       websiteUrl: updatedWebsitelUrl,
       profileImage: updatedProfileImage,
     };
-    dispatch(editUser({ userData, handleModalType }));
+    dispatch(editLoggedInUser(userData)).then(() => handleModalType(""));
   };
 
   return (

@@ -37,15 +37,14 @@ export const signupUser = createAsyncThunk(
   }
 );
 
-export const editUser = createAsyncThunk(
-  "auth/editUser",
-  async ({ userData, handleModalType }) => {
+export const editLoggedInUser = createAsyncThunk(
+  "auth/editLoggedInUser",
+  async (userData) => {
     try {
       const {
         data: { user },
       } = await axios.post("/api/users/edit", { userData });
 
-      handleModalType("");
       return user;
     } catch (error) {
       console.log(error.response);
@@ -106,11 +105,11 @@ export const authSlice = createSlice({
       state.error = payload;
       state.isLoading = false;
     },
-    [editUser.pending]: (state) => {
+    [editLoggedInUser.pending]: (state) => {
       state.error = "";
       state.isLoading = true;
     },
-    [editUser.fulfilled]: (state, { payload }) => {
+    [editLoggedInUser.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
       state.user = payload;
       localStorage.setItem("myspace-user", JSON.stringify(payload));
