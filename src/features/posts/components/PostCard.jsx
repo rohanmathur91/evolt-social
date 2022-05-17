@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useRef, useReducer, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -13,12 +13,18 @@ import {
 } from "../postSlice";
 import { useAuth } from "../../auth";
 import { loaderReducer, initialLoaderState } from "../reducers";
-import { useModal, CircularLoader, POSTMODAL } from "../../../common";
+import {
+  useModal,
+  POSTMODAL,
+  CircularLoader,
+  useOutsideClick,
+} from "../../../common";
 import { getDate, getPostLikedStatus, getPostBookmarkStatus } from "../utils";
 
 export const PostCard = ({ post }) => {
   const { user } = useAuth();
   const { bookmarks } = usePosts();
+  const showMoreOptionsRef = useRef(null);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -30,14 +36,15 @@ export const PostCard = ({ post }) => {
   const {
     _id,
     likes,
-    imageUrl,
     content,
     userId,
+    isEdited,
     username,
     firstName,
     lastName,
     updatedAt,
     comments,
+    postMedia,
     profileImage,
   } = post;
   const isPostLiked = getPostLikedStatus(user, likes);
@@ -47,9 +54,12 @@ export const PostCard = ({ post }) => {
     loaderDispatch({ type: "SHOW_MORE", payload: !showMore });
   };
 
+  const memoizedHandler = useCallback(handleShowMoreClick, [showMore]);
+  useOutsideClick(showMoreOptionsRef, showMore, memoizedHandler);
+
   const handleEditPostClick = () => {
     handleModalType(POSTMODAL);
-    dispatch(setCurrentEditPost(post));
+    dispatch(setCurrentEditPost({ ...post, isEdited: true }));
     loaderDispatch({ type: "SHOW_MORE", payload: false });
   };
 
@@ -81,7 +91,7 @@ export const PostCard = ({ post }) => {
   };
 
   return (
-    <article className="border rounded-lg my-4 md:mt-0 max-w-xl mx-auto shadow-md bg-white relative">
+    <article className="border rounded-lg my-4 md:mt-0 max-w-xl mx-auto shadow-md bg-white">
       <section className="p-2 pl-4 pt-4 flex items-center">
         <Link
           title={username}
@@ -93,10 +103,10 @@ export const PostCard = ({ post }) => {
               loading="lazy"
               src={profileImage.url}
               alt={profileImage.original_filename}
-              className="w-11 h-11 md:w-12 md:h-12 mr-4 object-cover rounded-full bg-gray-200"
+              className="w-11 h-11 md:w-12 md:h-12 mr-4 object-cover rounded-full bg-gray-200 hover:opacity-75"
             />
           ) : (
-            <div className="w-11 h-11 md:w-12 md:h-12 text-xl mr-4 flex flex-shrink-0 items-center justify-center font-semibold rounded-full bg-blue-500 text-white">
+            <div className="w-11 h-11 md:w-12 md:h-12 text-xl mr-4 flex flex-shrink-0 items-center hover:opacity-75 justify-center font-semibold rounded-full bg-blue-500 text-white">
               {firstName[0].toUpperCase()}
             </div>
           )}
@@ -106,63 +116,75 @@ export const PostCard = ({ post }) => {
               {firstName} {lastName}
             </span>
             <span className="text-gray-500 text-sm font-normal flex items-center line-clamp-1">
-              @{username} <span className="mx-1 font-semibold">•</span>
+              @{username}
+              <span className="mx-[6px] font-semibold">•</span>
               {getDate(updatedAt)}
+              {isEdited && (
+                <>
+                  <span className="mx-[6px] font-semibold">•</span>edited
+                </>
+              )}
             </span>
           </div>
         </Link>
 
         {username === user?.username && (
-          <button
-            data-tooltip="More"
-            onClick={handleShowMoreClick}
-            className="tooltip mx-2 w-10 h-10 ml-auto flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
-          >
-            <span className="material-icons-outlined text-2xl">more_horiz</span>
-          </button>
-        )}
-
-        {showMore && (
-          <div className="absolute top-14 right-7 z-[1] w-32 bg-white shadow-xl flex flex-col p-2 border rounded-lg">
+          <div ref={showMoreOptionsRef} className="ml-auto relative">
             <button
-              onClick={handleEditPostClick}
-              className="py-2 px-4 text-sm flex items-center hover:text-blue-500 hover:bg-blue-100 rounded"
+              data-tooltip="More"
+              onClick={handleShowMoreClick}
+              className="tooltip mx-2 w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
             >
-              <span className="material-icons-outlined text-xl mr-2">edit</span>
-              Edit
-            </button>
-            <button
-              disabled={isDeleting}
-              onClick={handleDeletePostClick}
-              className={`${
-                isDeleting ? "relative" : ""
-              } py-2 px-4 text-sm flex items-center hover:text-red-500 hover:bg-red-100 rounded`}
-            >
-              {isDeleting && (
-                <CircularLoader
-                  size="1rem"
-                  position="center"
-                  customStyle="text-red-500"
-                />
-              )}
-              <span
-                className={`${
-                  isDeleting ? "invisible" : ""
-                } material-icons-outlined text-xl mr-2`}
-              >
-                delete
+              <span className="material-icons-outlined text-2xl">
+                more_horiz
               </span>
-              <span className={isDeleting ? "invisible" : ""}>Delete</span>
             </button>
+
+            {showMore && (
+              <div className="absolute top-8 right-4 z-[1] w-32 bg-white shadow-xl flex flex-col p-2 border rounded-lg">
+                <button
+                  onClick={handleEditPostClick}
+                  className="py-2 px-4 text-sm flex items-center text-blue-500 hover:bg-blue-100 rounded"
+                >
+                  <span className="material-icons-outlined text-xl mr-2">
+                    edit
+                  </span>
+                  Edit
+                </button>
+                <button
+                  disabled={isDeleting}
+                  onClick={handleDeletePostClick}
+                  className={`${
+                    isDeleting ? "relative" : ""
+                  } py-2 px-4 text-sm flex items-center text-red-500 hover:bg-red-100 rounded`}
+                >
+                  {isDeleting && (
+                    <CircularLoader
+                      size="1rem"
+                      position="center"
+                      customStyle="text-red-500"
+                    />
+                  )}
+                  <span
+                    className={`${
+                      isDeleting ? "invisible" : ""
+                    } material-icons-outlined text-xl mr-2`}
+                  >
+                    delete
+                  </span>
+                  <span className={isDeleting ? "invisible" : ""}>Delete</span>
+                </button>
+              </div>
+            )}
           </div>
         )}
       </section>
 
-      {imageUrl && (
+      {postMedia && (
         <img
-          alt={username}
           loading="lazy"
-          src={imageUrl}
+          src={postMedia.url}
+          alt={postMedia.original_filename}
           onClick={handleSinglePostClick}
           className="w-full h-80 cursor-pointer aspect-[2/1] object-cover object-top mt-1 mb-2 bg-gray-200"
         />
@@ -237,10 +259,14 @@ PostCard.defaultProps = {
     likes: null,
     imageUrl: "",
     content: "",
+    userId: "",
+    isEdited: false,
     username: "",
     firstName: "",
     lastName: "",
     updatedAt: "",
+    comments: [],
+    postMedia: null,
     profileImage: null,
   },
 };

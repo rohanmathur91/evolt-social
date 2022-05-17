@@ -1,37 +1,81 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../../features";
-import { sideBarData } from "../helpers";
+import { useAuth, logoutUser } from "../../features";
+import { POSTMODAL, sideBarData } from "../helpers";
+import { useModal } from "../hooks";
 
 export const Sidebar = () => {
   const { user } = useAuth();
+  const dispatch = useDispatch();
+  const { handleModalType } = useModal();
+
+  const handleLogout = () => dispatch(logoutUser());
 
   return (
-    <aside className="md:left-aside z-[2] md:ml-auto sticky bottom-3 left-0 right-0 md:top-[15vh] md:w-[16rem] mx-3 md:mx-0 md:py-2 md:h-[80vh] rounded md:rounded-lg md:border bg-white/60 backdrop-blur-sm">
+    <aside className="sticky bottom-0 left-0 right-0 z-[2] md:top-[15vh] md:left-aside md:ml-auto md:w-[16rem] md:py-2 md:h-[80vh] rounded-lg md:border bg-white/60 backdrop-blur-sm">
       <ul className="w-full grid grid-cols-5 md:block gap-1 md:gap-0">
-        {sideBarData.map(({ icon, text, path }) => (
+        {sideBarData.map(({ icon, type, text, path }) => (
           <li
             key={icon}
             className={`${
-              text === "Profile" ? "hidden md:block" : ""
-            } flex-grow md:flex-grow-0 md:mb-1 md:mx-2 h-15 hover:transition-all`}
+              text === "Profile"
+                ? "hidden md:block"
+                : type === "button"
+                ? "block md:hidden"
+                : ""
+            } md:mb-1 md:mx-2 hover:transition-all`}
           >
-            <NavLink
-              title={text}
-              to={text === "Profile" ? `/profile/${user?._id}` : path}
-              className={({ isActive }) =>
-                `${
-                  isActive ? "bg-blue-100/70 text-blue-500" : ""
-                } p-3 md:p-2 flex flex-col text-xs md:text-base md:flex-row justify-center md:justify-start items-center md:py-2 md:px-4 hover:text-blue-500 hover:bg-blue-100 rounded`
-              }
-            >
-              <span className="material-icons-outlined text-2xl md:mr-3 md:text-3xl">
-                {icon}
-              </span>
-              <span className="hidden sm:block">{text}</span>
-            </NavLink>
+            {type === "button" ? (
+              <button
+                title="Add post"
+                onClick={() => handleModalType(POSTMODAL)}
+                className="p-3 md:py-2 md:px-4 flex flex-col text-xs md:text-base md:flex-row justify-center md:justify-start items-center hover:text-blue-500 hover:bg-blue-100 rounded w-full"
+              >
+                <span className="material-icons-outlined text-2xl md:mr-3 md:text-3xl">
+                  {icon}
+                </span>
+                <span className="hidden sm:block">{text}</span>
+              </button>
+            ) : (
+              <NavLink
+                title={text}
+                to={text === "Profile" ? `/profile/${user?._id}` : path}
+                className={({ isActive }) =>
+                  `${
+                    isActive ? "bg-blue-100/70 text-blue-500" : ""
+                  } p-3 md:py-2 md:px-4 flex flex-col text-xs md:text-base md:flex-row justify-center md:justify-start items-center hover:text-blue-500 hover:bg-blue-100 rounded`
+                }
+              >
+                <span className="material-icons-outlined text-2xl md:mr-3 md:text-3xl">
+                  {icon}
+                </span>
+                <span className="hidden sm:block">{text}</span>
+              </NavLink>
+            )}
           </li>
         ))}
+        <li key="add-post-btn" className="mt-2 hidden md:block mx-2">
+          <button
+            title="Add post"
+            onClick={() => handleModalType(POSTMODAL)}
+            className="w-full btn btn-primary py-2 px-4 text-base rounded"
+          >
+            Add post
+          </button>
+        </li>
+        <li key="logout-btn" className="hidden mt-36 md:block mx-2">
+          <button
+            title="Logout"
+            onClick={handleLogout}
+            className="w-full flex items-center justify-center py-2 px-4 border border-red-400 text-red-500 rounded hover:bg-red-500 hover:text-white text-sm md:text-base hover:transition-all"
+          >
+            Logout
+            <span className="material-icons-outlined text-base ml-2">
+              logout
+            </span>
+          </button>
+        </li>
       </ul>
     </aside>
   );

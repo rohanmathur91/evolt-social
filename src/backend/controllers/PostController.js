@@ -103,6 +103,7 @@ export const createPostHandler = function (schema, request) {
     const { postData } = JSON.parse(request.requestBody);
     const post = {
       _id: uuid(),
+      postMedia: null,
       ...postData,
       likes: {
         likeCount: 0,
@@ -110,7 +111,6 @@ export const createPostHandler = function (schema, request) {
         dislikedBy: [],
       },
       comments: [],
-      imageUrl: "",
       userId: user._id,
       username: user.username,
       profileImage: user.profileImage,
@@ -163,7 +163,7 @@ export const editPostHandler = function (schema, request) {
         }
       );
     }
-    post = { ...post, ...postData };
+    post = { ...post, ...postData, updatedAt: formatDate() };
     this.db.posts.update({ _id: postId }, post);
     return new Response(201, {}, { posts: this.db.posts });
   } catch (error) {
@@ -216,9 +216,9 @@ export const likePostHandler = function (schema, request) {
       username,
       firstName,
       lastName,
-      likedDate: formatDate(),
+      likeUpdateDate: formatDate(),
     });
-    this.db.posts.update({ _id: postId }, { ...post, updatedAt: formatDate() });
+    this.db.posts.update({ _id: postId }, post);
     return new Response(201, {}, { posts: this.db.posts });
   } catch (error) {
     return new Response(
@@ -277,10 +277,10 @@ export const dislikePostHandler = function (schema, request) {
       username,
       firstName,
       lastName,
-      likedDate: formatDate(),
+      likeUpdateDate: formatDate(),
     });
     post = { ...post, likes: { ...post.likes, likedBy: updatedLikedBy } };
-    this.db.posts.update({ _id: postId }, { ...post, updatedAt: formatDate() });
+    this.db.posts.update({ _id: postId }, post);
     return new Response(201, {}, { posts: this.db.posts });
   } catch (error) {
     return new Response(
@@ -362,17 +362,17 @@ export const commentPostHandler = function (schema, request) {
     const { firstName, lastName, username, profileImage } = user;
 
     post.comments.push({
-      ...comment,
+      comment,
       _id: uuid(),
       firstName,
       lastName,
       username,
       profileImage,
-      createdAt: formatDate(),
+      commentDate: formatDate(),
     });
 
     post.comments.reverse();
-    this.db.posts.update({ _id: postId }, { ...post, updatedAt: formatDate() });
+    this.db.posts.update({ _id: postId }, post);
     return new Response(201, {}, { posts: this.db.posts });
   } catch (error) {
     return new Response(

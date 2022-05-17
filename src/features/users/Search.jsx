@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useUsers, getSearchedUsers } from "./userSlice";
-import { Sidebar, TopContributors, CircularLoader } from "../../common";
+import {
+  Sidebar,
+  TopContributors,
+  CircularLoader,
+  useScrollToTop,
+  useDocumentTitle,
+} from "../../common";
 import { UserCard } from "./components";
 
 export const Search = () => {
@@ -9,12 +15,15 @@ export const Search = () => {
   const { userlist, isLoading } = useUsers();
   const [searchQuery, setSearchQuery] = useState("");
 
+  useScrollToTop();
+  useDocumentTitle("Search");
+
   useEffect(() => {
     dispatch(getSearchedUsers.pending());
 
     let timerId = setTimeout(() => {
       dispatch(getSearchedUsers(searchQuery));
-    }, 600);
+    }, 700);
 
     return () => timerId && clearTimeout(timerId);
   }, [dispatch, searchQuery]);
@@ -33,7 +42,9 @@ export const Search = () => {
       <TopContributors />
 
       <main className="main py-3 px-4 bg-white rounded-lg">
-        <h4 className="font-semibold mt-4 mb-2">Search your friends.</h4>
+        <h4 className="font-semibold my-3 text-center text-blue-500">
+          Search your friends
+        </h4>
         <label htmlFor="search" className="relative">
           <span className="material-icons-outlined absolute text-slate-500 left-[10px] top-[-2px]">
             search
@@ -59,7 +70,7 @@ export const Search = () => {
           )}
         </label>
 
-        <div className="mt-8">
+        <div className="mt-6">
           {isLoading ? (
             <p className="text-center font-semibold mt-8">
               {searchQuery ? (

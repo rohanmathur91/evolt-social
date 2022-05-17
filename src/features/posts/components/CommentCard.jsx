@@ -6,7 +6,7 @@ export const CommentCard = ({
   username,
   firstName,
   lastName,
-  createdAt,
+  commentDate,
   profileImage,
 }) => {
   return (
@@ -24,15 +24,16 @@ export const CommentCard = ({
         </div>
       )}
 
-      <div className="flex flex-col">
-        <p className="text-gray-500 text-sm font-normal flex items-center line-clamp-1">
+      <div className="flex flex-col text-sm">
+        <p className="text-gray-500 first-letter:font-normal flex items-center line-clamp-1">
           <span className="font-semibold text-neutral-900 mr-1">
             {firstName} {lastName}
           </span>
           <span className="mx-1 font-semibold">•</span>
-          {getDate(createdAt)}
+          {getDate(commentDate)}
         </p>
-        <p className="text-sm break-normal">{comment}</p>
+        <p className="text-gray-500 line-clamp-1">@{username}</p>
+        <p className="break-normal mt-2">{comment}</p>
       </div>
     </article>
   );

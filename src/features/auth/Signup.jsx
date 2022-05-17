@@ -2,18 +2,15 @@ import React, { useReducer, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthForm } from "./useAuthForm";
-import { validateSignupForm } from "./validateSignupForm ";
-import { signupErrorReducer, signUpErrorInitialState } from "./reducers";
 import { useAuth, signupUser } from "./authSlice";
-import { Input } from "../../common";
+import { signupErrorReducer, signUpErrorInitialState } from "./reducers";
+import { validateSignupForm } from "./validateSignupForm ";
+import { Input, useDocumentTitle, useScrollToTop } from "../../common";
 
 export const Signup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, error, isLoading } = useAuth();
-
-  useEffect(() => user && navigate("/"), [user, navigate]);
-
   const { showPassword, credentials, updateValue, handleShowPassword } =
     useAuthForm({
       email: "",
@@ -28,6 +25,10 @@ export const Signup = () => {
     signupErrorReducer,
     signUpErrorInitialState
   );
+
+  useEffect(() => user && navigate("/"), [user, navigate]);
+  useScrollToTop();
+  useDocumentTitle("Signup");
 
   const onFocusClearInput = (actionType) => {
     errorDispatch({ type: actionType, payload: "" });
