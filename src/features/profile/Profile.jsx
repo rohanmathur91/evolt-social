@@ -129,7 +129,11 @@ export const Profile = () => {
                 </span>
               </div>
               <div className="mt-2 mx-4 md:mx-10">
-                {bio && <p className="leading-tight text-sm mb-3">{bio}</p>}
+                {bio && (
+                  <p className="leading-tight line-clamp-1 text-sm mb-3">
+                    {bio}
+                  </p>
+                )}
                 {websiteUrl && (
                   <span className="flex items-center">
                     <span className="font-semibold text-sm mr-2">Website:</span>
