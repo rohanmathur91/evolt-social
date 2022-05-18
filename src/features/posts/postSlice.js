@@ -227,6 +227,7 @@ const postSlice = createSlice({
     [logoutUser]: (state) => {
       state.posts = [];
       state.bookmarks = [];
+      state.postSortType = "";
     },
     [getPosts.pending]: (state) => {
       state.isLoading = true;
