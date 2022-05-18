@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useAuthForm } from "./useAuthForm";
 import { useAuth, loginUser } from "./authSlice";
 import { Input, useDocumentTitle } from "../../common";
@@ -42,7 +43,14 @@ export const Login = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginUser(credentials));
+    dispatch(loginUser(credentials))
+      .unwrap()
+      .then(() => {
+        toast.success("You logged in successfully.");
+      })
+      .catch((error) => {
+        toast.error(error);
+      });
   };
 
   return (

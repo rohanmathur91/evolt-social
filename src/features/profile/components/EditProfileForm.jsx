@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { editUser, useAuth } from "../../auth";
+import { toast } from "react-toastify";
+import { useAuth, editLoggedInUser } from "../../auth";
 import { CircularLoader } from "../../../common";
 
 export const EditProfileForm = ({ handleModalType }) => {
@@ -40,7 +41,7 @@ export const EditProfileForm = ({ handleModalType }) => {
 
       setUpdatedProfileImage({ url, original_filename });
     } catch (error) {
-      console.log(error);
+      toast.error("Image upload failed!");
     } finally {
       setImageUploading(false);
     }
@@ -56,12 +57,14 @@ export const EditProfileForm = ({ handleModalType }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+
     const userData = {
       bio: editedBio,
       websiteUrl: updatedWebsitelUrl,
       profileImage: updatedProfileImage,
     };
-    dispatch(editUser({ userData, handleModalType }));
+
+    dispatch(editLoggedInUser(userData)).finally(() => handleModalType(""));
   };
 
   return (

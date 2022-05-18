@@ -39,21 +39,18 @@ export const Profile = () => {
   }, [userId, loggedInUser, dispatch]);
 
   const handleFollowClick = () => {
+    let followClickDispatchPromise;
+    setIsFollowLoader(true);
+
     if (!isFollowing) {
-      dispatch(
-        followUser({
-          followUserId: userId,
-          setIsFollowLoader,
-        })
-      );
+      followClickDispatchPromise = dispatch(followUser(userId));
     } else {
-      dispatch(
-        unfollowUser({
-          followingUserId: userId,
-          setIsFollowLoader,
-        })
-      );
+      followClickDispatchPromise = dispatch(unfollowUser(userId));
     }
+
+    followClickDispatchPromise.finally(() => {
+      setIsFollowLoader(false);
+    });
   };
 
   const handleLogout = () => dispatch(logoutUser());
@@ -113,7 +110,7 @@ export const Profile = () => {
 
                   <button
                     onClick={handleLogout}
-                    className="flex mt-3 md:h-9 items-center py-1 px-3 justify-center border border-red-400 text-red-500 rounded hover:bg-red-500 hover:text-white text-sm md:text-base hover:transition-all"
+                    className="md:hidden flex mt-3 md:h-9 items-center py-1 px-3 justify-center border border-red-400 text-red-500 rounded hover:bg-red-500 hover:text-white text-sm md:text-base hover:transition-all"
                   >
                     Logout
                     <span className="material-icons-outlined text-base ml-2">
@@ -132,7 +129,11 @@ export const Profile = () => {
                 </span>
               </div>
               <div className="mt-2 mx-4 md:mx-10">
-                {bio && <p className="leading-tight text-sm mb-3">{bio}</p>}
+                {bio && (
+                  <p className="leading-tight line-clamp-1 text-sm mb-3">
+                    {bio}
+                  </p>
+                )}
                 {websiteUrl && (
                   <span className="flex items-center">
                     <span className="font-semibold text-sm mr-2">Website:</span>

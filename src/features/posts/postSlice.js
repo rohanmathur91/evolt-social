@@ -3,47 +3,55 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 import { logoutUser } from "../auth";
 
-export const addPost = createAsyncThunk("posts/addPost", async (postData) => {
-  try {
-    const { data: posts } = await axios.post("/api/posts", { postData });
-
-    return posts;
-  } catch (error) {
-    console.log(error.response);
-  }
-});
-
-export const deletePost = createAsyncThunk(
-  "posts/deletePost",
-  async ({ postId, loaderDispatch }) => {
+export const addPost = createAsyncThunk(
+  "posts/addPost",
+  async (postData, { rejectWithValue }) => {
     try {
-      loaderDispatch({ type: "IS_DELETING", payload: true });
-      const { data: posts } = await axios.delete(`/api/posts/${postId}`);
+      const {
+        data: { posts },
+      } = await axios.post("/api/posts", { postData });
 
       return posts;
     } catch (error) {
-      console.log(error);
-    } finally {
-      loaderDispatch({ type: "IS_DELETING", payload: false });
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
-export const getPosts = createAsyncThunk("posts/getPosts", async () => {
-  try {
-    const { data: posts } = await axios.get("/api/posts");
+export const deletePost = createAsyncThunk(
+  "posts/deletePost",
+  async (postId, { rejectWithValue }) => {
+    try {
+      const {
+        data: { posts },
+      } = await axios.delete(`/api/posts/${postId}`);
 
-    return posts;
-  } catch (error) {
-    console.log(error);
+      return posts;
+    } catch (error) {
+      return rejectWithValue("Could not delete the post!");
+    }
   }
-});
+);
+
+export const getPosts = createAsyncThunk(
+  "posts/getPosts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const {
+        data: { posts },
+      } = await axios.get("/api/posts");
+
+      return posts;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const likePost = createAsyncThunk(
   "posts/likePost",
-  async ({ postId, loaderDispatch }, { rejectWithValue }) => {
+  async (postId, { rejectWithValue }) => {
     try {
-      loaderDispatch({ type: "IS_LIKE_LOADING", payload: true });
       const {
         data: { posts },
       } = await axios.post(`/api/posts/like/${postId}`);
@@ -53,19 +61,16 @@ export const likePost = createAsyncThunk(
       if (error.response.status === 400)
         return rejectWithValue("Post already liked!");
       else {
-        return rejectWithValue("Something went wrong!");
+        return rejectWithValue(error.response.data);
       }
-    } finally {
-      loaderDispatch({ type: "IS_LIKE_LOADING", payload: false });
     }
   }
 );
 
 export const disLikePost = createAsyncThunk(
   "posts/disLikePost",
-  async ({ postId, loaderDispatch }, { rejectWithValue }) => {
+  async (postId, { rejectWithValue }) => {
     try {
-      loaderDispatch({ type: "IS_LIKE_LOADING", payload: true });
       const {
         data: { posts },
       } = await axios.post(`/api/posts/dislike/${postId}`);
@@ -75,31 +80,32 @@ export const disLikePost = createAsyncThunk(
       if (error.response.status === 400)
         return rejectWithValue("Cannot dislike a post.");
       else {
-        return rejectWithValue("Something went wrong!");
+        return rejectWithValue(error.response.data);
       }
-    } finally {
-      loaderDispatch({ type: "IS_LIKE_LOADING", payload: false });
     }
   }
 );
 
-export const editPost = createAsyncThunk("posts/editPost", async (postData) => {
-  try {
-    const {
-      data: { posts },
-    } = await axios.post(`/api/posts/edit/${postData._id}`, {
-      postData,
-    });
+export const editPost = createAsyncThunk(
+  "posts/editPost",
+  async (postData, { rejectWithValue }) => {
+    try {
+      const {
+        data: { posts },
+      } = await axios.post(`/api/posts/edit/${postData._id}`, {
+        postData,
+      });
 
-    return posts;
-  } catch (error) {
-    console.log(error.response);
+      return posts;
+    } catch (error) {
+      return rejectWithValue("Could not edit the post!");
+    }
   }
-});
+);
 
 export const getBookmarkPosts = createAsyncThunk(
   "posts/getBookmarkPosts",
-  async () => {
+  async (_, { rejectWithValue }) => {
     try {
       const {
         data: { bookmarks },
@@ -107,61 +113,86 @@ export const getBookmarkPosts = createAsyncThunk(
 
       return bookmarks;
     } catch (error) {
-      console.log(error);
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
 export const addPostInBookmarks = createAsyncThunk(
   "posts/addPostInBookmarks",
-  async ({ postId, loaderDispatch }) => {
+  async (postId, { rejectWithValue }) => {
     try {
-      loaderDispatch({ type: "IS_BOOKMARK_LOADING", payload: true });
       const {
         data: { bookmarks },
       } = await axios.post(`/api/users/bookmark/${postId}`);
 
       return bookmarks;
     } catch (error) {
-      console.log(error);
-    } finally {
-      loaderDispatch({ type: "IS_BOOKMARK_LOADING", payload: false });
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
 export const removePostFromBookmarks = createAsyncThunk(
   "posts/removePostFromBookmarks",
-  async ({ postId, loaderDispatch }) => {
+  async (postId, { rejectWithValue }) => {
     try {
-      loaderDispatch({ type: "IS_BOOKMARK_LOADING", payload: true });
       const {
         data: { bookmarks },
       } = await axios.post(`/api/users/remove-bookmark/${postId}`);
 
       return bookmarks;
     } catch (error) {
-      console.log(error);
-    } finally {
-      loaderDispatch({ type: "IS_BOOKMARK_LOADING", payload: false });
+      return rejectWithValue(error.response.data);
     }
   }
 );
 
 export const commentOnPost = createAsyncThunk(
   "posts/commentOnPost",
-  async ({ postId, comment, setIsCommentPosting }, { rejectWithValue }) => {
+  async ({ postId, comment }, { rejectWithValue }) => {
     try {
-      setIsCommentPosting(true);
-      const { data: posts } = await axios.post(`/api/posts/comment/${postId}`, {
+      const {
+        data: { comments },
+      } = await axios.post(`/api/comment/${postId}`, {
         comment,
       });
 
-      return posts;
+      return { comments, postId };
     } catch (error) {
-      return rejectWithValue("Something went wrong!");
-    } finally {
-      setIsCommentPosting(false);
+      return rejectWithValue("Could not comment on post!");
+    }
+  }
+);
+
+export const editPostComment = createAsyncThunk(
+  "posts/editPostComment",
+  async ({ postId, commentData }, { rejectWithValue }) => {
+    try {
+      const {
+        data: { comments },
+      } = await axios.post(`/api/comment/edit/${postId}/${commentData._id}`, {
+        commentData,
+      });
+
+      return { comments, postId };
+    } catch (error) {
+      return rejectWithValue("Could not edit the comment!");
+    }
+  }
+);
+
+export const deletePostComment = createAsyncThunk(
+  "posts/deletePostComment",
+  async ({ postId, commentId }, { rejectWithValue }) => {
+    try {
+      const {
+        data: { comments },
+      } = await axios.post(`/api/comment/delete/${postId}/${commentId}`);
+
+      return { comments, postId };
+    } catch (error) {
+      return rejectWithValue("Could not delete the comment!");
     }
   }
 );
@@ -174,9 +205,7 @@ const postSlice = createSlice({
     bookmarks: [],
     modalType: "",
     isLoading: false,
-    likeError: "",
-    deleteError: "",
-    errorMessage: "",
+    postError: "",
     isEditMode: false,
     currentEditPost: null,
   },
@@ -204,11 +233,11 @@ const postSlice = createSlice({
     },
     [getPosts.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      state.posts = payload.posts.reverse();
+      state.posts = payload.reverse();
     },
-    [getPosts.rejected]: (state) => {
+    [getPosts.rejected]: (state, { payload }) => {
       state.isLoading = false;
-      state.errorMessage = "Could not fetch the posts!";
+      state.postError = payload;
     },
     [addPost.pending]: (state) => {
       state.isLoading = true;
@@ -216,30 +245,30 @@ const postSlice = createSlice({
     [addPost.fulfilled]: (state, { payload }) => {
       state.modalType = "";
       state.isLoading = false;
-      state.posts = payload.posts.reverse();
+      state.posts = payload.reverse();
     },
-    [addPost.rejected]: (state) => {
+    [addPost.rejected]: (state, { payload }) => {
       state.modalType = "";
       state.isLoading = false;
-      state.errorMessage = "Could not add the posts!";
+      state.postError = payload;
     },
     [deletePost.fulfilled]: (state, { payload }) => {
-      state.posts = payload.posts.reverse();
+      state.posts = payload.reverse();
     },
-    [deletePost.rejected]: (state) => {
-      state.deleteError = "Could not delete the post!";
+    [deletePost.rejected]: (state, { payload }) => {
+      state.postError = payload;
     },
     [likePost.fulfilled]: (state, { payload }) => {
       state.posts = payload.reverse();
     },
     [likePost.rejected]: (state, { payload }) => {
-      state.likeError = payload;
+      state.postError = payload;
     },
     [disLikePost.fulfilled]: (state, { payload }) => {
       state.posts = payload.reverse();
     },
     [disLikePost.rejected]: (state, { payload }) => {
-      state.likeError = payload;
+      state.postError = payload;
     },
     [editPost.pending]: (state) => {
       state.isLoading = true;
@@ -258,15 +287,14 @@ const postSlice = createSlice({
     },
     [getBookmarkPosts.pending]: (state) => {
       state.isLoading = true;
-      state.errorMessage = "";
     },
     [getBookmarkPosts.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
       state.bookmarks = payload;
     },
-    [getBookmarkPosts.rejected]: (state) => {
+    [getBookmarkPosts.rejected]: (state, { payload }) => {
       state.isLoading = false;
-      state.errorMessage = "Could not fetch the bookmarks!";
+      state.postError = payload;
     },
     [addPostInBookmarks.fulfilled]: (state, { payload }) => {
       state.bookmarks = payload.reverse();
@@ -275,7 +303,22 @@ const postSlice = createSlice({
       state.bookmarks = payload.reverse();
     },
     [commentOnPost.fulfilled]: (state, { payload }) => {
-      state.posts = payload.posts.reverse();
+      const postIndex = state.posts.findIndex(
+        (post) => post._id === payload.postId
+      );
+      state.posts[postIndex].comments = payload.comments;
+    },
+    [editPostComment.fulfilled]: (state, { payload }) => {
+      const postIndex = state.posts.findIndex(
+        (post) => post._id === payload.postId
+      );
+      state.posts[postIndex].comments = payload.comments;
+    },
+    [deletePostComment.fulfilled]: (state, { payload }) => {
+      const postIndex = state.posts.findIndex(
+        (post) => post._id === payload.postId
+      );
+      state.posts[postIndex].comments = payload.comments;
     },
   },
 });

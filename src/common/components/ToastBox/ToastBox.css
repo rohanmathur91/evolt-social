@@ -1,0 +1,10 @@
+/* overriding toastify styles */
+.toast {
+  --toastify-font-family: "Montserrat", sans-serif;
+  --toastify-color-success: #22c55e;
+  --toastify-color-error: #ef4444;
+  --toastify-icon-color-success: var(--toastify-color-success);
+  --toastify-color-progress-success: var(--toastify-color-success);
+  --toastify-icon-color-error: var(--toastify-color-error);
+  --toastify-color-progress-error: var(--toastify-color-error);
+}

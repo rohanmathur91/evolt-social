@@ -65,10 +65,6 @@
     @apply bg-blue-500 text-white;
   }
 
-  .btn-secondary {
-    @apply bg-pink-500 text-white;
-  }
-
   .max-container {
     @apply max-w-screen-2xl mx-auto;
   }
@@ -83,7 +79,7 @@
   }
 
   .grid-container {
-    @apply grid gap-6 mx-auto max-w-6xl;
+    @apply grid md:gap-6 mx-auto max-w-6xl;
     grid-template-columns: 1fr;
     grid-template-areas: "main";
   }
@@ -108,7 +104,7 @@
 
   .main {
     grid-area: main;
-    @apply mt-[10vh] md:mr-4 lg:mr-0 md:mt-[15vh] min-h-[85vh];
+    @apply mt-[4.2rem] md:mr-4 lg:mr-0 md:mt-[6.2rem] min-h-[calc(100vh-6.2rem)];
   }
 
   .right-aside {

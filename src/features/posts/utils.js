@@ -24,18 +24,6 @@ export const getPostLikedStatus = (user, likes) => {
 };
 
 /**
- * @description Function returns the single post depending on postId.
- *
- * @param  {array} posts
- * @param  {string} postId
- * @returns {object} post
- */
-
-export const getSinglePost = (posts, postId) => {
-  return posts.find(({ _id }) => _id === postId);
-};
-
-/**
  * @description Function returns a boolean depending upon if post is in bookmark or not.
  *
  * @param  {string} postId

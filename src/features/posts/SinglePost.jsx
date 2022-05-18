@@ -1,11 +1,12 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { useAuth } from "../auth";
 import { usePosts, commentOnPost } from "./postSlice";
 import { CircularLoader, useDocumentTitle, useScrollToTop } from "../../common";
 import { PostCard, CommentCard } from "./components";
-import { getSinglePost } from "./utils";
 
 export const SinglePost = () => {
   const { user } = useAuth();
@@ -21,7 +22,17 @@ export const SinglePost = () => {
   useDocumentTitle(post ? `${post.firstName} ${post.lastName}` : "Post");
 
   useEffect(() => {
-    setPost(getSinglePost(posts, postId));
+    (async () => {
+      try {
+        const {
+          data: { post },
+        } = await axios.get(`/api/posts/${postId}`);
+
+        setPost(post);
+      } catch (error) {
+        toast.error("Could not fetch the post!");
+      }
+    })();
   }, [posts, postId]);
 
   const handleCommentChange = (e) => {
@@ -30,12 +41,17 @@ export const SinglePost = () => {
 
   const handleCommentSubmit = (e) => {
     e.preventDefault();
-    dispatch(commentOnPost({ postId, comment, setIsCommentPosting }));
+
+    setIsCommentPosting(true);
+    dispatch(commentOnPost({ postId, comment })).finally(() => {
+      setIsCommentPosting(false);
+    });
+
     setComment("");
   };
 
   return (
-    <main className="main w-full pb-10 px-2 md:px-0 max-w-xl mx-auto">
+    <main className="main w-full pb-20 px-2 md:px-0 max-w-xl mx-auto">
       <button
         onClick={() => navigate(-1)}
         className="mb-4 mt-4 md:mt-0 py-2 px-4 flex items-center justify-center rounded text-blue-500 hover:bg-blue-100"
@@ -97,9 +113,15 @@ export const SinglePost = () => {
 
           <div>
             {post.comments.length > 0 &&
-              post.comments.map((comment) => (
-                <CommentCard key={comment._id} {...comment} />
-              ))}
+              [...post.comments]
+                .reverse()
+                .map((comment) => (
+                  <CommentCard
+                    key={comment._id}
+                    postId={postId}
+                    commentData={comment}
+                  />
+                ))}
           </div>
         </>
       )}
