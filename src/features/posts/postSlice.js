@@ -128,7 +128,6 @@ export const addPostInBookmarks = createAsyncThunk(
 
       return bookmarks;
     } catch (error) {
-      console.log(error.response);
       return rejectWithValue(error.response.data);
     }
   }
@@ -144,7 +143,6 @@ export const removePostFromBookmarks = createAsyncThunk(
 
       return bookmarks;
     } catch (error) {
-      console.log(error.response);
       return rejectWithValue(error.response.data);
     }
   }
