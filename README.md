@@ -3,6 +3,7 @@
 <img alt="myspace-logo" src="public/favicon.svg" width="180px" height="180px" />
 
 # myspace🚀
+ <h3>A social media web app.</h3> 
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/2c93609e-b9bb-43cf-8333-646d70b91310/deploy-status)](https://app.netlify.com/sites/evolt-myspace/deploys)
 
