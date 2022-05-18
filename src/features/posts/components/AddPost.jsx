@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { addPost, editPost, usePosts } from "../postSlice";
 import { useAuth } from "../../auth";
 import { CircularLoader } from "../../../common";
@@ -46,7 +47,7 @@ export const AddPost = ({ handleModalType }) => {
 
       setPostMedia({ url, original_filename });
     } catch (error) {
-      console.log(error);
+      toast.error("Image upload failed!");
     } finally {
       setIsMediaUploading(false);
     }
