@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 export const useInfiniteScroll = (allPosts) => {
-  const POSTLIMIT = 3;
+  const POSTLIMIT = 4;
   const totalPosts = allPosts.length;
   const [pageNumber, setPageNumber] = useState(1);
   const [observerRef, setObserverRef] = useState(null);
@@ -12,7 +12,7 @@ export const useInfiniteScroll = (allPosts) => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (hasMorePosts && entries[0].isIntersecting) {
-          setTimeout(() => setPageNumber((prevPage) => prevPage + 1), 800);
+          setTimeout(() => setPageNumber((prevPage) => prevPage + 1), 700);
         }
       },
       { threshold: 1 }
