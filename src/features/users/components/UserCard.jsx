@@ -43,7 +43,7 @@ export const UserCard = ({
             loading="lazy"
             src={profileImage.url}
             alt={profileImage.original_filename}
-            className="w-10 h-10 mr-4 object-cover flex-shrink-0 rounded-full bg-gray-200"
+            className="w-10 h-10 mr-4 object-cover object-top flex-shrink-0 rounded-full bg-gray-200"
           />
         ) : (
           <div className="w-10 h-10 mr-4 text-lg flex flex-shrink-0 items-center justify-center font-semibold rounded-full bg-blue-500 text-white">
