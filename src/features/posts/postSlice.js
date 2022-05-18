@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
-import { logoutUser } from "../auth";
+import { loginUser, logoutUser } from "../auth";
 
 export const addPost = createAsyncThunk(
   "posts/addPost",
@@ -128,6 +128,7 @@ export const addPostInBookmarks = createAsyncThunk(
 
       return bookmarks;
     } catch (error) {
+      console.log(error.response);
       return rejectWithValue(error.response.data);
     }
   }
@@ -143,6 +144,7 @@ export const removePostFromBookmarks = createAsyncThunk(
 
       return bookmarks;
     } catch (error) {
+      console.log(error.response);
       return rejectWithValue(error.response.data);
     }
   }
@@ -224,6 +226,9 @@ const postSlice = createSlice({
     },
   },
   extraReducers: {
+    [loginUser.fulfilled]: (state, { payload }) => {
+      state.bookmarks = payload.foundUser.bookmarks;
+    },
     [logoutUser]: (state) => {
       state.posts = [];
       state.bookmarks = [];
