@@ -27,6 +27,15 @@ export const AddPost = ({ handleModalType }) => {
   }, [currentEditPost]);
 
   const handleImageFileChange = async (e) => {
+    // converting bytes into megabytes
+    const size = e.target.files[0].size * 10 ** -6;
+
+    if (size > 8) {
+      toast.error("Please upload small size image.");
+      handleModalType("");
+      return;
+    }
+
     try {
       setIsMediaUploading(true);
       const postMediaFormData = new FormData();
