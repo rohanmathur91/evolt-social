@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
-import { logoutUser } from "../auth";
+import { loginUser, logoutUser } from "../auth";
 
 export const addPost = createAsyncThunk(
   "posts/addPost",
@@ -224,6 +224,9 @@ const postSlice = createSlice({
     },
   },
   extraReducers: {
+    [loginUser.fulfilled]: (state, { payload }) => {
+      state.bookmarks = payload.foundUser.bookmarks;
+    },
     [logoutUser]: (state) => {
       state.posts = [];
       state.bookmarks = [];
