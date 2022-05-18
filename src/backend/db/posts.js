@@ -61,7 +61,7 @@ export const posts = [
   {
     _id: "b09f0083-85c53",
     content:
-      "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores lor repellendus.",
+      "A genuine leader is not a searcher for consensus, but a molder of consensus.",
     likes: {
       likeCount: 2,
       likedBy: [
@@ -84,7 +84,10 @@ export const posts = [
     },
     userId: "rohan-mathur-test-userId",
     comments: [],
-    postMedia: { url: "https://picsum.photos/500/400", original_filename: "" },
+    postMedia: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652874627/788-536x354_btpwul.jpg",
+      original_filename: "rohan-post-test-image",
+    },
     profileImage: {
       url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652361355/g6uyad8oqzpx07uy1fuw.jpg",
       original_filename: "rohanmathur-profile",
@@ -98,7 +101,7 @@ export const posts = [
   {
     _id: "4d62-aa68-24c201367a354",
     content:
-      "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores lor repellendus.",
+      "When you have decided what you believe, what you feel must be done, have the courage to stand alone and be counted.",
     likes: {
       likeCount: 1,
       likedBy: [
@@ -121,6 +124,52 @@ export const posts = [
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },
+
+  {
+    _id: "4d62-aa68-24c201367a354-11xzzyjo",
+    content:
+      "Keep your face always toward the sunshine, and shadows will fall behind you.",
+    likes: {
+      likeCount: 1,
+      likedBy: [
+        {
+          _id: "rohan-mathur-test-userId",
+          username: "rohanmathur",
+          firstName: "Rohan",
+          lastName: "Mathur",
+          likeUpdateDate: "2022-05-15T16:30:17+05:30",
+        },
+      ],
+      dislikedBy: [],
+    },
+    userId: "john-doe-test-userId",
+    postMedia: null,
+    comments: [],
+    firstName: "John",
+    lastName: "Doe",
+    username: "johndoe",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+  },
+  {
+    _id: "4d62-aa68-24c201367a354-12-jowqy",
+    content:
+      "Be courageous. Challenge orthodoxy. Stand up for what you believe in. When you are in your rocking chair talking to you",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    userId: "john-doe-test-userId",
+    postMedia: null,
+    comments: [],
+    firstName: "John",
+    lastName: "Doe",
+    username: "johndoe",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+  },
+
   {
     _id: "4302618b-3cdd5",
     content: "Flowers 🌻",
@@ -170,7 +219,10 @@ export const posts = [
       dislikedBy: [],
     },
     comments: [],
-    postMedia: { url: "https://picsum.photos/500/400", original_filename: "" },
+    postMedia: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652874554/201-500x400_yawlt1.jpg",
+      original_filename: "test-image",
+    },
     userId: "john-doe-test-userId",
     firstName: "John",
     lastName: "Doe",
@@ -316,5 +368,96 @@ export const posts = [
     username: "adarshbalika",
     createdAt: "2022-05-15T16:43:34+05:30",
     updatedAt: "2022-05-15T16:43:34+05:30",
+  },
+  {
+    _id: "fa2a5e1e870c110-ad",
+    content:
+      "Life is fragile and temporary. The faces of today quickly become the faces of the past. Sorrow, pain, and anger... it all fades.",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    userId: "adarsh-balika-test-userId",
+    comments: [],
+    profileImage: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652362403/ct4fvtk6i5iu1mbnb6hj.jpg",
+      original_filename: "Pngtree—businessman",
+    },
+    postMedia: null,
+    firstName: "Adarsh",
+    lastName: "Balika",
+    username: "adarshbalika",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+  },
+
+  {
+    _id: "fa2a5e1e870c111-ad",
+    content:
+      "Learn from the mistakes of others. You can't live long enough to make them all yourself 🚀",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    userId: "adarsh-balika-test-userId",
+    comments: [],
+    profileImage: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652362403/ct4fvtk6i5iu1mbnb6hj.jpg",
+      original_filename: "Pngtree—businessman",
+    },
+    postMedia: null,
+    firstName: "Adarsh",
+    lastName: "Balika",
+    username: "adarshbalika",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+  },
+
+  {
+    _id: "fa2a5e1e870c112-ad",
+    content:
+      "The most important thing to remember is this: to be ready at any moment to give up what you are for what you might become.",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    userId: "adarsh-balika-test-userId",
+    comments: [],
+    profileImage: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652362403/ct4fvtk6i5iu1mbnb6hj.jpg",
+      original_filename: "Pngtree—businessman",
+    },
+    postMedia: null,
+    firstName: "Adarsh",
+    lastName: "Balika",
+    username: "adarshbalika",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+  },
+
+  {
+    _id: "fa2a5e1e870c113-ad",
+    content:
+      "A pessimist is one who makes difficulties of his opportunities and an optimist is one who makes opportunities of his difficulties.",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    userId: "adarsh-balika-test-userId",
+    comments: [],
+    profileImage: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652362403/ct4fvtk6i5iu1mbnb6hj.jpg",
+      original_filename: "Pngtree—businessman",
+    },
+    postMedia: null,
+    firstName: "Adarsh",
+    lastName: "Balika",
+    username: "adarshbalika",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
   },
 ];

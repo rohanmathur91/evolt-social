@@ -18,6 +18,7 @@ export const Input = ({
         id={id}
         type={type}
         value={value}
+        autoComplete="on"
         placeholder={placeholder}
         onFocus={handleOnFocus}
         onChange={(e) => handleInputChange(e, id)}
