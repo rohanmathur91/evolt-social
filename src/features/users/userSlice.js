@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 export const getSearchedUsers = createAsyncThunk(
   "users/getSearchedUsers",
-  async (searchQuery, { getState }) => {
+  async (searchQuery = "", { getState }) => {
     try {
       const { auth } = getState();
 
@@ -12,7 +12,7 @@ export const getSearchedUsers = createAsyncThunk(
         data: { users },
       } = await axios.get(`/api/users?search=${searchQuery}`);
 
-      return { users, loggedInUser: auth.user };
+      return { users, loggedInUser: auth.user, searchQuery };
     } catch (error) {
       console.log(error.response);
     }
@@ -23,6 +23,7 @@ const userSlice = createSlice({
   name: "users",
   initialState: {
     userlist: [],
+    suggestions: [],
     isLoading: false,
   },
   reducers: {},
@@ -35,6 +36,8 @@ const userSlice = createSlice({
       state.userlist = payload?.users.filter(
         (user) => user._id !== payload.loggedInUser._id
       );
+      state.suggestions =
+        payload.searchQuery === "" ? state.userlist : state.suggestions;
     },
   },
 });
