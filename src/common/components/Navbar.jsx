@@ -38,7 +38,7 @@ export const Navbar = () => {
 
             <div className="ml-auto flex items-center">
               <button
-                className="mr-4 tooltip"
+                className="mr-4 md:tooltip"
                 data-tooltip="Change theme"
                 onClick={handleThemeToggle}
               >
@@ -50,7 +50,7 @@ export const Navbar = () => {
               <Link
                 data-tooltip="Profile"
                 to={`profile/${user?._id}`}
-                className="shrink-0 tooltip"
+                className="shrink-0 md:tooltip"
               >
                 {profileImage ? (
                   <img
