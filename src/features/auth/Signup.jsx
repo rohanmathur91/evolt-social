@@ -56,14 +56,16 @@ export const Signup = () => {
   };
 
   return (
-    <main className="min-h-[100vh] h-full flex flex-row items-center justify-center">
+    <main className="min-h-[100vh] h-full flex flex-row items-center justify-center dark:text-white dark:bg-gray-900">
       <form
         onSubmit={handleFormSubmit}
-        className="border bg-white shadow-lg p-6 rounded-lg max-w-lg w-full my-8 mx-4"
+        className="border dark:border-gray-700 dark:bg-gray-800 bg-white shadow-lg p-6 rounded-lg max-w-lg w-full my-8 mx-4"
       >
         <div className="mb-4 text-center py-4">
           <h3 className="font-semibold text-blue-500">Signup for myspace</h3>
-          <p className="text-sm text-gray-500">Connect with the people.</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Join the network.
+          </p>
         </div>
 
         <div className="flex flex-col sm:flex-row sm:gap-2">
@@ -159,7 +161,7 @@ export const Signup = () => {
         </button>
 
         {error && (
-          <div className="mb-2 text-red-500 flex flex-row items-center text-center text-sm">
+          <div className="mb-2 text-red-500 dark:text-red-400 flex flex-row items-center text-center text-sm">
             <span className="material-icons-outlined mr-2 text-xl">
               error_outline
             </span>

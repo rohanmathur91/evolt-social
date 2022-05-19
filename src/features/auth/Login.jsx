@@ -54,14 +54,16 @@ export const Login = () => {
   };
 
   return (
-    <main className="min-h-[100vh] h-full flex flex-row items-center justify-center">
+    <main className="min-h-[100vh] h-full flex flex-row items-center justify-center dark:text-white dark:bg-gray-900">
       <form
         onSubmit={handleFormSubmit}
-        className="border bg-white shadow-lg p-6 rounded-lg max-w-md w-full mx-4"
+        className="border dark:border-gray-700 bg-white dark:bg-gray-800 shadow-lg p-6 rounded-lg max-w-md w-full mx-4"
       >
         <div className="mb-4 text-center py-4">
           <h3 className="font-semibold text-blue-500">Login to myspace</h3>
-          <p className="text-sm text-gray-500">Connect with the people.</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Connect with the people.
+          </p>
         </div>
 
         <Input
@@ -111,7 +113,7 @@ export const Login = () => {
         </button>
 
         {error && (
-          <div className="mb-2 text-red-500 flex flex-row items-center text-center text-sm">
+          <div className="mb-2 text-red-500 dark:text-red-400 flex flex-row items-center text-center text-sm">
             <span className="material-icons-outlined mr-2 text-xl">
               error_outline
             </span>
