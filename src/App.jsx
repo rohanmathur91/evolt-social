@@ -31,7 +31,7 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <div className="text-neutral-900 bg-gray-100">
+    <div className="text-neutral-900 bg-gray-100 dark">
       <Navbar />
       <ToastBox />
       <Routes>

@@ -22,11 +22,11 @@ export const Input = ({
         placeholder={placeholder}
         onFocus={handleOnFocus}
         onChange={(e) => handleInputChange(e, id)}
-        className="mt-1 text-base border rounded focus:border focus:border-blue-500"
+        className="mt-1 text-base border rounded focus:border focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:focus:border-blue-500"
       />
 
       {error && (
-        <div className="text-red-500 text-sm flex items-center mt-2">
+        <div className="text-red-500 dark:text-red-400 text-sm flex items-center mt-2">
           <span className="material-icons-outlined mr-2 text-xl">
             error_outline
           </span>

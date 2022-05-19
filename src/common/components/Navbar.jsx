@@ -21,7 +21,7 @@ export const Navbar = () => {
           </Modal>
         )}
 
-        <nav className="fixed top-0 left-0 right-0 w-full border bg-white/80 backdrop-blur-sm z-[3]">
+        <nav className="fixed top-0 left-0 right-0 w-full bg-white/60 dark:text-white border-b dark:border-b-gray-700 dark:bg-gray-900/80 backdrop-blur-sm z-[3]">
           <div className="max-container h-[4.2rem] flex flex-row items-center px-5">
             <Link
               to="/"
