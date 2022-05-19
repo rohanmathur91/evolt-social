@@ -99,7 +99,7 @@ export const AddPost = ({ handleModalType }) => {
   return (
     <form
       onSubmit={handleFormSubmit}
-      className="max-w-xl w-full relative bg-white border p-3 rounded-lg"
+      className="max-w-xl w-full relative bg-white dark:bg-gray-800 border dark:border-gray-700 p-3 rounded-lg"
     >
       <div className="rounded-lg border-2 border-blue-500 p-3 mb-3">
         <textarea
@@ -109,7 +109,7 @@ export const AddPost = ({ handleModalType }) => {
           value={postContent}
           onChange={handleContentChange}
           placeholder="What's on your mind?"
-          className="w-full h-36 resize-none outline-none"
+          className="w-full h-36 resize-none outline-none dark:text-white dark:bg-gray-800"
         ></textarea>
 
         {isMediaUploading ? (
@@ -131,7 +131,7 @@ export const AddPost = ({ handleModalType }) => {
             type="button"
             data-tooltip="Add emoji"
             onClick={handleShowEmoji}
-            className="tooltip mr-2 w-10 h-10 rounded-full hover:cursor-pointer text-2xl text-blue-500 hover:bg-blue-100"
+            className="tooltip mr-2 w-10 h-10 rounded-full hover:cursor-pointer text-2xl text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-700"
           >
             <span className="material-icons-outlined flex items-center justify-center select-none">
               add_reaction
@@ -143,7 +143,7 @@ export const AddPost = ({ handleModalType }) => {
             data-tooltip="Add image"
             className="tooltip flex items-center"
           >
-            <span className="material-icons-outlined select-none w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer text-2xl text-blue-500 hover:bg-blue-100">
+            <span className="material-icons-outlined select-none w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer text-2xl text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-700">
               add_photo_alternate
             </span>
             <input
@@ -153,16 +153,14 @@ export const AddPost = ({ handleModalType }) => {
               className="invisible w-0 p-0"
               onChange={handleImageFileChange}
             />
-
-            <span className="text-xs text-gray-500 max-w-[8ch] line-clamp-1">
-              {postMedia?.name}
-            </span>
           </label>
         </div>
 
         <span
           className={`${
-            postContent.length === postLimit ? "text-blue-500" : "text-gray-500"
+            postContent.length === postLimit
+              ? "text-blue-500"
+              : "text-gray-500 dark:text-gray-400"
           } text-xs text-center self-center w-[5rem] md:text-sm font-semibold mx-1`}
         >
           {postContent.length} / {postLimit}
@@ -199,7 +197,7 @@ export const AddPost = ({ handleModalType }) => {
 
       {showEmojis && (
         <div
-          className="absolute left-0 bottom-[-130px] z-[1] p-2 flex flex-row items-center justify-center flex-wrap max-w-xs rounded bg-white border"
+          className="absolute left-0 bottom-[-130px] z-[1] p-2 flex flex-row items-center justify-center flex-wrap max-w-xs rounded bg-white dark:bg-gray-800 border dark:border-gray-700"
           onClick={(e) => e.stopPropagation()}
         >
           {emojis.map((emoji, index) => (
@@ -207,7 +205,7 @@ export const AddPost = ({ handleModalType }) => {
               key={index}
               type="button"
               onClick={() => handleEmojiClick(emoji)}
-              className="m-1 w-7 h-7 flex flex-row items-center justify-center hover:bg-slate-200 hover:scale-110 rounded p-1"
+              className="m-1 w-7 h-7 flex flex-row items-center justify-center hover:bg-slate-200 dark:hover:bg-gray-700 hover:scale-110 rounded p-1"
             >
               {emoji}
             </button>

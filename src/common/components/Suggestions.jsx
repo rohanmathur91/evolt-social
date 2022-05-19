@@ -49,7 +49,7 @@ export const Suggestions = () => {
               </span>
               <span>You're All Caught Up.</span>
             </p>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-gray-500 dark:text-gray-400">
               No more new users to follow.
             </p>
           </div>

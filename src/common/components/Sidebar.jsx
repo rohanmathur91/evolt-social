@@ -13,7 +13,7 @@ export const Sidebar = () => {
   const handleLogout = () => dispatch(logoutUser());
 
   return (
-    <aside className="sticky bottom-0 left-0 right-0 z-[2] md:top-[6.2rem] md:left-aside md:ml-auto md:w-[16rem] md:py-2 md:h-[80vh] rounded-lg md:border dark:border-gray-700 bg-white/60 dark:bg-gray-900 dark:border-t dark:rounded-none dark:md:rounded-lg backdrop-blur-sm">
+    <aside className="sticky bottom-0 left-0 right-0 z-[2] md:top-[6.2rem] md:left-aside md:ml-auto md:w-[16rem] md:py-2 md:h-[80vh] md:rounded-lg md:border dark:border-gray-700 bg-white shadow-md md:shadow-none dark:bg-gray-900 border-t rounded-none  backdrop-blur-sm">
       <ul className="w-full grid grid-cols-5 md:block gap-1 md:gap-0">
         {sideBarData.map(({ icon, type, text, path }) => (
           <li
@@ -44,9 +44,9 @@ export const Sidebar = () => {
                 className={({ isActive }) =>
                   `${
                     isActive
-                      ? "bg-blue-100/70 text-blue-500 dark:bg-blue-50/5"
+                      ? "bg-blue-100/70 text-blue-500 dark:bg-gray-800"
                       : ""
-                  } p-3 md:py-2 md:px-4 flex flex-col text-xs md:text-base md:flex-row justify-center md:justify-start items-center hover:text-blue-500 hover:bg-blue-100 rounded dark:hover:bg-blue-50/5`
+                  } p-3 md:py-2 md:px-4 flex flex-col text-xs md:text-base md:flex-row justify-center md:justify-start items-center hover:text-blue-500 hover:bg-blue-100 rounded dark:hover:bg-gray-800`
                 }
               >
                 <span className="material-icons-outlined text-2xl md:mr-3 md:text-3xl">

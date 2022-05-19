@@ -61,8 +61,14 @@ export const authSlice = createSlice({
     user: null,
     error: "",
     isLoading: false,
+    theme: localStorage.getItem("myspace-theme") || "light",
   },
-  reducers: {},
+  reducers: {
+    toggleTheme: (state) => {
+      state.theme = state.theme === "light" ? "dark" : "light";
+      localStorage.setItem("myspace-theme", state.theme);
+    },
+  },
   extraReducers: {
     [persistUser]: (state) => {
       state.user = JSON.parse(localStorage.getItem("myspace-user")) ?? null;
@@ -118,4 +124,5 @@ export const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
+export const { toggleTheme } = authSlice.actions;
 export const useAuth = () => useSelector((state) => state.auth);

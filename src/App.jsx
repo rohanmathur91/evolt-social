@@ -17,13 +17,15 @@ import {
   persistUser,
   getPosts,
 } from "./features";
-import { Navbar, NotFound, ToastBox } from "./common";
+import { Navbar, NotFound, ToastBox, useInitializeTheme } from "./common";
 
 const App = () => {
   const dispatch = useDispatch();
 
+  useInitializeTheme();
   useEffect(() => {
     const token = localStorage.getItem("myspace-token");
+
     if (token) {
       dispatch(persistUser());
       dispatch(getPosts());
@@ -31,7 +33,7 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <div className="text-neutral-900 bg-gray-100 dark">
+    <div className="text-neutral-900 bg-gray-100 dark:text-slate-50 dark:bg-gray-900">
       <Navbar />
       <ToastBox />
       <Routes>

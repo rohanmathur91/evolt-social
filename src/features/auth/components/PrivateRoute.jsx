@@ -8,7 +8,7 @@ export const PrivateRoute = () => {
   const location = useLocation();
 
   return user ? (
-    <div className="grid-container dark:text-white dark:bg-gray-900">
+    <div className="grid-container">
       <Sidebar />
       <Outlet />
       <Suggestions />

@@ -36,7 +36,7 @@ export const SuggestionCard = ({
         </span>
       </div>
 
-      <span className="material-icons-round ml-auto text-blue-500 p-2 rounded-full hover:bg-blue-100 dark:hover:bg-blue-50/5">
+      <span className="material-icons-round ml-auto text-blue-500 p-2 rounded-full hover:bg-blue-100 dark:hover:bg-gray-700">
         add
       </span>
     </Link>

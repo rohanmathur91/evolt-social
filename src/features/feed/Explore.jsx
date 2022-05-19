@@ -44,7 +44,7 @@ export const Explore = () => {
               <CircularLoader size="2rem" customStyle="mt-8 text-blue-500" />
             </span>
           ) : (
-            <p className="text-center text-gray-500 mt-8 text-sm">
+            <p className="text-center text-gray-500 dark:text-gray-400 mt-8 text-sm">
               You have reached the end.
             </p>
           )}
