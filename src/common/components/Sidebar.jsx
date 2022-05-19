@@ -13,7 +13,7 @@ export const Sidebar = () => {
   const handleLogout = () => dispatch(logoutUser());
 
   return (
-    <aside className="sticky bottom-0 left-0 right-0 z-[2] md:top-[6.2rem] md:left-aside md:ml-auto md:w-[16rem] md:py-2 md:h-[80vh] rounded-lg md:border bg-white/60 backdrop-blur-sm">
+    <aside className="sticky bottom-0 left-0 right-0 z-[2] md:top-[6.2rem] md:left-aside md:ml-auto md:w-[16rem] md:py-2 md:h-[80vh] md:rounded-lg md:border dark:border-gray-700 bg-white shadow-md md:shadow-none dark:bg-gray-900 border-t rounded-none  backdrop-blur-sm">
       <ul className="w-full grid grid-cols-5 md:block gap-1 md:gap-0">
         {sideBarData.map(({ icon, type, text, path }) => (
           <li
@@ -43,8 +43,10 @@ export const Sidebar = () => {
                 to={text === "Profile" ? `/profile/${user?._id}` : path}
                 className={({ isActive }) =>
                   `${
-                    isActive ? "bg-blue-100/70 text-blue-500" : ""
-                  } p-3 md:py-2 md:px-4 flex flex-col text-xs md:text-base md:flex-row justify-center md:justify-start items-center hover:text-blue-500 hover:bg-blue-100 rounded`
+                    isActive
+                      ? "bg-blue-100/70 text-blue-500 dark:bg-gray-800"
+                      : ""
+                  } p-3 md:py-2 md:px-4 flex flex-col text-xs md:text-base md:flex-row justify-center md:justify-start items-center hover:text-blue-500 hover:bg-blue-100 rounded dark:hover:bg-gray-800`
                 }
               >
                 <span className="material-icons-outlined text-2xl md:mr-3 md:text-3xl">
@@ -68,7 +70,7 @@ export const Sidebar = () => {
           <button
             title="Logout"
             onClick={handleLogout}
-            className="w-full flex items-center justify-center py-2 px-4 border border-red-400 text-red-500 rounded hover:bg-red-500 hover:text-white text-sm md:text-base hover:transition-all"
+            className="w-full flex items-center justify-center py-2 px-4 border border-red-400 text-red-500 rounded hover:bg-red-500 hover:text-white dark:text-red-400 dark:hover:text-white text-sm md:text-base hover:transition-all"
           >
             Logout
             <span className="material-icons-outlined text-base ml-2">

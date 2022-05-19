@@ -31,7 +31,7 @@ export const Search = () => {
   };
 
   return (
-    <main className="main py-3 px-4 bg-white rounded-lg">
+    <main className="main py-3 px-4 bg-white dark:bg-gray-900 rounded-lg">
       <h4 className="font-semibold my-4 text-center text-blue-500">
         Search your friends
       </h4>
@@ -47,13 +47,13 @@ export const Search = () => {
           autoComplete="off"
           placeholder="Search..."
           onChange={handleSearchQuery}
-          className="bg-slate-100 shadow-sm px-10 rounded-lg focus:bg-slate-50 w-full border focus:border focus:border-slate-300"
+          className="bg-slate-100 dark:bg-gray-700 shadow-sm px-10 rounded-lg focus:bg-slate-50 dark:focus:bg-gray-800 w-full border dark:border-gray-700 focus:border focus:border-slate-300 dark:focus:border-gray-600"
         />
         {searchQuery && (
           <button
             title="Clear"
             onClick={handleClearSearchQuery}
-            className="flex items-center hover:bg-slate-200 rounded text-slate-500 text-xl absolute right-[10px] top-[-2px]"
+            className="flex items-center hover:bg-slate-200 dark:hover:bg-gray-900 rounded text-slate-500 text-xl absolute right-[10px] top-[-2px]"
           >
             <span className="material-icons-outlined">close</span>
           </button>

@@ -12,7 +12,7 @@ export const SuggestionCard = ({
     <Link
       title={`@${username}`}
       to={`/profile/${_id}`}
-      className="flex items-center p-2 pt-3 mb-4 rounded-lg shadow  border"
+      className="flex items-center p-2 pt-3 mb-4 rounded-lg shadow border dark:bg-gray-800 dark:border-gray-700"
     >
       {profileImage ? (
         <img
@@ -31,12 +31,12 @@ export const SuggestionCard = ({
         <span>
           {firstName} {lastName}
         </span>
-        <span className="hidden sm:inline text-gray-500 text-sm font-normal">
+        <span className="hidden sm:inline text-gray-500 dark:text-gray-400 text-sm font-normal">
           @{username}
         </span>
       </div>
 
-      <span className="material-icons-round ml-auto text-blue-500 p-2 rounded-full hover:bg-blue-100">
+      <span className="material-icons-round ml-auto text-blue-500 p-2 rounded-full hover:bg-blue-100 dark:hover:bg-gray-700">
         add
       </span>
     </Link>

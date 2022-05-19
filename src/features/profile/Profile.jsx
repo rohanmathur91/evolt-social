@@ -63,7 +63,7 @@ export const Profile = () => {
         </Modal>
       )}
 
-      <main className="main bg-white rounded-lg md:col-start-2 md:col-end-[-1]">
+      <main className="main bg-white dark:bg-gray-900 rounded-lg md:col-start-2 md:col-end-[-1]">
         {!currentUser || isUserLoading ? (
           <CircularLoader size="2rem" customStyle="mt-8 text-blue-500" />
         ) : (
@@ -110,7 +110,7 @@ export const Profile = () => {
 
                   <button
                     onClick={handleLogout}
-                    className="md:hidden flex mt-3 md:h-9 items-center py-1 px-3 justify-center border border-red-400 text-red-500 rounded hover:bg-red-500 hover:text-white text-sm md:text-base hover:transition-all"
+                    className="md:hidden flex mt-3 md:h-9 items-center py-1 px-3 justify-center border border-red-400 text-red-500 dark:text-red-400 rounded hover:bg-red-500 hover:text-white dark:hover:text-white text-sm md:text-base hover:transition-all"
                   >
                     Logout
                     <span className="material-icons-outlined text-base ml-2">
@@ -124,7 +124,7 @@ export const Profile = () => {
                 <h3 className="text-lg md:text-2xl">
                   {firstName} {lastName}
                 </h3>
-                <span className="text-sm md:text-base text-gray-500">
+                <span className="text-sm md:text-base text-gray-500 dark:text-gray-400">
                   @{username}
                 </span>
               </div>
@@ -175,7 +175,7 @@ export const Profile = () => {
               </div>
             </div>
             <div className="max-w-xl mx-auto mt-4 pb-32">
-              <div className="border-b flex items-center justify-between">
+              <div className="border-b dark:border-gray-700 flex items-center justify-between">
                 <NavLink
                   end
                   to={`/profile/${_id}`}

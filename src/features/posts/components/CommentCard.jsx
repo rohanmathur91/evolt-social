@@ -68,7 +68,7 @@ export const CommentCard = ({ postId, commentData }) => {
   };
 
   return (
-    <article className="flex bg-white p-2 rounded-lg border mb-4 shadow text-sm">
+    <article className="flex bg-white dark:bg-gray-800 p-2 rounded-lg border dark:border-gray-700 mb-4 shadow text-sm">
       {profileImage ? (
         <img
           loading="lazy"
@@ -88,7 +88,7 @@ export const CommentCard = ({ postId, commentData }) => {
             <p className="font-semibold flex items-center line-clamp-1">
               {firstName} {lastName}
             </p>
-            <p className="text-gray-500 line-clamp-1">
+            <p className="text-gray-500 dark:text-gray-400 line-clamp-1">
               @{username}
               <span className="mx-[6px] font-semibold">•</span>
               {getDate(commentDate)}
@@ -105,7 +105,7 @@ export const CommentCard = ({ postId, commentData }) => {
               <button
                 data-tooltip="More"
                 onClick={handleShowMoreOptionsClick}
-                className="tooltip mx-2 w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100"
+                className="tooltip mx-2 w-10 h-10 flex items-center justify-center rounded-full hover:cursor-pointer hover:text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-700"
               >
                 <span className="material-icons-outlined text-2xl">
                   more_horiz
@@ -113,10 +113,10 @@ export const CommentCard = ({ postId, commentData }) => {
               </button>
 
               {showMoreOptions && (
-                <div className="absolute top-8 right-4 z-[1] w-32 bg-white shadow-xl flex flex-col p-2 border rounded-lg">
+                <div className="absolute top-8 right-4 z-[1] w-32 bg-white dark:bg-gray-900 shadow-xl flex flex-col p-2 border dark:border-gray-700 rounded-lg">
                   <button
                     onClick={handleEditCommentClick}
-                    className="py-2 px-4 text-sm flex items-center text-blue-500 hover:bg-blue-100 rounded"
+                    className="py-2 px-4 text-sm flex items-center text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-800 rounded"
                   >
                     <span className="material-icons-outlined text-xl mr-2">
                       edit
@@ -128,7 +128,7 @@ export const CommentCard = ({ postId, commentData }) => {
                     onClick={handleDeleteCommentClick}
                     className={`${
                       isUpdating ? "relative" : ""
-                    } py-2 px-4 text-sm flex items-center text-red-500 hover:bg-red-100 rounded`}
+                    } py-2 px-4 text-sm flex items-center text-red-500 dark:text-red-400 dark:hover:bg-gray-800 rounded`}
                   >
                     {isUpdating && (
                       <CircularLoader
@@ -160,7 +160,7 @@ export const CommentCard = ({ postId, commentData }) => {
               type="text"
               value={editedComment}
               onChange={handleCommentInputChange}
-              className="border-b px-0 w-full mr-2"
+              className="border-b dark:border-b-gray-600 px-0 w-full mr-2 dark:bg-gray-800"
             />
             <div className="flex items-center">
               <button

@@ -36,7 +36,7 @@ export const UserCard = ({
   };
 
   return (
-    <article className="p-2 pt-3 mb-4 rounded-lg shadow-md flex items-center border">
+    <article className="p-2 pt-3 mb-4 rounded-lg shadow-md flex items-center border dark:border-gray-700 dark:bg-gray-800">
       <Link to={`/profile/${_id}`} className="flex items-center">
         {profileImage ? (
           <img
@@ -54,11 +54,13 @@ export const UserCard = ({
         <div>
           <p className="mr-1 text-sm sm:text-base font-semibold flex items-center line-clamp-1">
             {firstName} {lastName}
-            <span className="hidden sm:inline text-gray-500 text-sm font-normal ml-2">
+            <span className="hidden sm:inline text-gray-500 dark:text-gray-400 text-sm font-normal ml-2">
               @{username}
             </span>
           </p>
-          <p className="text-sm text-gray-500 line-clamp-1">{bio}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-1">
+            {bio}
+          </p>
         </div>
       </Link>
       {username !== user.username && (

@@ -46,7 +46,7 @@ export const Home = () => {
         <button
           title="Add post"
           onClick={() => handleModalType(POSTMODAL)}
-          className="bg-white w-full p-2 rounded-lg border"
+          className="bg-white w-full p-2 rounded-lg border dark:bg-gray-800 dark:border-gray-700"
         >
           <span className="flex items-center">
             {user?.profileImage ? (
@@ -62,7 +62,7 @@ export const Home = () => {
               </span>
             )}
 
-            <span className="text-gray-400 border p-2 w-full text-left rounded-lg hover:bg-slate-100">
+            <span className="text-gray-400 border dark:border-gray-700 p-2 w-full text-left rounded-lg hover:bg-slate-100 dark:hover:bg-gray-700">
               What's on your mind?
             </span>
           </span>
@@ -89,7 +89,7 @@ export const Home = () => {
               postSortType === "SORT_BY_RECENT"
                 ? "border-blue-400"
                 : "border-transparent"
-            } btn w-full border flex items-center justify-center font-semibold py-2 px-4 bg-blue-100 text-blue-500 rouded text-sm`}
+            } btn w-full border flex items-center justify-center font-semibold py-2 px-4 bg-blue-100 dark:bg-gray-800 text-blue-500 rouded text-sm`}
           >
             <span className="material-icons-outlined mr-2">view_timeline</span>
             Recent
@@ -101,7 +101,7 @@ export const Home = () => {
               postSortType === "SORT_BY_TRENDING"
                 ? "border-blue-400"
                 : "border-transparent"
-            } btn w-full border flex items-center justify-center font-semibold py-2 px-4 bg-blue-100 text-blue-500 rouded text-sm`}
+            } btn w-full border flex items-center justify-center font-semibold py-2 px-4 bg-blue-100 dark:bg-gray-800 text-blue-500 rouded text-sm`}
           >
             <span className="material-icons-outlined mr-2">trending_up</span>
             Trending
@@ -121,7 +121,7 @@ export const Home = () => {
               <CircularLoader size="2rem" customStyle="mt-8 text-blue-500" />
             </span>
           ) : (
-            <p className="text-center text-gray-500 mt-8 text-sm">
+            <p className="text-center text-gray-500 dark:text-gray-400 mt-8 text-sm">
               You have reached the end.
             </p>
           )}

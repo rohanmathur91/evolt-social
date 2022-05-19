@@ -54,7 +54,7 @@ export const SinglePost = () => {
     <main className="main w-full pb-20 px-2 md:px-0 max-w-xl mx-auto">
       <button
         onClick={() => navigate(-1)}
-        className="mb-4 mt-4 md:mt-0 py-2 px-4 flex items-center justify-center rounded text-blue-500 hover:bg-blue-100"
+        className="mb-4 mt-4 md:mt-0 py-2 px-4 flex items-center justify-center rounded text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-800"
       >
         <span className="material-icons-outlined text-xl mr-1">arrow_back</span>
         Go back
@@ -82,14 +82,14 @@ export const SinglePost = () => {
               </div>
             )}
 
-            <div className="ml-2 w-full bg-white border border-blue-300 rounded-lg flex items-center px-2">
+            <div className="ml-2 w-full bg-white dark:bg-gray-800 border border-blue-300 rounded-lg flex items-center px-2">
               <input
                 autoFocus
                 type="text"
                 value={comment}
                 onChange={handleCommentChange}
                 placeholder="Post your comment..."
-                className="mt-1 text-base w-full"
+                className="mt-1 text-base w-full dark:bg-gray-800"
               />
               <button
                 disabled={!comment}

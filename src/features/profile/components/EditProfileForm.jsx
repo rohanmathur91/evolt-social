@@ -70,14 +70,14 @@ export const EditProfileForm = ({ handleModalType }) => {
   return (
     <form
       onSubmit={handleFormSubmit}
-      className="bg-white flex flex-col p-4 rounded relative"
+      className="bg-white flex flex-col p-4 rounded relative dark:bg-gray-800 dark:text-white"
     >
       <div className="absolute right-0 top-0">
         <button
           type="button"
           data-tooltip="Close"
           onClick={() => handleModalType("")}
-          className="tooltip p-2 m-2 flex rounded items-center justify-center hover:bg-blue-100 hover:text-blue-500"
+          className="tooltip p-2 m-2 flex rounded items-center justify-center hover:bg-blue-100 dark:hover:bg-gray-700 hover:text-blue-500"
         >
           <span className="material-icons-outlined">close</span>
         </button>
@@ -143,7 +143,7 @@ export const EditProfileForm = ({ handleModalType }) => {
           value={updatedWebsitelUrl}
           onChange={handleWebsiteUrlChange}
           placeholder="website or portfolio..."
-          className="border border-slate-300 mt-1 rounded w-full focus:border focus:border-blue-500"
+          className="border border-slate-300 dark:bg-gray-700 dark:border-gray-600 mt-1 rounded w-full focus:border focus:border-blue-500 dark:focus:border-blue-500"
         />
       </label>
 
@@ -154,11 +154,11 @@ export const EditProfileForm = ({ handleModalType }) => {
           placeholder="Bio..."
           value={editedBio}
           onChange={handleBioChange}
-          className="border border-slate-300 h-28 mt-1 rounded w-full py-2 px-4 outline-none focus:border focus:border-blue-500"
+          className="border border-slate-300 dark:bg-gray-700 dark:border-gray-600 h-28 mt-1 rounded w-full py-2 px-4 outline-none focus:border focus:border-blue-500 dark:focus:border-blue-500"
         ></textarea>
       </label>
       {editedBio.length > 80 && (
-        <span className="text-sm text-red-500 flex items-center">
+        <span className="text-sm text-red-500 dark:text-red-400 flex items-center">
           <span className="material-icons-outlined mr-2 text-xl">
             error_outline
           </span>
