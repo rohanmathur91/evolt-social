@@ -111,7 +111,7 @@ export const PostCard = ({ post }) => {
 
   return (
     <article className="border dark:border-gray-700 rounded-lg my-4 md:mt-0 max-w-xl mx-auto shadow-md bg-white dark:bg-gray-800">
-      <section className="p-2 pl-4 pt-4 flex items-center">
+      <section className="pr-2 pl-4 pt-4 flex items-center">
         <Link
           title={username}
           to={`/profile/${userId}`}
@@ -200,22 +200,31 @@ export const PostCard = ({ post }) => {
       </section>
 
       {postMedia && (
-        <img
-          loading="lazy"
-          src={postMedia.url}
-          alt={postMedia.original_filename}
-          onClick={handleSinglePostClick}
-          className="w-full h-80 cursor-pointer aspect-[2/1] object-cover object-top mt-1 mb-2 bg-gray-200"
-        />
+        <div className="flex items-center justify-center">
+          <img
+            loading="lazy"
+            src={postMedia.url}
+            alt={postMedia.original_filename}
+            onClick={handleSinglePostClick}
+            className="cursor-pointer mt-3 mb-1 max-h-[25rem] bg-gray-200 dark:bg-gray-800"
+          />
+        </div>
       )}
 
-      <p
-        onClick={handleSinglePostClick}
-        className="py-2 px-5 text-sm lg:text-base cursor-pointer mb-2 break-normal"
+      {content && (
+        <p
+          onClick={handleSinglePostClick}
+          className="py-2 px-5 text-sm lg:text-base cursor-pointer my-2 break-normal"
+        >
+          {content}
+        </p>
+      )}
+
+      <section
+        className={`flex flex-row items-center justify-between py-2 mx-5 ${
+          content ? "border-t dark:border-t-gray-600" : ""
+        }`}
       >
-        {content}
-      </p>
-      <section className="flex flex-row items-center justify-between py-2 mx-5 border-t dark:border-t-gray-600">
         <div className="flex text-gray-900">
           <div className="flex items-center w-16">
             <button
