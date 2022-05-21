@@ -254,7 +254,7 @@ export const posts = [
   },
   {
     _id: "48bc-9b0a-3c66d5634ad48",
-    content: "This is a panda. 👀",
+    content: "This beauty ✨.",
     likes: {
       likeCount: 2,
       likedBy: [
@@ -285,8 +285,8 @@ export const posts = [
     lastName: "Balika",
     username: "adarshbalika",
     postMedia: {
-      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1649834647/wildlife_txpxpo.webp",
-      original_filename: "panda",
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652874627/788-536x354_btpwul.jpg",
+      original_filename: "scenery",
     },
     createdAt: "2022-05-15T16:43:34+05:30",
     updatedAt: "2022-05-15T16:43:34+05:30",
