@@ -103,7 +103,6 @@ export const AddPost = ({ handleModalType }) => {
     >
       <div className="rounded-lg border-2 border-blue-500 p-3 mb-3">
         <textarea
-          required
           autoFocus
           maxLength={postLimit}
           value={postContent}
@@ -177,10 +176,11 @@ export const AddPost = ({ handleModalType }) => {
 
           <button
             disabled={
-              isLoading ||
-              isMediaUploading ||
-              postContent.length === 0 ||
-              postContent.length > postLimit
+              !postMedia &&
+              (isLoading ||
+                isMediaUploading ||
+                postContent.length === 0 ||
+                postContent.length > postLimit)
             }
             className={`btn btn-primary text-sm md:text-base py-1 px-3 border border-blue-500 ${
               isLoading ? "relative" : ""
