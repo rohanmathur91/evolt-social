@@ -2,6 +2,7 @@ import React, { useRef, useReducer, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   usePosts,
   likePost,
@@ -107,6 +108,13 @@ export const PostCard = ({ post }) => {
 
   const handleSinglePostClick = () => {
     if (!pathname.includes("post")) navigate(`/post/${_id}`);
+  };
+
+  const handleShareClick = () => {
+    window.navigator.clipboard.writeText(
+      `${window.location.origin}/post/${_id}`
+    );
+    toast.success("Link copied, share the post!");
   };
 
   return (
@@ -248,7 +256,7 @@ export const PostCard = ({ post }) => {
             </span>
           </div>
 
-          <div className="flex items-center">
+          <div className="flex items-center w-16">
             <button
               data-tooltip="Comment"
               onClick={handleSinglePostClick}
@@ -262,6 +270,16 @@ export const PostCard = ({ post }) => {
               {comments.length}
             </span>
           </div>
+
+          <button
+            data-tooltip="Share"
+            onClick={handleShareClick}
+            className="tooltip w-10 h-10 flex items-center justify-center rounded-full hover:text-blue-500 dark:text-gray-200 hover:bg-blue-100 dark:hover:bg-gray-700"
+          >
+            <span className="material-icons-outlined text-xl mr-[2px] sm:text-[22px]">
+              share
+            </span>
+          </button>
         </div>
 
         <button
