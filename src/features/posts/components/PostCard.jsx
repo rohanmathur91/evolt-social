@@ -114,7 +114,7 @@ export const PostCard = ({ post }) => {
     window.navigator.clipboard.writeText(
       `${window.location.origin}/post/${_id}`
     );
-    toast.success("Link copied share the post!");
+    toast.success("Link copied, share the post!");
   };
 
   return (
