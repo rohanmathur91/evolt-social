@@ -43,7 +43,7 @@ export const SinglePost = () => {
     e.preventDefault();
 
     setIsCommentPosting(true);
-    dispatch(commentOnPost({ postId, comment })).finally(() => {
+    dispatch(commentOnPost({ postId, comment: comment.trim() })).finally(() => {
       setIsCommentPosting(false);
     });
 
@@ -92,7 +92,7 @@ export const SinglePost = () => {
                 className="mt-1 text-base w-full dark:bg-gray-800"
               />
               <button
-                disabled={!comment}
+                disabled={!comment.trim()}
                 className={`btn btn-primary text-sm md:text-base py-1 px-3 ${
                   isCommentPosting ? "relative" : ""
                 }`}
