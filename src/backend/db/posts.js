@@ -7,20 +7,21 @@ import { formatDate } from "../utils/authUtils";
 
 export const posts = [
   {
-    _id: "a572a19c-68de11",
+    _id: "fa2a5e1e870c121",
     content:
-      "Leadership is lifting a person's vision to high sights, the raising of a person's performance to a higher standard, the building of a personality beyond its normal limitations. —Peter Drucker",
+      "Before you are a leader, success is all about growing yourself. When you become a leader, success is all about growing others. —Jack Welch",
     likes: {
       likeCount: 0,
       likedBy: [],
       dislikedBy: [],
     },
+
     comments: [],
+    postMedia: null,
     profileImage: {
       url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1653736054/angelist-profile_rmiupp.jpg",
-      original_filename: "rohanmathur-profile",
+      original_filename: "rohanmathur",
     },
-    postMedia: null,
     userId: "rohan-mathur-test-userId",
     firstName: "Rohan",
     lastName: "Mathur",
@@ -28,6 +29,53 @@ export const posts = [
     createdAt: "2022-05-15T16:43:34+05:30",
     updatedAt: "2022-05-15T16:43:34+05:30",
   },
+
+  {
+    _id: "fa2a5e1e870c111-a2d",
+    content:
+      "Learn from the mistakes of others. You can't live long enough to make them all yourself 🚀",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    comments: [],
+    postMedia: null,
+    profileImage: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1653736054/angelist-profile_rmiupp.jpg",
+      original_filename: "rohanmathur",
+    },
+    userId: "rohan-mathur-test-userId",
+    firstName: "Rohan",
+    lastName: "Mathur",
+    username: "rohanmathur",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+  },
+
+  {
+    _id: "fa2a5e1e870c112-a22d",
+    content:
+      "The most important thing to remember is this: to be ready at any moment to give up what you are for what you might become.",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    comments: [],
+    postMedia: null,
+    profileImage: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1653736054/angelist-profile_rmiupp.jpg",
+      original_filename: "rohanmathur",
+    },
+    userId: "rohan-mathur-test-userId",
+    firstName: "Rohan",
+    lastName: "Mathur",
+    username: "rohanmathur",
+    createdAt: "2022-05-14T16:43:34+05:30",
+    updatedAt: "2022-05-14T16:43:34+05:30",
+  },
+
   {
     _id: "4670-acf8-6b4892ec621e21",
     content:
@@ -45,7 +93,20 @@ export const posts = [
       ],
       dislikedBy: [],
     },
-    comments: [],
+    comments: [
+      {
+        comment: "Good work",
+        commentDate: "2022-05-12T19:05:28+05:30",
+        firstName: "Lucy",
+        lastName: "Van",
+        username: "lucyvan",
+        _id: "2ae6268b-dd1b-447a-121-23sq2",
+        profileImage: {
+          url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652872677/28102735662_5773509d11_b_zpjwv0.webp",
+          original_filename: "lucyvan-profile",
+        },
+      },
+    ],
     profileImage: {
       url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1653736054/angelist-profile_rmiupp.jpg",
       original_filename: "rohanmathur-profile",
@@ -81,6 +142,7 @@ export const posts = [
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },
+
   {
     _id: "4d62-aa68-24c201367a354-11xzzyj1o",
     content:
@@ -136,7 +198,32 @@ export const posts = [
       likedBy: [],
       dislikedBy: [],
     },
-    comments: [],
+    comments: [
+      {
+        comment: "Cool colors, great work.",
+        commentDate: formatDate(),
+        firstName: "Conor",
+        lastName: "McGregor",
+        username: "thenotoriousmma",
+        _id: "2ae6268b-dd1b-447a-121-23vc2",
+        profileImage: {
+          url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1653735959/images_fufwdx.jpg",
+          original_filename: "conor-mcgregor",
+        },
+      },
+      {
+        comment: "Good job",
+        commentDate: formatDate(),
+        firstName: "Lucy",
+        lastName: "Van",
+        username: "lucyvan",
+        _id: "2ae6268b-dd1b-447a1-23sq2",
+        profileImage: {
+          url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652872677/28102735662_5773509d11_b_zpjwv0.webp",
+          original_filename: "lucyvan-profile",
+        },
+      },
+    ],
     profileImage: {
       url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1653736054/angelist-profile_rmiupp.jpg",
       original_filename: "rohanmathur-profile",
@@ -187,7 +274,20 @@ export const posts = [
       dislikedBy: [],
     },
 
-    comments: [],
+    comments: [
+      {
+        comment: "Well said.",
+        commentDate: "2022-05-10T19:05:28+05:30",
+        firstName: "Conor",
+        lastName: "McGregor",
+        username: "thenotoriousmma",
+        _id: "2ae6268b-dd1b-447a-121-23vc342",
+        profileImage: {
+          url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1653735959/images_fufwdx.jpg",
+          original_filename: "conor-mcgregor",
+        },
+      },
+    ],
     profileImage: {
       url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1653736054/angelist-profile_rmiupp.jpg",
       original_filename: "rohanmathur",
@@ -209,7 +309,20 @@ export const posts = [
       dislikedBy: [],
     },
 
-    comments: [],
+    comments: [
+      {
+        comment: "Well said.",
+        commentDate: "2022-05-15T19:05:28+05:30",
+        firstName: "Conor",
+        lastName: "McGregor",
+        username: "thenotoriousmma",
+        _id: "2ae6268b-dd1b-447a-121-23vc342",
+        profileImage: {
+          url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1653735959/images_fufwdx.jpg",
+          original_filename: "conor-mcgregor",
+        },
+      },
+    ],
     profileImage: {
       url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1653736054/angelist-profile_rmiupp.jpg",
       original_filename: "rohanmathur",
@@ -225,6 +338,55 @@ export const posts = [
     createdAt: "2022-05-15T16:43:34+05:30",
     updatedAt: "2022-05-15T16:43:34+05:30",
   },
+
+  {
+    _id: "a572a19c-68de11",
+    content:
+      "Leadership is lifting a person's vision to high sights, the raising of a person's performance to a higher standard, the building of a personality beyond its normal limitations. —Peter Drucker",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    comments: [
+      {
+        comment: "Nice quote.",
+        commentDate: "2022-05-28T19:05:28+05:30",
+        firstName: "Dan",
+        lastName: "Abramov",
+        username: "dan_abramov",
+        _id: "2ae6268b-dd1b-447a-1sqa21",
+        profileImage: {
+          url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1653736290/dan_o6nk9h.jpg",
+          original_filename: "dan-abramov",
+        },
+      },
+      {
+        comment: "Good one.",
+        commentDate: "2022-05-28T19:05:28+05:30",
+        firstName: "Conor",
+        lastName: "McGregor",
+        username: "thenotoriousmma",
+        _id: "2ae6268b-dd1b-447a-121-232",
+        profileImage: {
+          url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1653735959/images_fufwdx.jpg",
+          original_filename: "conor-mcgregor",
+        },
+      },
+    ],
+    profileImage: {
+      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1653736054/angelist-profile_rmiupp.jpg",
+      original_filename: "rohanmathur-profile",
+    },
+    postMedia: null,
+    userId: "rohan-mathur-test-userId",
+    firstName: "Rohan",
+    lastName: "Mathur",
+    username: "rohanmathur",
+    createdAt: "2022-05-15T16:43:34+05:30",
+    updatedAt: "2022-05-15T16:43:34+05:30",
+  },
+
   {
     _id: "f8add63b-9e2819",
     content: `This man has been inspiring me for a couple of decades now.
@@ -249,7 +411,20 @@ export const posts = [
       ],
       dislikedBy: [],
     },
-    comments: [],
+    comments: [
+      {
+        comment: "This is awesome.",
+        commentDate: "2022-05-28T19:05:28+05:30",
+        firstName: "Dan",
+        lastName: "Abramov",
+        username: "dan_abramov",
+        _id: "2ae6268b-dd1b-447a-121",
+        profileImage: {
+          url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1653736290/dan_o6nk9h.jpg",
+          original_filename: "dan-abramov",
+        },
+      },
+    ],
     profileImage: {
       url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1653736054/angelist-profile_rmiupp.jpg",
       original_filename: "rohanmathur",
@@ -313,29 +488,6 @@ export const posts = [
   },
 
   {
-    _id: "fa2a5e1e870c121",
-    content:
-      "Before you are a leader, success is all about growing yourself. When you become a leader, success is all about growing others. —Jack Welch",
-    likes: {
-      likeCount: 0,
-      likedBy: [],
-      dislikedBy: [],
-    },
-
-    comments: [],
-    postMedia: null,
-    profileImage: {
-      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1653736054/angelist-profile_rmiupp.jpg",
-      original_filename: "rohanmathur",
-    },
-    userId: "rohan-mathur-test-userId",
-    firstName: "Rohan",
-    lastName: "Mathur",
-    username: "rohanmathur",
-    createdAt: "2022-05-15T16:43:34+05:30",
-    updatedAt: "2022-05-15T16:43:34+05:30",
-  },
-  {
     _id: "fa2a5e1e870c110-ad2",
     content:
       "Life is fragile and temporary. The faces of today quickly become the faces of the past. Sorrow, pain, and anger... it all fades.",
@@ -357,50 +509,7 @@ export const posts = [
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },
-  {
-    _id: "fa2a5e1e870c111-a2d",
-    content:
-      "Learn from the mistakes of others. You can't live long enough to make them all yourself 🚀",
-    likes: {
-      likeCount: 0,
-      likedBy: [],
-      dislikedBy: [],
-    },
-    comments: [],
-    postMedia: null,
-    profileImage: {
-      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1653736054/angelist-profile_rmiupp.jpg",
-      original_filename: "rohanmathur",
-    },
-    userId: "rohan-mathur-test-userId",
-    firstName: "Rohan",
-    lastName: "Mathur",
-    username: "rohanmathur",
-    createdAt: formatDate(),
-    updatedAt: formatDate(),
-  },
-  {
-    _id: "fa2a5e1e870c112-a22d",
-    content:
-      "The most important thing to remember is this: to be ready at any moment to give up what you are for what you might become.",
-    likes: {
-      likeCount: 0,
-      likedBy: [],
-      dislikedBy: [],
-    },
-    comments: [],
-    postMedia: null,
-    profileImage: {
-      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1653736054/angelist-profile_rmiupp.jpg",
-      original_filename: "rohanmathur",
-    },
-    userId: "rohan-mathur-test-userId",
-    firstName: "Rohan",
-    lastName: "Mathur",
-    username: "rohanmathur",
-    createdAt: formatDate(),
-    updatedAt: formatDate(),
-  },
+
   {
     _id: "fa2a5e1e870c113-a4d",
     content:
