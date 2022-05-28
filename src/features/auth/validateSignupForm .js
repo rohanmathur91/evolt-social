@@ -14,7 +14,7 @@ export const validateSignupForm = ({
   const isUsernameValid = /^[a-zA-Z0-9]{3,20}$/.test(username);
   const isEmailValid = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/.test(email);
   const isPasswordValid =
-    /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(password);
+    /^(?=.*[0-9])(?=.*[!@#$%^&*_])[a-zA-Z0-9!@#$%^&*_]{6,16}$/.test(password);
   const isConfirmPassword =
     confirmPassword !== "" && password === confirmPassword;
 
