@@ -6,22 +6,6 @@ import { formatDate } from "../utils/authUtils";
 
 export const users = [
   {
-    _id: "adarsh-balika-test-userId",
-    firstName: "Adarsh",
-    lastName: "Balika",
-    username: "adarshbalika",
-    password: "adarshBalika123",
-    profileBackgroundUrl: "",
-    bio: "Adarsh balika the web developer ❤️",
-    websiteUrl: "https://adarshbalika.netlify.app/",
-    profileImage: {
-      url: "https://res.cloudinary.com/dexubgbx0/image/upload/v1652362403/ct4fvtk6i5iu1mbnb6hj.jpg",
-      original_filename: "adarshbalika-profile",
-    },
-    createdAt: formatDate(),
-    updatedAt: formatDate(),
-  },
-  {
     _id: "rohan-mathur-test-userId",
     firstName: "Rohan",
     lastName: "Mathur",

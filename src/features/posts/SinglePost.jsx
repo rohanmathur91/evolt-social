@@ -74,7 +74,7 @@ export const SinglePost = () => {
                 loading="lazy"
                 src={user.profileImage?.url || ""}
                 alt={user.profileImage?.original_filename || ""}
-                className="w-10 h-10 flex-shrink-0 mr-2 object-cover rounded-full bg-gray-200"
+                className="w-10 h-10 flex-shrink-0 mr-2 border object-cover object-top rounded-full bg-gray-200"
               />
             ) : (
               <div className="w-10 h-10 text-lg flex-shrink-0 flex items-center justify-center font-semibold rounded-full bg-blue-500 text-white">

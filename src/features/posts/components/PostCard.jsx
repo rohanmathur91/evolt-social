@@ -130,7 +130,7 @@ export const PostCard = ({ post }) => {
               loading="lazy"
               src={profileImage.url}
               alt={profileImage.original_filename}
-              className="w-11 h-11 md:w-12 md:h-12 mr-4 object-cover object-top rounded-full bg-gray-200 hover:opacity-75"
+              className="w-11 h-11 md:w-12 md:h-12 mr-4 border object-cover object-top rounded-full bg-gray-200 hover:opacity-75"
             />
           ) : (
             <div className="w-11 h-11 md:w-12 md:h-12 text-xl mr-4 flex flex-shrink-0 items-center hover:opacity-75 justify-center font-semibold rounded-full bg-blue-500 text-white">

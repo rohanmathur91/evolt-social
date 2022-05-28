@@ -35,8 +35,8 @@ export const Login = () => {
     authFormDispatch({
       type: "SET_TEST_CREDENTIALS",
       payload: {
-        username: "adarshbalika",
-        password: "adarshBalika123",
+        username: process.env.REACT_APP_TEST_USERNAME,
+        password: process.env.REACT_APP_TEST_PASSWORD,
       },
     });
   };

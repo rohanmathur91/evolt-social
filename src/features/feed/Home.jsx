@@ -54,7 +54,7 @@ export const Home = () => {
                 loading="lazy"
                 src={user.profileImage?.url || ""}
                 alt={user.profileImage?.original_filename || ""}
-                className="w-11 h-11 md:w-12 md:h-12 mr-3 object-cover rounded-full bg-gray-200"
+                className="w-11 h-11 md:w-12 md:h-12 mr-3 border object-cover object-top flex-shrink-0 rounded-full bg-gray-200"
               />
             ) : (
               <span className="w-11 h-11 md:w-12 md:h-12 text-xl mr-3 flex flex-shrink-0 items-center justify-center font-semibold rounded-full bg-blue-500 text-white">
