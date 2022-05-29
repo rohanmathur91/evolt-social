@@ -75,7 +75,7 @@ export const Profile = () => {
                     loading="lazy"
                     src={profileImage.url}
                     alt={profileImage.original_filename}
-                    className="mt-8 object-cover border-4 border-white w-28 h-28 md:w-36 md:h-36 bg-gray-200 rounded-full"
+                    className="mt-8 object-cover border-4 border-gray-200 w-28 h-28 md:w-36 md:h-36 bg-gray-200 rounded-full"
                   />
                 ) : (
                   <div className="mt-8 text-4xl md:text-6xl w-28 h-28 md:w-36 md:h-36 border-4 border-white flex items-center justify-center font-semibold rounded-full bg-blue-500 text-white">

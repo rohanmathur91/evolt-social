@@ -28,7 +28,7 @@ export const SuggestionCard = ({
             loading="lazy"
             src={profileImage.url}
             alt={profileImage.original_filename}
-            className="w-10 h-10 mr-4 object-cover rounded-full flex-shrink-0 bg-gray-200"
+            className="w-10 h-10 mr-4 border object-cover object-top rounded-full flex-shrink-0 bg-gray-200"
           />
         ) : (
           <div className="w-10 h-10 mr-4 text-lg flex items-center flex-shrink-0 justify-center font-semibold rounded-full bg-blue-500 text-white">

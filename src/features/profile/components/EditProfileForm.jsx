@@ -59,7 +59,7 @@ export const EditProfileForm = ({ handleModalType }) => {
     e.preventDefault();
 
     const userData = {
-      bio: editedBio,
+      bio: editedBio.trim(),
       websiteUrl: updatedWebsitelUrl,
       profileImage: updatedProfileImage,
     };
@@ -139,7 +139,7 @@ export const EditProfileForm = ({ handleModalType }) => {
       <label>
         Website link:
         <input
-          type="text"
+          type="url"
           value={updatedWebsitelUrl}
           onChange={handleWebsiteUrlChange}
           placeholder="website or portfolio..."

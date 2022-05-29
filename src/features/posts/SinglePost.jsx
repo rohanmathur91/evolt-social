@@ -43,7 +43,7 @@ export const SinglePost = () => {
     e.preventDefault();
 
     setIsCommentPosting(true);
-    dispatch(commentOnPost({ postId, comment })).finally(() => {
+    dispatch(commentOnPost({ postId, comment: comment.trim() })).finally(() => {
       setIsCommentPosting(false);
     });
 
@@ -74,7 +74,7 @@ export const SinglePost = () => {
                 loading="lazy"
                 src={user.profileImage?.url || ""}
                 alt={user.profileImage?.original_filename || ""}
-                className="w-10 h-10 flex-shrink-0 mr-2 object-cover rounded-full bg-gray-200"
+                className="w-10 h-10 flex-shrink-0 mr-2 border object-cover object-top rounded-full bg-gray-200"
               />
             ) : (
               <div className="w-10 h-10 text-lg flex-shrink-0 flex items-center justify-center font-semibold rounded-full bg-blue-500 text-white">
@@ -92,7 +92,7 @@ export const SinglePost = () => {
                 className="mt-1 text-base w-full dark:bg-gray-800"
               />
               <button
-                disabled={!comment}
+                disabled={!comment.trim()}
                 className={`btn btn-primary text-sm md:text-base py-1 px-3 ${
                   isCommentPosting ? "relative" : ""
                 }`}

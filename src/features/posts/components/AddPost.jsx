@@ -82,7 +82,7 @@ export const AddPost = ({ handleModalType }) => {
       lastName,
       firstName,
       postMedia,
-      content: postContent,
+      content: postContent.trim(),
     };
 
     if (!isEditMode) {
@@ -157,12 +157,12 @@ export const AddPost = ({ handleModalType }) => {
 
         <span
           className={`${
-            postContent.length === postLimit
+            postContent.trim().length === postLimit
               ? "text-blue-500"
               : "text-gray-500 dark:text-gray-400"
           } text-xs text-center self-center w-[5rem] md:text-sm font-semibold mx-1`}
         >
-          {postContent.length} / {postLimit}
+          {postContent.trim().length} / {postLimit}
         </span>
 
         <div className="ml-auto md:ml-1 mt-1 md:mt-0">
@@ -179,8 +179,8 @@ export const AddPost = ({ handleModalType }) => {
               !postMedia &&
               (isLoading ||
                 isMediaUploading ||
-                postContent.length === 0 ||
-                postContent.length > postLimit)
+                postContent.trim().length === 0 ||
+                postContent.trim().length > postLimit)
             }
             className={`btn btn-primary text-sm md:text-base py-1 px-3 border border-blue-500 ${
               isLoading ? "relative" : ""
