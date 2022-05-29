@@ -1,8 +1,8 @@
 ### Changes:
 
-- Trimed the input for not accepting the white spaces for post, comment and profile edit form.
-- Fix minor style for sidebar for larger screens and added border around the profile picture.
-- Updated the posts for and removed the "adarsh balika" user.
+- Trimmed the input for not accepting the white spaces for post, comment and profile edit form.
+- Fix minor style ie height change for sidebar for larger screens and added border around the profile picture.
+- Updated the posts and removed the "adarsh balika" user.
 
 ### Note:
 
