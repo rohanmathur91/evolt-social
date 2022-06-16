@@ -55,6 +55,10 @@ export const Profile = () => {
 
   const handleLogout = () => dispatch(logoutUser());
 
+  // A[C] -> B[C] -> set(mutual followers)
+  // C -> A, B
+  // A,B -> C
+
   return (
     <>
       {modalType === PROFILEMODAL && (
@@ -214,6 +218,10 @@ export const Profile = () => {
                   }
                 >
                   Following
+                </NavLink>
+
+                <NavLink to={`/profile/${_id}/mutual-followers`}>
+                  Mutual Followers
                 </NavLink>
               </div>
               <Outlet />

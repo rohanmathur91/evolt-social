@@ -16,6 +16,7 @@ import {
   PrivateRoute,
   persistUser,
   getPosts,
+  MutualFollowers,
 } from "./features";
 import { Navbar, NotFound, ToastBox, useInitializeTheme } from "./common";
 
@@ -49,6 +50,7 @@ const App = () => {
             <Route index element={<Posts />} />
             <Route path="followers" element={<Followers />} />
             <Route path="following" element={<Following />} />
+            <Route path="mutual-followers" element={<MutualFollowers />} />
           </Route>
         </Route>
         <Route path="*" element={<NotFound />} />
