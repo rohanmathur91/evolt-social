@@ -41,6 +41,8 @@ npm install
 - Create a `.env` file at the root level of the directory (at the level of `package.json`) and create a environment variables
 
 ```
+REACT_APP_TEST_USERNAME = rohanmathur
+REACT_APP_TEST_PASSWORD = rohanmathur@123
 REACT_APP_JWT_SECRET = <JWT_SECRET_KEY_OF_YOUR_CHOICE>
 REACT_APP_CLOUD_NAME = <YOUR_CLOUD_NAME_FROM_CLOUDINARY>
 REACT_APP_UPLOAD_PRESET_NAME = <YOUR_UPLOAD_PRESET>
